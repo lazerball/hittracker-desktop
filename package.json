@@ -1,0 +1,101 @@
+{
+    "name": "hittracker-desktop",
+    "productName": "HitTracker",
+    "version": "0.0.1",
+    "description": "An Electron wrapper for HitTracker",
+    "keywords": [],
+    "main": "src/index.ts",
+    "scripts": {
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "lint": "eslint src && tslint src"
+    },
+    "repository": {},
+    "author": {
+        "name": "Johnny Robeson",
+        "email": "jrobeson@lazerball.com",
+        "url": "https://www.lazerball.com/"
+    },
+    "license": "AGPL-1.0",
+    "config": {
+        "forge": {
+            "make_targets": {
+                "win32": [
+                    "squirrel"
+                ],
+                "darwin": [
+                    "zip"
+                ],
+                "linux": [
+                    "flatpak",
+                    "rpm",
+                    "zip"
+                ]
+            },
+            "electronPackagerConfig": {
+                "ignore": [
+                    "config_files",
+                    "bundled/",
+                    "TODO.md",
+                    "scripts/"
+                ],
+                "afterExtract": [
+                    "./scripts/copy_bundled_packages.js"
+                ],
+                "app-bundle-id": "com.lazerball.HitTracker",
+                "app-category-type": "public.app-category.games",
+                "win32metadata": {
+                    "CompanyName": "LazerBall",
+                    "productName": "HitTracker"
+                }
+            },
+            "electronWinstallerConfig": {
+                "name": "hittracker"
+            },
+            "electronInstallerDebian": {},
+            "electronInstallerRedhat": {},
+            "github_repository": {
+                "owner": "lazerball",
+                "name": "hittracker-desktop"
+            }
+        }
+    },
+    "dependencies": {
+        "@types/electron": "^1.4.32",
+        "@types/electron-devtools-installer": "^2.0.2",
+        "@types/lodash": "^4.14.53",
+        "@types/node": "^7.0.5",
+        "devtron": "^1.4.0",
+        "electron-compile": "^6.1.2",
+        "electron-debug": "^1.1.0",
+        "electron-devtools-installer": "^2.1.0",
+        "electron-is-dev": "^0.1.2",
+        "electron-log": "^1.3.0",
+        "electron-window-state": "^4.0.2",
+        "fs-jetpack": "^0.11.0",
+        "lodash": "^4.17.4",
+        "printer": "^0.2.2",
+        "serialport": "^4.0.7",
+        "sqlite3": "^3.1.8",
+        "tslib": "^1.6.0"
+    },
+    "devDependencies": {
+        "async": "^2.1.5",
+        "babel-plugin-transform-async-to-generator": "^6.22.0",
+        "babel-preset-env": "^1.1.8",
+        "babel-preset-react": "^6.23.0",
+        "download": "^5.0.3",
+        "electron-prebuilt-compile": "1.4.15",
+        "eslint": "^3.16.0",
+        "eslint-config-airbnb": "^14.1.0",
+        "eslint-plugin-import": "^2.2.0",
+        "eslint-plugin-jsx-a11y": "^4.0.0",
+        "eslint-plugin-react": "^6.10.0",
+        "spectron": "^3.6.0",
+        "tmp": "^0.0.31",
+        "tslint": "^4.4.2",
+        "tslint-eslint-rules": "^3.4.0",
+        "typescript": "^2.2.1"
+    }
+}

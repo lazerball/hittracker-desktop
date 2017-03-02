@@ -1,0 +1,27 @@
+{$SITE_HOSTNAME}:{$SITE_PORT}/media {
+    bind {$SITE_ADDRESS}
+    log stdout
+    errors stderr
+
+    rewrite {
+        r (.*)
+        to /{1}
+    }
+    root {$SYMFONY__UPLOAD_DIR}
+}
+
+{$SITE_HOSTNAME}:{$SITE_PORT}/ {
+    bind {$SITE_ADDRESS}
+    log stdout
+    errors stderr
+
+    root {$SITE_ROOT}
+    rewrite {
+        to {path} {path}/ /index.php?{query}
+    }
+
+    # https://caddyserver.com/docs/fastcgi
+    # pool is the number of persistent connections to reuse (can be good for performance on Windows); default is 0.
+    fastcgi / {$FASTCGI_HOST}:{$FASTCGI_PORT} php {
+    }
+}

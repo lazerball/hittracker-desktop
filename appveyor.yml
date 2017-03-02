@@ -1,0 +1,34 @@
+platform:
+  - x64
+
+environment:
+  matrix:
+    - node_version: "7"
+
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
+
+init:
+- git config --global core.autocrlf input
+
+install:
+  - ps: Install-Product node $env:node_version
+  - yarn install
+
+
+build_script:
+  - yarn run build
+
+test_script:
+  - node --version
+  - yarn --version
+  - yarn run test
+  - yarn run e2e
+
+cache:
+  - node_modules
+  - "%LOCALAPPDATA%/Yarn"
+  - '%USERPROFILE%\.electron'
+cache:
+ - node_modules
