@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": true,
@@ -21,7 +20,12 @@
     "moduleResolution": "node",
     "pretty": true,
     "target": "es2015",
-    "jsx": "react"
+    "jsx": "react",
+    "typeRoots": [ "./types", "./node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./types/*"]
+    }
   },
   "formatCodeOptions": {
     "indentSize": 4,
