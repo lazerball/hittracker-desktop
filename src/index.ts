@@ -1,9 +1,8 @@
-import * as childProcess from 'child_process';
 import { app, Menu, BrowserWindow } from 'electron';
-
 import * as xdgBaseDir from 'xdg-basedir';
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
+import { spawn } from 'spawn-rx';
 
 import devMenuTemplate from './menu/dev';
 import editMenuTemplate from './menu/edit';
@@ -55,52 +54,45 @@ function startProcesses() {
 
     const fastCgiEnvVars = Object.assign(config.fastCgi.env, envVars);
 
-    const phpFpm = childProcess.spawn(
+    const phpFpm = spawn(
         config.fastCgi.bin,
         config.fastCgi.args,
         {
+            split: true,
             env: fastCgiEnvVars,
         },
-    );
-    phpFpm.stdout.on('data', (data) => {
-        log.debug(data.toString());
-    });
-
-    phpFpm.stderr.on('data', (data) => {
-        log.debug(data.toString());
+    ).subscribe((x: any) => {
+       log.debug(x);
+    },
+    (e: any) => {
+        log.error(e);
     });
 
     const caddyEnvVars = Object.assign(config.caddy.env, envVars);
-    const caddy = childProcess.spawn(
+    const caddy = spawn(
         config.caddy.bin,
         config.caddy.args,
         {
             env: caddyEnvVars,
         },
-    );
-
-    caddy.stdout.on('data', (data) => {
-        log.debug(data.toString());
+    ).subscribe((x: any) => {
+       log.debug(x);
+    },
+    (e: any) => {
+        log.error(e);
     });
 
-    caddy.stderr.on('data', (data) => {
-        log.debug(data.toString());
-    });
-
-    const htDataClient = childProcess.spawn(
+    const htDataClient = spawn(
         config.htDataClient.bin,
         config.htDataClient.args,
-    );
-
-    htDataClient.stdout.on('data', (data) => {
-        log.debug(data.toString());
+    ).subscribe((x: any) => {
+       log.debug(x);
+    },
+    (e: any) => {
+        log.error(e);
     });
 
-    htDataClient.stderr.on('data', (data) => {
-        log.debug(data.toString());
-    });
-
-    return [htDataClient, phpFpm, caddy];
+    return [caddy, htDataClient, phpFpm];
 }
 
 const setApplicationMenu = () => {
@@ -150,7 +142,7 @@ app.on('ready', () => {
     mainWindow.on('closed', () => {
         mainWindow = null;
         processes.forEach((process) => {
-            process.kill();
+            process.unsubscribe();
         });
     });
 });
