@@ -19,7 +19,6 @@
         "sourceMaps": "inline"
       },
       "text/typescript": {
-        "typeRoots" : ["./@types/"],
         "allowSyntheticDefaultImports": true,
         "removeComments": false,
         "preserveConstEnums": true,
@@ -40,7 +39,12 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "target": "es2015",
-        "jsx": "react"
+        "jsx": "react",
+        "typeRoots": [ "./types", "./@types", "./node_modules/@types"],
+        "baseUrl": ".",
+        "paths": {
+          "*": ["./types/*"]
+        }
       }
     },
     "production": {
@@ -77,7 +81,12 @@
         "noEmitHelpers": true,
         "experimentalDecorators": true,
         "target": "es2015",
-        "jsx": "react"
+        "jsx": "react",
+        "typeRoots": [ "./types", "./@types", "./node_modules/@types"],
+        "baseUrl": ".",
+        "paths": {
+          "*": ["./types/*"]
+        }
       }
     }
   }

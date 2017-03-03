@@ -2,7 +2,6 @@
   "compilerOptions": {
     "removeComments": false,
     "preserveConstEnums": true,
-    "sourceMap": true,
     "declaration": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -21,7 +20,7 @@
     "pretty": true,
     "target": "es2015",
     "jsx": "react",
-    "typeRoots": [ "./types", "./node_modules/@types"],
+    "typeRoots": [ "./types", "./@types/", "./node_modules/@types"],
     "baseUrl": ".",
     "paths": {
       "*": ["./types/*"]
@@ -30,5 +29,13 @@
   "formatCodeOptions": {
     "indentSize": 4,
     "tabSize": 4
-  }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "out",
+    "**/*.spec.ts"
+  ]
 }
