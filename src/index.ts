@@ -1,9 +1,9 @@
 import * as childProcess from 'child_process';
 import { app, Menu, BrowserWindow } from 'electron';
 
+import * as xdgBaseDir from 'xdg-basedir';
 import * as log from 'electron-log';
-import jetpack from 'fs-jetpack';
-import xdgBaseDir from 'xdg-basedir';
+import * as jetpack from 'fs-jetpack';
 
 import devMenuTemplate from './menu/dev';
 import editMenuTemplate from './menu/edit';
@@ -42,7 +42,7 @@ log.info(config);
 // tslint:disable-next-line:no-var-requires
 require('electron-debug')({enabled: debug, showDevTools: debug});
 
-let mainWindow: Electron.BrowserWindow | null = null; // Prevent window from being garbage collected
+let mainWindow: Electron.BrowserWindow | null = null;
 
 function startProcesses() {
     const userDataRoot = app.getPath('userData');
