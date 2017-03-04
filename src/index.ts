@@ -7,6 +7,7 @@ import { spawn } from 'spawn-rx';
 import devMenuTemplate from './menu/dev';
 import editMenuTemplate from './menu/edit';
 import fileMenuTemplate from './menu/file';
+import helpMenuTemplate from './menu/help';
 
 //import isDev from 'electron-is-dev';
 const isDev = process.execPath.match(/[\\/]electron/);
@@ -86,6 +87,7 @@ const setApplicationMenu = () => {
     if (env !== 'production') {
         menus.push(devMenuTemplate);
     }
+    menus.push(helpMenuTemplate);
     Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
 };
 
