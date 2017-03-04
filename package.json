@@ -3,19 +3,27 @@
     "productName": "HitTracker",
     "version": "0.0.1",
     "description": "An Electron wrapper for HitTracker",
+    "homepage": "https://www.lazerball.com",
+    "bugs": {
+        "url" : "https://github.com/lazerball/hittracker-desktop/issues",
+        "email" : "support@lazerball.com"
+    },
     "keywords": [],
+    "author": {
+        "name": "Johnny Robeson",
+        "email": "jrobeson@lazerball.com",
+        "url": "https://www.lazerball.com"
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/lazerball/hittracker-desktop.git"
+    },
     "main": "src/index.ts",
     "scripts": {
         "start": "electron-forge start",
         "package": "electron-forge package",
         "make": "electron-forge make",
         "lint": "eslint src && tslint src"
-    },
-    "repository": {},
-    "author": {
-        "name": "Johnny Robeson",
-        "email": "jrobeson@lazerball.com",
-        "url": "https://www.lazerball.com/"
     },
     "license": "AGPL-1.0",
     "config": {
