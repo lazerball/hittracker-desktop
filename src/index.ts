@@ -48,47 +48,35 @@ function startProcesses() {
     jetpack.dir(`${userDataRoot}/symfony/logs`);
     jetpack.dir(`${userDataRoot}/symfony/cache`);
 
+    const processLogger = (msg: any) => {
+       log.debug(msg);
+    };
+
+    const processErrorLogger = (msg: any) => {
+        log.error(msg);
+
+    };
     const envVars = Object.assign({}, process.env);
 
     const fastCgiEnvVars = Object.assign(config.fastCgi.env, envVars);
 
-    const phpFpm = spawn(
-        config.fastCgi.bin,
-        config.fastCgi.args,
+    const phpFpm = spawn(config.fastCgi.bin, config.fastCgi.args,
         {
             split: true,
             env: fastCgiEnvVars,
         },
-    ).subscribe((x: any) => {
-       log.debug(x);
-    },
-    (e: any) => {
-        log.error(e);
-    });
+    ).subscribe(processLogger, processErrorLogger);
 
     const caddyEnvVars = Object.assign(config.caddy.env, envVars);
-    const caddy = spawn(
-        config.caddy.bin,
-        config.caddy.args,
+
+    const caddy = spawn(config.caddy.bin, config.caddy.args,
         {
             env: caddyEnvVars,
         },
-    ).subscribe((x: any) => {
-       log.debug(x);
-    },
-    (e: any) => {
-        log.error(e);
-    });
+    ).subscribe(processLogger, processErrorLogger);
 
-    const htDataClient = spawn(
-        config.htDataClient.bin,
-        config.htDataClient.args,
-    ).subscribe((x: any) => {
-       log.debug(x);
-    },
-    (e: any) => {
-        log.error(e);
-    });
+    const htDataClient = spawn(config.htDataClient.bin, config.htDataClient.args,
+    ).subscribe(processLogger, processErrorLogger);
 
     return [caddy, htDataClient, phpFpm];
 }
