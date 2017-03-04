@@ -27,7 +27,7 @@ if (env !== 'production') {
 
 import * as config from './config';
 
-log.transports.file.file = `${app.getPath('userData')}'/log.txt`;
+log.transports.file.file = `${app.getPath('userData')}/log.txt`;
 
 if (isDev) {
     log.info('Running in development');
