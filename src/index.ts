@@ -41,7 +41,7 @@ log.info(config);
 
 let mainWindow: Electron.BrowserWindow | null = null;
 
-function startProcesses() {
+async function startProcesses() {
     const userDataRoot = app.getPath('userData');
     jetpack.dir(`${userDataRoot}/php`);
     jetpack.dir(`${userDataRoot}/media`);
@@ -60,7 +60,7 @@ function startProcesses() {
 
     const fastCgiEnvVars = Object.assign(config.fastCgi.env, envVars);
 
-    const phpFpm = spawn(config.fastCgi.bin, config.fastCgi.args,
+    const phpFpm = await spawn(config.fastCgi.bin, config.fastCgi.args,
         {
             split: true,
             env: fastCgiEnvVars,
@@ -69,7 +69,7 @@ function startProcesses() {
 
     const caddyEnvVars = Object.assign(config.caddy.env, envVars);
 
-    const caddy = spawn(config.caddy.bin, config.caddy.args,
+    const caddy = await spawn(config.caddy.bin, config.caddy.args,
         {
             env: caddyEnvVars,
         },
@@ -116,7 +116,7 @@ const createWindow = async () => {
         },
     });
 
-    const processes = startProcesses();
+    const processes = await startProcesses();
 
     if (debug) {
         // tslint:disable-next-line:no-var-requires
