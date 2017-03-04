@@ -117,15 +117,9 @@ if (shouldQuit) {
     app.quit();
 }
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
-
+const createWindow = async () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on('ready', () => {
     setApplicationMenu();
     mainWindow = new BrowserWindow({
         width: 900,
@@ -145,4 +139,19 @@ app.on('ready', () => {
             process.unsubscribe();
         });
     });
+};
+
+app.on('ready', createWindow);
+
+app.on('activate', () => {
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (mainWindow === null) {
+        createWindow();
+    }
+});
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
 });
