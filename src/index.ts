@@ -38,8 +38,6 @@ if (isDev) {
 log.info('Configuration:');
 log.info(config);
 
-// tslint:disable-next-line:no-var-requires
-require('electron-debug')({enabled: debug, showDevTools: debug});
 
 let mainWindow: Electron.BrowserWindow | null = null;
 
@@ -131,6 +129,12 @@ const createWindow = async () => {
     });
 
     const processes = startProcesses();
+
+    if (debug) {
+        // tslint:disable-next-line:no-var-requires
+        require('electron-debug')({enabled: debug, showDevTools: debug});
+    }
+
     mainWindow.loadURL(config.hitTracker.url);
 
     mainWindow.on('closed', () => {
