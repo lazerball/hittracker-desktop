@@ -19,7 +19,14 @@ const hitTracker = <any> {
     databasePath: `${userDataPath}/hittracker.db`,
     rootUri: '/',
     port: 8088,
-    url: ''
+    url: '',
+};
+
+hitTracker.env = {
+    SYMFONY__VAR_DIR: `${userDataPath}/symfony`,
+    SYMFONY__UPLOAD_DIR:  hitTracker.uploadDir,
+    SYMFONY__DATABASE_PATH: hitTracker.databasePath,
+    SYMFONY__BUILD_TYPE: 'electron',
 };
 
 const htc = Object.assign({}, hitTracker);
@@ -37,12 +44,7 @@ const fastCgi = {
     ],
     port: 8081,
     host: 'localhost',
-    env: {
-        SYMFONY__VAR_DIR: `${userDataPath}/symfony`,
-        SYMFONY__UPLOAD_DIR:  hitTracker.uploadDir,
-        SYMFONY__DATABASE_PATH: hitTracker.databasePath,
-        SYMFONY__BUILD_TYPE: 'electron',
-    }
+    env: hitTracker.env
 };
 if (platform === 'win32') {
     fastCgi.bin = 'php-cgi.exe';
