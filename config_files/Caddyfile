@@ -3,11 +3,7 @@
     log stdout
     errors stderr
 
-    rewrite {
-        r (.*)
-        to /{1}
-    }
-    root {$SYMFONY__UPLOAD_DIR}
+    root {$SITE_MEDIA_ROOT}
 }
 
 {$SITE_HOSTNAME}:{$SITE_PORT}/ {

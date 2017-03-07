@@ -15,6 +15,7 @@ const app = {
 const hitTracker = <any> {
     appDir: hitTrackerAppDir,
     webDir: `${hitTrackerAppDir}/web`,
+    uploadDir: `${userDataPath}/media`,
     databasePath: `${userDataPath}/hittracker.db`,
     rootUri: '/',
     port: 8088,
@@ -38,7 +39,7 @@ const fastCgi = {
     host: 'localhost',
     env: {
         SYMFONY__VAR_DIR: `${userDataPath}/symfony`,
-        SYMFONY__UPLOAD_DIR: `${userDataPath}/media`,
+        SYMFONY__UPLOAD_DIR:  hitTracker.uploadDir,
         SYMFONY__DATABASE_PATH: hitTracker.databasePath,
         SYMFONY__BUILD_TYPE: 'electron',
     }
@@ -59,6 +60,7 @@ const caddy: any = {
         SITE_HOSTNAME: hostName,
         SITE_PORT: hitTracker.port,
         SITE_ROOT: hitTracker.webDir,
+        SITE_MEDIA_ROOT: `${userDataPath}/media`,
         FASTCGI_SERVER: fastCgi.host,
         FASTCGI_PORT: fastCgi.port,
     }
