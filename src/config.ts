@@ -74,10 +74,8 @@ const htDataClient: any = {
         // '/dev/ttyUSB0',
         '/dev/pts/4',
         `${hitTracker.url}/games/hit`,
-        '-l',
-        'debug',
-        '-c',
-        '10',
+        '-l', 'debug',
+        '-c', '1',
     ]
 };
 export {app, caddy, fastCgi, hitTracker, htDataClient};
