@@ -42,6 +42,10 @@ log.info(config);
 
 let mainWindow: Electron.BrowserWindow | null = null;
 
+const appendEnvVars = (envVars: any) => {
+   return Object.assign({}, envVars, process.env);
+};
+
 async function startProcesses() {
     const userDataRoot = app.getPath('userData');
 
@@ -58,22 +62,17 @@ async function startProcesses() {
         log.error(msg);
 
     };
-    const envVars = Object.assign({}, process.env);
-
-    const fastCgiEnvVars = Object.assign(config.fastCgi.env, envVars);
 
     const phpFpm = await spawn(config.fastCgi.bin, config.fastCgi.args,
         {
             split: true,
-            env: fastCgiEnvVars,
+            env: appendEnvVars(config.fastCgi.env),
         },
     ).subscribe(processLogger, processErrorLogger);
 
-    const caddyEnvVars = Object.assign(config.caddy.env, envVars);
-
     const caddy = await spawn(config.caddy.bin, config.caddy.args,
         {
-            env: caddyEnvVars,
+            env: appendEnvVars(config.caddy.env),
         },
     ).subscribe(processLogger, processErrorLogger);
 
