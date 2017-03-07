@@ -44,10 +44,11 @@ let mainWindow: Electron.BrowserWindow | null = null;
 
 async function startProcesses() {
     const userDataRoot = app.getPath('userData');
-    jetpack.dir(`${userDataRoot}/php`);
-    jetpack.dir(`${userDataRoot}/media`);
-    jetpack.dir(`${userDataRoot}/symfony/logs`);
-    jetpack.dir(`${userDataRoot}/symfony/cache`);
+
+    // make directories we need
+    ['php', 'media', 'symfony/logs', 'symfony/cache'].forEach((dir) => {
+        jetpack.dir(`${userDataRoot}/${dir}`);
+    });
 
     const processLogger = (msg: any) => {
        log.debug(msg);
