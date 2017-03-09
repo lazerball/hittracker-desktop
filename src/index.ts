@@ -1,4 +1,5 @@
 import { app, Menu, BrowserWindow } from 'electron';
+import { getConfig } from './config';
 import * as xdgBaseDir from 'xdg-basedir';
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
@@ -32,8 +33,7 @@ if (!(process.platform in ['win32', 'darwin'])) {
 if (env !== 'production') {
     app.setPath('userData', `${app.getPath('userData')} (${env})`);
 }
-
-import * as config from './config';
+const config = getConfig(env, debug);
 
 log.transports.file.file = `${app.getPath('userData')}/log.txt`;
 
