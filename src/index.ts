@@ -9,8 +9,15 @@ import editMenuTemplate from './menu/edit';
 import fileMenuTemplate from './menu/file';
 import helpMenuTemplate from './menu/help';
 
-//import isDev from 'electron-is-dev';
 const isDev = process.execPath.match(/[\\/]electron/);
+
+// tslint:disable-next-line:no-var-requires
+const packageJson = require('../package.json');
+
+// We still want to show our app name even if running with prebuilt binary
+if (app.getName().toLowerCase() == 'electron') {
+    app.setName(packageJson.productName || packageJson.name);
+}
 
 const debug = isDev;
 const env: string = 'development';
