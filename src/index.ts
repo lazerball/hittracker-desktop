@@ -9,7 +9,7 @@ import editMenuTemplate from './menu/edit';
 import fileMenuTemplate from './menu/file';
 import helpMenuTemplate from './menu/help';
 
-const isDev = process.execPath.match(/[\\/]electron/);
+const isDev = /[\\/]electron/.test(process.execPath);
 
 // tslint:disable-next-line:no-var-requires
 const packageJson = require('../package.json');
