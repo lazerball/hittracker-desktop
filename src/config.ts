@@ -3,8 +3,6 @@ import { app as electronApp } from 'electron';
 //import * as _ from 'lodash';
 
 export const getConfig = (env: string, debug: boolean) => {
-    env = 'developmment';
-    debug = true;
     const platform = process.platform;
     const arch = process.arch;
     const userDataPath = electronApp.getPath('userData');
@@ -17,7 +15,7 @@ export const getConfig = (env: string, debug: boolean) => {
         packageDir = './bundled';
     }
     const app = {
-        debug: true,
+        debug: debug,
     };
 
     // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
@@ -48,8 +46,8 @@ export const getConfig = (env: string, debug: boolean) => {
         // @todo: generate on app install
         SYMFONY__SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
         // @TODO make conditional
-        SYMFONY_DEBUG: 1,
-        SYMFONY_ENV: 'development',
+        SYMFONY_DEBUG: debug ? 1 : 0,
+        SYMFONY_ENV: env == 'production' ? 'prod' : 'dev',
     };
 
     const htc = Object.assign({}, hitTracker);
@@ -97,10 +95,12 @@ export const getConfig = (env: string, debug: boolean) => {
             // '/dev/ttyUSB0',
             '/dev/pts/4',
             `${hitTracker.url}/games/hit`,
-            '-l', 'debug',
             '-c', '1',
         ]
     };
+    if (debug) {
+        htDataClient.args.push(...['-l', 'debug']);
+    }
 
     return {app, caddy, fastCgi, hitTracker, htDataClient, php};
 };

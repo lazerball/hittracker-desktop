@@ -20,8 +20,8 @@ if (app.getName().toLowerCase() == 'electron') {
     app.setName(packageJson.productName || packageJson.name);
 }
 
+const env: string = isDev ? 'development' : 'production';
 const debug = isDev;
-const env: string = 'development';
 
 // needed until electron stops storing non-config files in `$XDG_CONFIG_HOME`
 // https://github.com/electron/electron/issues/8124
