@@ -3,15 +3,30 @@ import { app as electronApp } from 'electron';
 //import * as _ from 'lodash';
 
 const platform = process.platform;
+const arch = process.arch;
 const userDataPath = electronApp.getPath('userData');
 
 const hostName = 'localhost';
-const hitTrackerAppDir = './bundled/HitTracker';
+const useBundledPackages = true;
 
+let packageDir = '';
+if (useBundledPackages) {
+    packageDir = './bundled';
+}
 const app = {
     debug: true,
 };
 
+// @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
+const php = {
+    bin: 'php'
+};
+if (platform === 'win32') {
+   php.bin = `${packageDir}/php-${arch}-${platform}/php.exe`;
+}
+
+
+const hitTrackerAppDir = `${packageDir}/HitTracker`;
 const hitTracker = <any> {
     appDir: hitTrackerAppDir,
     webDir: `${hitTrackerAppDir}/web`,
@@ -47,13 +62,13 @@ const fastCgi = {
     env: hitTracker.env
 };
 if (platform === 'win32') {
-    fastCgi.bin = 'php-cgi.exe';
+    fastCgi.bin = `${packageDir}/php/php-cgi.exe`;
     fastCgi.args = ['-b', `${fastCgi.host}:${fastCgi.port}`];
 }
 fastCgi.args.push(...['-c', './config_files/php.ini']);
 
 const caddy: any = {
-    bin: './bundled/caddy/caddy',
+    bin: `${packageDir}/caddy-${arch}-${platform}/caddy`,
     args: [
         '-conf', './config_files/Caddyfile',
     ],
@@ -69,7 +84,7 @@ const caddy: any = {
 };
 // @todo different args for dev and prod
 const htDataClient: any = {
-    bin: './bundled/htdataclient/htdataclient',
+    bin: `./bundled/htdataclient-${arch}-${platform}/htdataclient`,
     args: [
         // '/dev/ttyUSB0',
         '/dev/pts/4',
