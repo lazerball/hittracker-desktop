@@ -71,7 +71,7 @@ export const getConfig = (env: string, debug: boolean) => {
         fastCgi.bin = `${packageDir}/php/php-cgi.exe`;
         fastCgi.args = ['-b', `${fastCgi.host}:${fastCgi.port}`];
     }
-    fastCgi.args.push(...['-c', './config_files/php.ini']);
+    fastCgi.args.push(...['-c', `${hitTrackerAppDir}/etc/php/php.ini`]);
 
     const caddy: any = {
         bin: `${packageDir}/caddy-${arch}-${platform}/caddy`,
