@@ -45,8 +45,7 @@ export const getConfig = (env: string, debug: boolean) => {
         SYMFONY__BUILD_TYPE: 'electron',
         // @todo: generate on app install
         SYMFONY__SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
-        // @TODO make conditional
-        SYMFONY_DEBUG: debug ? 1 : 0,
+        SYMFONY_DEBUG: debug ? 'true' : 'false',
         SYMFONY_ENV: env == 'production' ? 'prod' : 'dev',
     };
 
@@ -88,7 +87,7 @@ export const getConfig = (env: string, debug: boolean) => {
             FASTCGI_PORT: fastCgi.port,
         }
     };
-    // @todo different args for dev and prod
+
     const htDataClient: any = {
         bin: `./bundled/htdataclient-${arch}-${platform}/htdataclient`,
         args: [
