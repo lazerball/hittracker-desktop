@@ -1,16 +1,15 @@
 platform:
+  - x32
   - x64
 
 environment:
-  matrix:
+  global:
     - node_version: "7"
 
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
-
-init:
-- git config --global core.autocrlf input
+    - "gh-pages"
 
 install:
   - ps: Install-Product node $env:node_version
@@ -30,5 +29,3 @@ cache:
   - node_modules
   - "%LOCALAPPDATA%/Yarn"
   - '%USERPROFILE%\.electron'
-cache:
- - node_modules
