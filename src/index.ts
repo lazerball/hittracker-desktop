@@ -3,7 +3,7 @@ import { getConfig } from './config';
 import * as xdgBaseDir from 'xdg-basedir';
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
-import { spawn } from 'spawn-rx';
+import { spawn, spawnPromise } from 'spawn-rx';
 
 import devMenuTemplate from './menu/dev';
 import editMenuTemplate from './menu/edit';
@@ -46,20 +46,48 @@ if (isDev) {
 log.info('Configuration:');
 log.info(config);
 
-
 let mainWindow: Electron.BrowserWindow | null = null;
 
 const appendEnvVars = (envVars: any) => {
    return Object.assign({}, envVars, process.env);
 };
 
-async function startProcesses() {
+const firstRun = async () => {
     const userDataRoot = app.getPath('userData');
 
     // make directories we need
     ['php', 'media', 'symfony/logs', 'symfony/cache'].forEach((dir) => {
         jetpack.dir(`${userDataRoot}/${dir}`);
     });
+
+    const runHitTrackerCmd = async (subCommand: string, args?: any) => {
+        const commandArgs  = [config.hitTracker.bin, subCommand, '--no-interaction'];
+        if (args) {
+            commandArgs.push(...args);
+        }
+
+        const envVars = appendEnvVars(config.hitTracker.env);
+        return await spawnPromise(config.php.bin, commandArgs, {env : envVars});
+    };
+    try {
+        await runHitTrackerCmd('cache:clear');
+    } catch (e) {
+        console.log(`Failed to clear the cache because: ${e}`);
+    }
+
+    try {
+        await runHitTrackerCmd('doctrine:database:create');
+    } catch (e) {
+        console.log(`Failed to create database because: ${e}`);
+    }
+
+    try {
+        await runHitTrackerCmd('doctrine:migrations:migrate');
+    } catch (e) {
+        console.log(`Failed to migrate database because: ${e}`);
+    }
+};
+async function startProcesses() {
 
     const processLogger = (msg: any) => {
        log.debug(msg);
@@ -115,6 +143,8 @@ if (shouldQuit) {
 const createWindow = async () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
+    await firstRun();
+
     setApplicationMenu();
     mainWindow = new BrowserWindow({
         width: 900,
