@@ -1,3 +1,4 @@
+build: false
 platform:
   - x32
   - x64
@@ -8,23 +9,34 @@ environment:
 
 branches:
   except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
     - "gh-pages"
 
 install:
   - ps: Install-Product node $env:node_version
+  - npm install -g electron-forge
   - yarn install
 
-
-build_script:
-  - yarn run build
 
 test_script:
   - node --version
   - yarn --version
-  - yarn run test
-  - yarn run e2e
+  - yarn lint
 
+before_deploy:
+  - yarn make
+  - appveyor PushArtifact out\make\HitTracker-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
+
+deploy:
+    description: "Release $(APPVEYOR_REPO_TAG_NAME)"
+    provider: GitHub
+    auth_token:
+      secure: "N7AGr+WKRHnBh8dscxot6kPvACQt1AY5HIQ1UVqAaiV/dPlKPQiCLy8JNiW17KMx"
+    artifact: /.*\.exe/
+    draft: true
+    prerelease: false
+    on:
+        branch: master
+        appveyor_repo_tag: true
 cache:
   - node_modules
   - "%LOCALAPPDATA%/Yarn"
