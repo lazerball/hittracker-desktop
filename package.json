@@ -38,7 +38,6 @@
                 ],
                 "linux": [
                     "flatpak",
-                    "rpm",
                     "zip"
                 ]
             },
