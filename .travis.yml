@@ -18,6 +18,8 @@ addons:
       - xz-utils
 
 install:
+    # manually install yarn until https://github.com/travis-ci/travis-ci/issues/7454 is fixed
+    - npm install -g yarn
     - npm install -g electron-forge
     - yarn install
 script:
