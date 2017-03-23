@@ -21,6 +21,7 @@
     "main": "src/index.ts",
     "scripts": {
         "start": "electron-forge start",
+        "bundle-third-party": "gulp bundle-third-party",
         "package": "electron-forge package",
         "make": "electron-forge make",
         "lint": "eslint src && tslint src"
