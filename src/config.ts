@@ -60,7 +60,7 @@ export const getConfig = (env: string, debug: boolean) => {
         bin: 'php-fpm',
         args: [
             '-p', `${userDataPath}/php`,
-            '-y', './config_files/php-fpm.conf',
+            '-y', `${hitTrackerAppDir}/etc/php-fpm/php-fpm-electron.conf`,
         ],
         port: 8081,
         host: 'localhost',
