@@ -4,7 +4,7 @@ import { app as electronApp } from 'electron';
 
 export const getConfig = (env: string, debug: boolean) => {
     const platform = process.platform;
-    const arch = process.arch;
+    const arch = process.arch === 'ia32' ? 'x32' : process.arch;
     const userDataPath = electronApp.getPath('userData');
 
     const hostName = 'localhost';
@@ -23,10 +23,10 @@ export const getConfig = (env: string, debug: boolean) => {
         bin: 'php'
     };
     if (platform === 'win32') {
-        php.bin = `${packageDir}/php-${arch}-${platform}/php.exe`;
+        php.bin = `${packageDir}/php-${platform}-${arch}/php.exe`;
     }
 
-    const hitTrackerAppDir = `${packageDir}/HitTracker`;
+    const hitTrackerAppDir = `${packageDir}/HitTracker-${platform}`;
     const hitTracker = <any> {
         bin: `${hitTrackerAppDir}/bin/console`,
         appDir: hitTrackerAppDir,
@@ -67,13 +67,13 @@ export const getConfig = (env: string, debug: boolean) => {
         env: hitTracker.env
     };
     if (platform === 'win32') {
-        fastCgi.bin = `${packageDir}/php/php-cgi.exe`;
+        fastCgi.bin = `${packageDir}/php-${platform}-${arch}/php-cgi.exe`;
         fastCgi.args = ['-b', `${fastCgi.host}:${fastCgi.port}`];
     }
     fastCgi.args.push(...['-c', `${hitTrackerAppDir}/etc/php/php.ini`]);
 
     const caddy: any = {
-        bin: `${packageDir}/caddy-${arch}-${platform}/caddy`,
+        bin: `${packageDir}/caddy-${platform}-${arch}/caddy`,
         args: [
             '-conf', './config_files/Caddyfile',
         ],
@@ -89,7 +89,7 @@ export const getConfig = (env: string, debug: boolean) => {
     };
 
     const htDataClient: any = {
-        bin: `./bundled/htdataclient-${arch}-${platform}/htdataclient`,
+        bin: `./bundled/htdataclient-${platform}-${arch}/htdataclient`,
         args: [
             // '/dev/ttyUSB0',
             '/dev/pts/4',
