@@ -21,6 +21,7 @@ test_script:
   - node --version
   - yarn --version
   - yarn lint
+  - yarn make
 
 before_deploy:
   - yarn make
