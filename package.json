@@ -51,8 +51,9 @@
                 "afterExtract": [
                     "./scripts/copy_bundled_packages.js"
                 ],
-                "app-bundle-id": "com.lazerball.HitTracker",
-                "app-category-type": "public.app-category.games",
+                "appCopyright": "LazerBall",
+                "appBundleId": "com.lazerball.HitTracker",
+                "appCategoryType": "public.app-category.games",
                 "win32metadata": {
                     "CompanyName": "LazerBall",
                     "productName": "HitTracker"
