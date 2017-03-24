@@ -37,7 +37,6 @@
                     "zip"
                 ],
                 "linux": [
-                    "flatpak",
                     "zip"
                 ]
             },
