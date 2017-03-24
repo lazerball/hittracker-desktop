@@ -22,8 +22,8 @@
     "scripts": {
         "start": "electron-forge start",
         "bundle-third-party": "gulp bundle-third-party",
-        "package": "electron-forge package",
-        "make": "electron-forge make",
+        "package": "gulp bundle-third-party && electron-forge package",
+        "make": "gulp bundle-third-party && electron-forge make",
         "lint": "eslint src && tslint src"
     },
     "license": "AGPL-1.0",
@@ -42,10 +42,15 @@
             },
             "electronPackagerConfig": {
                 "ignore": [
-                    "config_files",
+                    "config_files/",
                     "bundled/",
                     "TODO.md",
-                    "scripts/"
+                    ".appveyor.yml",
+                    ".travis.yml",
+                    "yarn.lock",
+                    "tsconfig.json",
+                    "tslint.json",
+                    "gulpfile.ts"
                 ],
                 "afterExtract": [
                     "./scripts/copy_bundled_packages.js"
