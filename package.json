@@ -93,7 +93,8 @@
         "serialport": "^4.0.7",
         "spawn-rx": "^2.0.10",
         "sqlite3": "^3.1.8",
-        "tslib": "^1.6.0"
+        "tslib": "^1.6.0",
+        "xdg-basedir": "^3.0.0"
     },
     "devDependencies": {
         "@types/gulp": "^4.0.2",
