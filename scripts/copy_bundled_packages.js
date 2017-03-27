@@ -5,7 +5,7 @@ module.exports = (extractPath, electronVersion, platform, arch, done) => {
 
     const packageArch = arch === 'ia32' ? 'x32' : arch;
     jetpack.copy('./bundled', `${extractPath}/bundled`, {
-        matching: [`*-${platform}`, `*-${platform}-${packageArch}`],
+        matching: [`*-${platform}/**`, `*-${platform}-${packageArch}/**`],
     });
 
     done();
