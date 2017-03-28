@@ -1,3 +1,4 @@
+const jetpack = require('fs-jetpack');
 // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#ignore
 //  given an absolute file path, returns true if the file is ignored, or false if the file is kept.
 const ignoreFilter = (path) => {
@@ -24,6 +25,18 @@ const ignoreFilter = (path) => {
     return !includes.some(pattern => path.match(pattern));
 };
 
+
+const afterExtract = (extractPath, electronVersion, platform, arch, done) => {
+    jetpack.copy('./config_files', `${extractPath}/config_files`);
+
+    const packageArch = arch === 'ia32' ? 'x32' : arch;
+    jetpack.copy('./bundled', `${extractPath}/bundled`, {
+        matching: [`*-${platform}/**`, `*-${platform}-${packageArch}/**`],
+    });
+
+    done();
+};
+
 const forgeConfig = {
     make_targets: {
         win32: [
@@ -39,7 +52,7 @@ const forgeConfig = {
     electronPackagerConfig: {
         ignore: ignoreFilter,
         afterExtract: [
-            './scripts/copy_bundled_packages.js',
+            afterExtract,
         ],
         appCopyright: 'LazerBall',
         appBundleId: 'com.lazerball.HitTracker',
