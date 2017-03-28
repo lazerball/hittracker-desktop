@@ -21,6 +21,7 @@ test_script:
   - node --version
   - yarn --version
   - yarn lint
+  - SET DEBUG=*
   - yarn make
 
 before_deploy:
