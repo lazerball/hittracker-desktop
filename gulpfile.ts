@@ -53,7 +53,7 @@ const fetchDataClient = (unpackDir: string, platform: string, arch: string) => {
 };
 
 const fetchHitTracker = (unpackDir: string, platform: string) => {
-    const url = `https://github.com/lazerball/HitTracker/releases/download/0.0.18/HitTracker-electron-${platform}-0.0.18.tar.bz2`;
+    const url = `https://github.com/lazerball/HitTracker/releases/download/0.0.23/HitTracker-electron-${platform}-0.0.23.tar.bz2`;
     download(url, unpackDir, { extract: true}).then(() => {
         console.log('Successfully downloaded HitTracker');
     }, (error: any) => {
