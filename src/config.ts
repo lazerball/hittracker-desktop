@@ -18,15 +18,24 @@ export const getConfig = (env: string, debug: boolean) => {
         debug: debug,
     };
 
+    const hitTrackerAppDir = `${packageDir}/HitTracker-${platform}`;
     // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
     const php = {
-        bin: 'php'
+        bin: 'php',
+        env: {
+            PHPRC: `${hitTrackerAppDir}/etc/php/php.ini`,
+            PHP_INI_SCAN_DIR: `${hitTrackerAppDir}/etc/php/unix`,
+        }
     };
     if (platform === 'win32') {
         php.bin = `${packageDir}/php-${platform}-${arch}/php.exe`;
+        php.env = {
+            PHPRC: `${hitTrackerAppDir}\etc\php\php.ini`,
+            PHP_INI_SCAN_DIR: `${hitTrackerAppDir}\etc\php\win32`,
+        };
+
     }
 
-    const hitTrackerAppDir = `${packageDir}/HitTracker-${platform}`;
     const hitTracker = <any> {
         bin: `${hitTrackerAppDir}/bin/console`,
         appDir: hitTrackerAppDir,
@@ -48,6 +57,7 @@ export const getConfig = (env: string, debug: boolean) => {
         SYMFONY_DEBUG: debug ? 'true' : 'false',
         SYMFONY_ENV: env == 'production' ? 'prod' : 'dev',
     };
+    hitTracker.env = Object.assign({}, hitTracker.env, php.env);
 
     const htc = Object.assign({}, hitTracker);
     htc.scheme = 'http';
@@ -64,7 +74,7 @@ export const getConfig = (env: string, debug: boolean) => {
         ],
         port: 8081,
         host: 'localhost',
-        env: hitTracker.env
+        env: hitTracker.env,
     };
     if (platform === 'win32') {
         fastCgi.bin = `${packageDir}/php-${platform}-${arch}/php-cgi.exe`;
