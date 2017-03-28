@@ -28,51 +28,7 @@
     },
     "license": "AGPL-1.0",
     "config": {
-        "forge": {
-            "make_targets": {
-                "win32": [
-                    "squirrel"
-                ],
-                "darwin": [
-                    "zip"
-                ],
-                "linux": [
-                    "zip"
-                ]
-            },
-            "electronPackagerConfig": {
-                "ignore": [
-                    "config_files/",
-                    "bundled/",
-                    "TODO.md",
-                    ".appveyor.yml",
-                    ".travis.yml",
-                    "yarn.lock",
-                    "tsconfig.json",
-                    "tslint.json",
-                    "gulpfile.ts"
-                ],
-                "afterExtract": [
-                    "./scripts/copy_bundled_packages.js"
-                ],
-                "appCopyright": "LazerBall",
-                "appBundleId": "com.lazerball.HitTracker",
-                "appCategoryType": "public.app-category.games",
-                "win32metadata": {
-                    "CompanyName": "LazerBall",
-                    "productName": "HitTracker"
-                }
-            },
-            "electronWinstallerConfig": {
-                "name": "hittracker"
-            },
-            "electronInstallerDebian": {},
-            "electronInstallerRedhat": {},
-            "github_repository": {
-                "owner": "lazerball",
-                "name": "hittracker-desktop"
-            }
-        }
+        "forge": "./forge.config.js"
     },
     "dependencies": {
         "@types/electron": "^1.4.32",
