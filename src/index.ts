@@ -60,35 +60,30 @@ const firstRun = async () => {
         jetpack.dir(`${userDataRoot}/${dir}`);
     });
 
-    const runHitTrackerCmd = async (subCommand: string, args?: any) => {
+    const runHitTrackerCmd = async (subCommand: string, args?: any[]) => {
         const commandArgs  = [config.hitTracker.bin, subCommand, '--no-interaction'];
         if (args) {
             commandArgs.push(...args);
         }
 
         const envVars = appendEnvVars(config.hitTracker.env);
-        return await spawnPromise(config.php.bin, commandArgs, {env : envVars});
+        await spawnPromise(config.php.bin, commandArgs, {env : envVars}).then(
+            (x) => log.info(x), // needs to be log.debug
+            (e) => {
+                log.error(`ERROR: ${e}`);
+            }
+        );
     };
-    try {
-        await runHitTrackerCmd('cache:clear');
-    } catch (e) {
-        console.log(`Failed to clear the cache because: ${e}`);
-    }
 
-    try {
+    await runHitTrackerCmd('cache:clear');
+    // --if-not-exists is broken on sqlite (https://github.com/doctrine/dbal/pull/2402)
+    if (!jetpack.exists(config.hitTracker.databasePath)) {
         await runHitTrackerCmd('doctrine:database:create');
-    } catch (e) {
-        console.log(`Failed to create database because: ${e}`);
     }
-
-    try {
-        await runHitTrackerCmd('doctrine:migrations:migrate');
-    } catch (e) {
-        console.log(`Failed to migrate database because: ${e}`);
-    }
+    await runHitTrackerCmd('doctrine:migrations:migrate');
 };
-async function startProcesses() {
 
+async function startProcesses() {
     const processLogger = (msg: any) => {
        log.debug(msg);
     };
@@ -158,6 +153,7 @@ const createWindow = async () => {
     const processes = await startProcesses();
 
     if (debug) {
+        //await installExtension('noaneddfkdjfnfdakjjmocngnfkfehhd');
         // tslint:disable-next-line:no-var-requires
         require('electron-debug')({enabled: debug, showDevTools: debug});
     }
