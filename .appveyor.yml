@@ -19,10 +19,10 @@ init:
   - SET TEMP=C:\T
   - SET TMP=C:\T
   - SET NODE_PLATFORM=%PLATFORM%
-  - IF %PLATFORM% == "x64" SET NODE_PLATFORM=ia32
+  - IF %PLATFORM% == "x86" SET NODE_PLATFORM=ia32
 
 install:
-  - ps: Install-Product node $env:node_version %PLATFORM%
+  - ps: Install-Product node $env:node_version $env:PLATFORM
   - npm install -g electron-forge
   - yarn install
 
