@@ -1,6 +1,32 @@
+import * as path from 'path';
 import * as gulp from 'gulp';
 import * as jetpack from 'fs-jetpack';
 import * as download from 'download';
+
+const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) => {
+    platform = 'win32';
+    if (platform !== 'win32') {
+        return;
+    }
+    // @todo: don't use http url for getting php
+    const phpArch = arch === 'ia32' ? 'x86' : arch;
+
+    const apcuUrl = `http://windows.php.net/downloads/pecl/releases/apcu/5.1.8/php_apcu-5.1.8-7.1-nts-vc14-${phpArch}.zip`;
+    const apcuDir = `./bundled/php-ext-apcu-${platform}-${arch}`;
+
+    jetpack.dir(apcuDir);
+
+    download(apcuUrl, apcuDir, { extract: true }).then(() => {
+        jetpack.move(`${apcuDir}/php_apcu.dll`, `${unpackDir}/php_apcu.dll`);
+        jetpack.move(`${apcuDir}/LICENSE`, `${path.dirname(unpackDir)}/APCU_LICENSE`);
+        jetpack.remove(apcuDir);
+        console.log('Successfully downloaded apcU');
+
+    }, (error: any) => {
+        console.log(error);
+    });
+
+};
 
 const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
     if (platform !== 'win32') {
@@ -38,6 +64,7 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
         });
 
         console.log('Successfully downloaded PHP');
+        fetchPhpExtensions(`${unpackDir}/ext`, platform, arch);
     }, (error: any) => {
         console.log(error);
     });
