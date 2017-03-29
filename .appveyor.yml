@@ -31,12 +31,6 @@ test_script:
   - node --version
   - yarn --version
   - yarn lint
-  - SET DEBUG=*
-  - yarn make
-  - echo %PLATFORM%
-  - echo %NODE_PLATFORM%
-  - ps: Get-ChildItem out\make -Recurse
-  - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
 
 
 before_deploy:
