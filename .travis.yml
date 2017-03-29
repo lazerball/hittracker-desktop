@@ -19,6 +19,10 @@ addons:
       - libgnome-keyring-dev
       - xz-utils
 
+before_install:
+    - export NODE_PLATFORM=linux
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export NODE_PLATFORM=darwin; fi
+
 install:
     # manually install yarn until https://github.com/travis-ci/travis-ci/issues/7454 is fixed
     - npm install -g yarn
@@ -34,6 +38,7 @@ script:
 
 before_deploy:
     - yarn make
+    - mv out/make/HitTracker-$NODE_PLATFORM-x64.zip out/make/HitTracker-$NODE_PLATFORM-x64-$TRAVIS_TAG.zip
 
 deploy:
     provider: releases
@@ -53,3 +58,4 @@ cache:
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
+    - gh-pages
