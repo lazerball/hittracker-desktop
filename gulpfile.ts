@@ -7,8 +7,8 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
         return;
     }
     // @todo: don't use http url for getting php
-    const phpArch = arch === 'ia32' ? 'x32' : arch;
-    const url = `http://windows.php.net/downloads/releases/php-7.1.2-nts-Win32-VC14-${phpArch}.zip`;
+    const phpArch = arch === 'ia32' ? 'x86' : arch;
+    const url = `http://windows.php.net/downloads/releases/php-7.1.3-nts-Win32-VC14-${phpArch}.zip`;
     download(url, unpackDir, { extract: true }).then(() => {
         const cleanExtList = [
             'php_com_dotnet.dll',
