@@ -55,5 +55,5 @@ deploy:
         appveyor_repo_tag: true
 cache:
   - node_modules
-  - "%LOCALAPPDATA%/Yarn"
+  - "%LOCALAPPDATA%\\Yarn"
   - '%USERPROFILE%\.electron'
