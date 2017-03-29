@@ -31,6 +31,7 @@ test_script:
   - node --version
   - yarn --version
   - yarn lint
+  - SET DEBUG=*
   - yarn make
   - dir out\make\squirrel.windows /b
   - dir out\make\squirrel.windows\%NODE_PLATFORM% /b
