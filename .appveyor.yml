@@ -18,7 +18,7 @@ init:
   # the default TEMP/TMP paths are too long for electron-windows-installer to package them
   - SET TEMP=C:\T
   - SET TMP=C:\T
-  - SET NODE_PLATFORM=%PLATFORM
+  - SET NODE_PLATFORM=%PLATFORM%
   - IF %PLATFORM == "x86" SET NODE_PLATFORM=ia32
 
 install:
@@ -38,7 +38,6 @@ test_script:
 
 
 before_deploy:
-
   - yarn make
   - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM-%APPVEYOR_REPO_TAG_NAME%.exe
   - appveyor PushArtifact HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
