@@ -34,12 +34,12 @@ test_script:
   - SET DEBUG=*
   - yarn make
   - ps: Get-ChildItem out\make -Recurse
-  - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM-%APPVEYOR_REPO_TAG_NAME%.exe
+  - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
 
 
 before_deploy:
   - yarn make
-  - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM-%APPVEYOR_REPO_TAG_NAME%.exe
+  - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
   - appveyor PushArtifact HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
 
 deploy:
