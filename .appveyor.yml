@@ -8,12 +8,14 @@ clone_folder: C:\HT
 environment:
   global:
     node_version: "7"
-    TEMP: C:\T
-    TMP: C:\T
 
 branches:
   except:
     - "gh-pages"
+
+init:
+    - SET TEMP=C:\T
+    - SET TMP=C:\T
 
 install:
   - ps: Install-Product node $env:node_version
