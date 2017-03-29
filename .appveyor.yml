@@ -31,6 +31,11 @@ test_script:
   - node --version
   - yarn --version
   - yarn lint
+  - yarn make
+  - dir out\make\squirrel.windows /b
+  - dir out\make\squirrel.windows\%NODE_PLATFORM% /b
+  - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM-%APPVEYOR_REPO_TAG_NAME%.exe
+
 
 before_deploy:
 
