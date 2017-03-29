@@ -8,6 +8,8 @@ clone_folder: C:\HT
 environment:
   global:
     node_version: "7"
+    TEMP: C:\T
+    TMP: C:\T
 
 branches:
   except:
