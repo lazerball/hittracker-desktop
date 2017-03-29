@@ -38,7 +38,7 @@ before_deploy:
 deploy:
     provider: releases
     api_key:
-        secure: "LJ1ZwqBmg6GajDkgtFrgkNttfmBObPAAUPnJr8d53mXEA6+ZwZw/fIXOt7BzOQOow2DWMDf+PAqMkmSQLwdjnRB+jGIa4yJHnOQ1BxgyLuiQ5yiFckkHwBt+1HrKGZ54uxaQBej1/wbBi1GrEhz5BNWjAsHotGVMbiJ6dR4uU24="
+        secure: D+awB144WTyUv9Qh8ecyLFowiymc5QQZN7z8/dTmILEx7IiNGztb2eZ8kO3U/JSnT3YlOeEgg4sWrua82mUzgTVrC94r73T0fzdNVgAIqzP5GgBDJLLIyMX3aVZ6FcDQK95mZy5UMS8xSdXuWse6PSuSfkO56OgVokHxeJFgIaeQdcwjgx4/zaJ+vUuu5SS56mdoxQY1vM96GPANQGNEjAvwXspal2mDr40C5vyz1iv348myQknzB6yQ5x7ZRnR7kN0EMt5EZG1k0wFxyxBjTadaBM4T11doSSJmIOqKdpoYudFodzf99ri4a9AqTRKK2A99nY+752zTiPULFCRt3L00jFkv+sOuSLz5b2htKWvDVZzRaGQ30a4gDK1L+iSlTKE8rA8D55sDQxam/j+MP3N+b2MRPcqGmG1uc0k2Z5NO9X+PEMvKy7CWt5qweZK4DpFTXHKYxdEt9PSPZ0IF1HF5+CBYtMRfOZrZaiqB6qZsNBdb3dSt9nSSe0wJ7yDdo78Vyz4TBKgnjwhQ7BKlsOrSnbtdXXFY1AUwm9kBVWvEqODNnkZZcAhBmGQpAJ9VzWjly+kvXt06WbGDTs3OnrcJRCn4WDemFKFcGHKRBe7gwN/5sRdWtB9/m7BoEXms6xL/5Iz/TLCa7F0u+vGeOh1troqIwnJkkYUPSTPytNE=
     file: "out/make/*"
     file_glob: true
     skip_cleanup: true
