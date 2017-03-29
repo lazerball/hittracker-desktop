@@ -3,6 +3,8 @@ platform:
   - x32
   - x64
 
+clone_folder: C:\HT
+
 environment:
   global:
     node_version: "7"
