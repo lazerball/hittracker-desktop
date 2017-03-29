@@ -50,6 +50,7 @@ const forgeConfig = {
         ],
     },
     electronPackagerConfig: {
+        asar: true,
         ignore: ignoreFilter,
         afterExtract: [
             afterExtract,
