@@ -3,7 +3,7 @@ platform:
   - x32
   - x64
 
-clone_folder: C:\HT
+clone_folder: "C:\\HT"
 
 environment:
   global:
@@ -14,8 +14,9 @@ branches:
     - "gh-pages"
 
 init:
-    - SET TEMP=C:\T
-    - SET TMP=C:\T
+  - IF NOT EXIST C:\T mkdir C:\T
+  - SET TEMP=C:\T
+  - SET TMP=C:\T
 
 install:
   - ps: Install-Product node $env:node_version
