@@ -38,6 +38,8 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
         });
 
         console.log('Successfully downloaded PHP');
+    }, (error: any) => {
+        console.log(error);
     });
 };
 
