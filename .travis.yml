@@ -41,7 +41,7 @@ script:
   #- yarn run e2e
 
 after_success:
-  - if [ ${TRAVIS_TAG} ]; then yarn make && yarn publish; fi
+  - if [ ${TRAVIS_TAG} ]; then forge make && forge publish; fi
 
 cache:
   yarn: true
