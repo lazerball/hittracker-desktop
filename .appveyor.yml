@@ -7,6 +7,8 @@ clone_folder: "C:\\HT"
 
 environment:
   global:
+    GITHUB_TOKEN:
+      secure: 9va/uJFLZdZhq9AUQif1Txb9nSaAcLzcWvSC20I6B7KdV6xXzAujIMGouU2zqQAW
     node_version: "7"
 
 branches:
@@ -18,8 +20,6 @@ init:
   # the default TEMP/TMP paths are too long for electron-windows-installer to package them
   - SET TEMP=C:\T
   - SET TMP=C:\T
-  - SET NODE_PLATFORM=%PLATFORM%
-  - IF %PLATFORM% == x86 SET NODE_PLATFORM=ia32
 
 install:
   - ps: Install-Product node $env:node_version $env:PLATFORM
@@ -33,22 +33,10 @@ test_script:
   - yarn lint
 
 
-before_deploy:
-  - yarn make
-  - move out\make\squirrel.windows\%NODE_PLATFORM%\HitTrackerSetup.exe HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
-  - appveyor PushArtifact HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
+deploy_script:
+  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" = "" yarn make
+  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" = "" yarn publish
 
-deploy:
-  description: "Release $(APPVEYOR_REPO_TAG_NAME)"
-  provider: GitHub
-  auth_token:
-    secure: "N7AGr+WKRHnBh8dscxot6kPvACQt1AY5HIQ1UVqAaiV/dPlKPQiCLy8JNiW17KMx"
-  artifact: /.*\.exe/
-  draft: true
-  prerelease: false
-  on:
-    branch: master
-    appveyor_repo_tag: true
 cache:
   - node_modules
   - "%LOCALAPPDATA%\\Yarn"

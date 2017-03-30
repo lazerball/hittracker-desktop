@@ -19,6 +19,10 @@ addons:
       - libgnome-keyring-dev
       - xz-utils
 
+env:
+  global:
+    - secure: "UhyALjaKu795IhUd+sB3sTYEiXx4eYghyQeqB8MNfXXjKf0Ot1wo0/7PSeqryYYyxj2etqBndJG1jDaR4NSd3UaNb00ljJCkzOrI+4ipBwinmUhaOKHYiSNJKk2CUC0MRDe9Qhn2v8HR0vQAJAt7hXhpy+29ADuXOtmK4NZatRTMAdkb0djgRLaQ9Y3yH0oauWy7TI9vEocGWniyOOrgalEXkVvODxpc0kQR1JqTLCGfyzavAA2DtIoUpth6taFW3wPJ69oNSRdsijlRX+hRv7RCSPHzeBrD7mjhRnYHjzrff7m1tgEiWGxp8fuU4QuxBOYK/++U2YV5IqOcGS88riOqT0JL6neCMU0DqJwU8X5DUBvGV5pOfsmRgI85nk/cRaqJIoXQAjK2u1ewhUfsDYAgfB7dNJ111f04pBBmduanSYF7i91Tx9DI7f9b2H8iNwUGLdPhwefzQWdFHAC24QFEnG/0lqtXjcwEnYDRe+YBUyPtme3bpcGz2pe4+LsaP1b+Gg+ZJ0lPzj9++JAc1egsdQrHC4/xNwfkDHPgzJR+gtGI7f4JzM3jD4a+GXZ8yrw6n/JL5ZldYVGJPS4Phnvdcg9Ci/uejAmosVpDbDpL5CEJTFXBMpiqTSbffNy/ng6TrAjFh+r8tA93flpdtsya0KIggS76PbJIlnqnRpQ="
+
 before_install:
   - export NODE_PLATFORM=linux
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export NODE_PLATFORM=darwin; fi
@@ -36,19 +40,9 @@ script:
   #- yarn test
   #- yarn run e2e
 
-before_deploy:
-  - yarn make
-  - mv out/make/HitTracker-$NODE_PLATFORM-x64.zip out/make/HitTracker-$NODE_PLATFORM-x64-$TRAVIS_TAG.zip
+after_success:
+  - if [[ -v TRAVIS_TAG ]]; then yarn make && yarn publish; fi
 
-deploy:
-  provider: releases
-  api_key:
-    secure: D+awB144WTyUv9Qh8ecyLFowiymc5QQZN7z8/dTmILEx7IiNGztb2eZ8kO3U/JSnT3YlOeEgg4sWrua82mUzgTVrC94r73T0fzdNVgAIqzP5GgBDJLLIyMX3aVZ6FcDQK95mZy5UMS8xSdXuWse6PSuSfkO56OgVokHxeJFgIaeQdcwjgx4/zaJ+vUuu5SS56mdoxQY1vM96GPANQGNEjAvwXspal2mDr40C5vyz1iv348myQknzB6yQ5x7ZRnR7kN0EMt5EZG1k0wFxyxBjTadaBM4T11doSSJmIOqKdpoYudFodzf99ri4a9AqTRKK2A99nY+752zTiPULFCRt3L00jFkv+sOuSLz5b2htKWvDVZzRaGQ30a4gDK1L+iSlTKE8rA8D55sDQxam/j+MP3N+b2MRPcqGmG1uc0k2Z5NO9X+PEMvKy7CWt5qweZK4DpFTXHKYxdEt9PSPZ0IF1HF5+CBYtMRfOZrZaiqB6qZsNBdb3dSt9nSSe0wJ7yDdo78Vyz4TBKgnjwhQ7BKlsOrSnbtdXXFY1AUwm9kBVWvEqODNnkZZcAhBmGQpAJ9VzWjly+kvXt06WbGDTs3OnrcJRCn4WDemFKFcGHKRBe7gwN/5sRdWtB9/m7BoEXms6xL/5Iz/TLCa7F0u+vGeOh1troqIwnJkkYUPSTPytNE=
-  file: "out/make/*"
-  file_glob: true
-  skip_cleanup: true
-  on:
-    tags: true
 cache:
   yarn: true
   npm: true
