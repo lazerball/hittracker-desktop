@@ -34,8 +34,8 @@ test_script:
 
 
 deploy_script:
-  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" == "" forge make
-  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" == "" forge publish
+  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" == "" yarn forge-make
+  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" == "" yarn forge-publish
 
 cache:
   - node_modules

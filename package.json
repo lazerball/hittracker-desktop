@@ -20,11 +20,12 @@
     },
     "main": "src/index.ts",
     "scripts": {
-        "start": "electron-forge start",
+        "lint": "eslint src && tslint src",
         "bundle-third-party": "gulp bundle-third-party",
-        "package": "gulp bundle-third-party && electron-forge package",
-        "make": "gulp bundle-third-party && electron-forge make",
-        "lint": "eslint src && tslint src"
+        "start": "electron-forge start",
+        "forge-package": "gulp bundle-third-party && electron-forge package",
+        "forge-make": "gulp bundle-third-party && electron-forge make",
+        "forge-publish": "electron-forge publish"
     },
     "license": "AGPL-1.0",
     "config": {
