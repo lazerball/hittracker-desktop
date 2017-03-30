@@ -41,6 +41,7 @@ const forgeConfig = {
     make_targets: {
         win32: [
             'squirrel',
+            'zip',
         ],
         darwin: [
             'zip',
@@ -64,7 +65,7 @@ const forgeConfig = {
         },
     },
     electronWinstallerConfig: {
-        name: 'hittracker',
+        name: 'HitTracker',
     },
     github_repository: {
         owner: 'lazerball',
