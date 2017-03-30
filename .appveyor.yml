@@ -39,16 +39,16 @@ before_deploy:
   - appveyor PushArtifact HitTrackerSetup-win32-%PLATFORM%-%APPVEYOR_REPO_TAG_NAME%.exe
 
 deploy:
-    description: "Release $(APPVEYOR_REPO_TAG_NAME)"
-    provider: GitHub
-    auth_token:
-      secure: "N7AGr+WKRHnBh8dscxot6kPvACQt1AY5HIQ1UVqAaiV/dPlKPQiCLy8JNiW17KMx"
-    artifact: /.*\.exe/
-    draft: true
-    prerelease: false
-    on:
-        branch: master
-        appveyor_repo_tag: true
+  description: "Release $(APPVEYOR_REPO_TAG_NAME)"
+  provider: GitHub
+  auth_token:
+    secure: "N7AGr+WKRHnBh8dscxot6kPvACQt1AY5HIQ1UVqAaiV/dPlKPQiCLy8JNiW17KMx"
+  artifact: /.*\.exe/
+  draft: true
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true
 cache:
   - node_modules
   - "%LOCALAPPDATA%\\Yarn"
