@@ -4,7 +4,6 @@ import * as jetpack from 'fs-jetpack';
 import * as download from 'download';
 
 const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) => {
-    platform = 'win32';
     if (platform !== 'win32') {
         return;
     }
@@ -71,6 +70,9 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
 };
 
 const fetchDataClient = (unpackDir: string, platform: string, arch: string) => {
+    if (jetpack.exists(unpackDir)) {
+        return;
+    }
     const packageArch = arch === 'ia32' ? 'x32' : arch;
     const ext = platform === 'win32' ? 'zip' : 'tar.xz';
     const url = `https://github.com/lazerball/htdataredirector/releases/download/0.7.9/htdataclient-${platform}-${packageArch}-0.7.9.${ext}`;
@@ -82,6 +84,9 @@ const fetchDataClient = (unpackDir: string, platform: string, arch: string) => {
 };
 
 const fetchHitTracker = (unpackDir: string, platform: string) => {
+    if (jetpack.exists(unpackDir)) {
+        return;
+    }
     const url = `https://github.com/lazerball/HitTracker/releases/download/0.0.23/HitTracker-electron-${platform}-0.0.23.tar.bz2`;
     download(url, unpackDir, { extract: true}).then(() => {
         console.log('Successfully downloaded HitTracker');
@@ -91,7 +96,11 @@ const fetchHitTracker = (unpackDir: string, platform: string) => {
 };
 
 const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
-    const caddyOs = (platform === 'win32') ? 'windows' : platform;
+    if (jetpack.exists(unpackDir)) {
+        return;
+    }
+
+    const caddyOs = platform === 'win32' ? 'windows' : platform;
 
     const caddyArchMap = {
         ia32: '386',
@@ -115,9 +124,6 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
 
     const url = `https://caddyserver.com/download/build?os=${caddyOs}&arch=${caddyArch}&arm=${caddyArm}&features=${caddyFeatures}`;
 
-    if (jetpack.exists(unpackDir)) {
-        return true;
-    }
     download(url, unpackDir, { extract: true }).then(() => {
         ['init', 'CHANGES.txt', 'README.txt'].forEach((file) => {
             jetpack.remove(`${unpackDir}/${file}`);
@@ -126,7 +132,6 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
     }, (error: any) => {
         console.log(error);
     });
-    return true;
 };
 
 gulp.task('bundle-third-party', () => {
