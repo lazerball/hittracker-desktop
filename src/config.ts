@@ -1,10 +1,12 @@
 import { app as electronApp } from 'electron';
+import * as path from 'path';
 //import * as jetpack from 'fs-jetpack';
 //import * as _ from 'lodash';
 
 export const getConfig = (env: string, debug: boolean) => {
     const platform = process.platform;
-    const arch = process.arch === 'ia32' ? 'x32' : process.arch;
+    const arch = process.arch;
+    const simpleArch = arch === 'win32' ? 'win32' : 'unix';
     const userDataPath = electronApp.getPath('userData');
 
     const hostName = 'localhost';
@@ -12,43 +14,39 @@ export const getConfig = (env: string, debug: boolean) => {
 
     let packageDir = '';
     if (useBundledPackages) {
-        packageDir = './bundled';
+        packageDir = 'bundled';
     }
     const app = {
         debug: debug,
     };
 
-    const hitTrackerAppDir = `${packageDir}/HitTracker-${platform}`;
+    const hitTrackerAppDir = path.join(packageDir, `HitTracker-${platform}`);
     // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
     const php = {
         bin: 'php',
+        phpIni: path.join(hitTrackerAppDir, 'etc', 'php', 'php.ini'),
         env: {
-            PHPRC: `${hitTrackerAppDir}/etc/php/php.ini`,
-            PHP_INI_SCAN_DIR: `${hitTrackerAppDir}/etc/php/unix`,
+            PHPRC: path.join(hitTrackerAppDir, 'etc', 'php', 'php.ini'),
+            PHP_INI_SCAN_DIR: path.join(hitTrackerAppDir, 'etc', 'php', simpleArch),
         }
     };
     if (platform === 'win32') {
         php.bin = `${packageDir}/php-${platform}-${arch}/php.exe`;
-        php.env = {
-            PHPRC: `${hitTrackerAppDir}\etc\php\php.ini`,
-            PHP_INI_SCAN_DIR: `${hitTrackerAppDir}\etc\php\win32`,
-        };
-
     }
 
     const hitTracker = <any> {
-        bin: `${hitTrackerAppDir}/bin/console`,
+        bin: path.join(hitTrackerAppDir, 'bin', 'console'),
         appDir: hitTrackerAppDir,
-        webDir: `${hitTrackerAppDir}/web`,
-        uploadDir: `${userDataPath}/media`,
-        databasePath: `${userDataPath}/hittracker.db`,
+        webDir: path.join(hitTrackerAppDir, 'web'),
+        uploadDir: path.join(userDataPath, 'media'),
+        databasePath: path.join(userDataPath, 'hittracker.db'),
         rootUri: '/',
         port: 8088,
         url: '',
     };
 
     hitTracker.env = {
-        SYMFONY__VAR_DIR: `${userDataPath}/symfony`,
+        SYMFONY__VAR_DIR: path.join(userDataPath, 'symfony'),
         SYMFONY__UPLOAD_DIR:  hitTracker.uploadDir,
         SYMFONY__DATABASE_PATH: hitTracker.databasePath,
         SYMFONY__BUILD_TYPE: 'electron',
@@ -69,37 +67,37 @@ export const getConfig = (env: string, debug: boolean) => {
     const fastCgi = {
         bin: 'php-fpm',
         args: [
-            '-p', `${userDataPath}/php`,
-            '-y', `${hitTrackerAppDir}/etc/php-fpm/php-fpm-electron.conf`,
+            '-p', path.join(userDataPath, 'php'),
+            '-y', path.join(hitTrackerAppDir, 'etc' , 'php-fpm', 'php-fpm-electron.conf'),
         ],
         port: 8081,
         host: 'localhost',
         env: hitTracker.env,
     };
     if (platform === 'win32') {
-        fastCgi.bin = `${packageDir}/php-${platform}-${arch}/php-cgi.exe`;
+        fastCgi.bin = path.join(packageDir, `php-${platform}-${arch}`, 'php-cgi.exe');
         fastCgi.args = ['-b', `${fastCgi.host}:${fastCgi.port}`];
     }
-    fastCgi.args.push(...['-c', `${hitTrackerAppDir}/etc/php/php.ini`]);
+    fastCgi.args.push(...['-c', php.phpIni]);
 
     const caddy: any = {
-        bin: `${packageDir}/caddy-${platform}-${arch}/caddy`,
+        bin: path.join(packageDir, `caddy-${platform}-${arch}`, 'caddy'),
         args: [
-            '-conf', './config_files/Caddyfile',
+            '-conf', path.join('config_files', 'Caddyfile'),
         ],
         env: {
             SITE_ADDRESS: '127.0.0.1',
             SITE_HOSTNAME: hostName,
             SITE_PORT: hitTracker.port,
             SITE_ROOT: hitTracker.webDir,
-            SITE_MEDIA_ROOT: `${userDataPath}/media`,
+            SITE_MEDIA_ROOT: hitTracker.uploadDir,
             FASTCGI_SERVER: fastCgi.host,
             FASTCGI_PORT: fastCgi.port,
         }
     };
 
     const htDataClient: any = {
-        bin: `./bundled/htdataclient-${platform}-${arch}/htdataclient`,
+        bin: path.join(packageDir, `htdataclient-${platform}-${arch}`, 'htdataclient'),
         args: [
             // '/dev/ttyUSB0',
             '/dev/pts/4',

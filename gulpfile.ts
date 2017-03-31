@@ -11,13 +11,13 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
     const phpArch = arch === 'ia32' ? 'x86' : arch;
 
     const apcuUrl = `http://windows.php.net/downloads/pecl/releases/apcu/5.1.8/php_apcu-5.1.8-7.1-nts-vc14-${phpArch}.zip`;
-    const apcuDir = `./bundled/php-ext-apcu-${platform}-${arch}`;
+    const apcuDir = path.join('bundled', `php-ext-apcu-${platform}-${arch}`);
 
     jetpack.dir(apcuDir);
 
     download(apcuUrl, apcuDir, { extract: true }).then(() => {
-        jetpack.move(`${apcuDir}/php_apcu.dll`, `${unpackDir}/php_apcu.dll`);
-        jetpack.move(`${apcuDir}/LICENSE`, `${path.dirname(unpackDir)}/APCU_LICENSE`);
+        jetpack.move(path.join(apcuDir, 'php_apcu.dll'), path.join(unpackDir, 'php_apcu.dll'));
+        jetpack.move(path.join(apcuDir, 'LICENSE'), path.join(path.dirname(unpackDir), 'APCU_LICENSE'));
         jetpack.remove(apcuDir);
         console.log('Successfully downloaded apcU');
 
@@ -59,11 +59,11 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
         ];
 
         cleanExtList.forEach((file) => {
-            jetpack.remove(`${unpackDir}/ext/${file}`);
+            jetpack.remove(path.join(unpackDir, 'ext', file));
         });
 
         console.log('Successfully downloaded PHP');
-        fetchPhpExtensions(`${unpackDir}/ext`, platform, arch);
+        fetchPhpExtensions(path.join(unpackDir, 'ext'), platform, arch);
     }, (error: any) => {
         console.log(error);
     });
@@ -126,7 +126,7 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
 
     download(url, unpackDir, { extract: true }).then(() => {
         ['init', 'CHANGES.txt', 'README.txt'].forEach((file) => {
-            jetpack.remove(`${unpackDir}/${file}`);
+            jetpack.remove(path.join(unpackDir, file));
         });
         console.log('Sucessfully downloaded caddy');
     }, (error: any) => {
@@ -135,14 +135,14 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
 };
 
 gulp.task('bundle-third-party', () => {
-    const baseUnpackDir = './bundled';
+    const baseUnpackDir = 'bundled';
     const arch = process.arch;
     const platform = process.platform;
 
     return Promise.all([
-        fetchDataClient(`${baseUnpackDir}/htdataclient-${platform}-${arch}`, platform, arch),
-        fetchCaddy(`${baseUnpackDir}/caddy-${platform}-${arch}`, platform, arch),
-        fetchPhp(`${baseUnpackDir}/php-${platform}-${arch}`, platform, arch),
-        fetchHitTracker(`${baseUnpackDir}/HitTracker-${platform}`, platform),
+        fetchDataClient(path.join(baseUnpackDir, `htdataclient-${platform}-${arch}`), platform, arch),
+        fetchCaddy(path.join(baseUnpackDir, `caddy-${platform}-${arch}`), platform, arch),
+        fetchPhp(path.join(baseUnpackDir, `php-${platform}-${arch}`), platform, arch),
+        fetchHitTracker(path.join(baseUnpackDir, `HitTracker-${platform}`), platform),
     ]);
 });

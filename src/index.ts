@@ -3,6 +3,7 @@ import { getConfig } from './config';
 import * as xdgBaseDir from 'xdg-basedir';
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
+import * as path from 'path';
 import { spawn, spawnPromise } from 'spawn-rx';
 
 import devMenuTemplate from './menu/dev';
@@ -27,7 +28,7 @@ const debug = isDev;
 // https://github.com/electron/electron/issues/8124
 if (!(['win32', 'darwin'].includes(process.platform))) {
     app.setPath('appData', xdgBaseDir.data);
-    app.setPath('userData', `${xdgBaseDir.data}/${app.getName()}`);
+    app.setPath('userData', path.join(xdgBaseDir.data, app.getName()));
 }
 
 if (env !== 'production') {
@@ -35,7 +36,7 @@ if (env !== 'production') {
 }
 const config = getConfig(env, debug);
 
-log.transports.file.file = `${app.getPath('userData')}/log.txt`;
+log.transports.file.file = path.join(app.getPath('userData'), 'log.txt');
 
 if (isDev) {
     log.info('Running in development');
@@ -57,7 +58,7 @@ const firstRun = async () => {
 
     // make directories we need
     ['php', 'media', 'symfony/logs', 'symfony/cache'].forEach((dir) => {
-        jetpack.dir(`${userDataRoot}/${dir}`);
+        jetpack.dir(path.join(userDataRoot, dir));
     });
 
     const runHitTrackerCmd = async (subCommand: string, args?: any[]) => {

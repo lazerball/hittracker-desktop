@@ -1,7 +1,9 @@
 const jetpack = require('fs-jetpack');
+const path = require('path');
+
 // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#ignore
 //  given an absolute file path, returns true if the file is ignored, or false if the file is kept.
-const ignoreFilter = (path) => {
+const ignoreFilter = (file) => {
     const excludes = [
         '/node_modules/\\.bin($|/)',
         '/node_modules/electron($|/)',
@@ -11,7 +13,7 @@ const ignoreFilter = (path) => {
         '\\.o(bj)?$',
     ];
 
-    if (excludes.some(pattern => path.match(pattern))) {
+    if (excludes.some(pattern => file.match(pattern))) {
         return true;
     }
     const includes = [
@@ -22,14 +24,14 @@ const ignoreFilter = (path) => {
         '^/package.json$',
     ];
 
-    return !includes.some(pattern => path.match(pattern));
+    return !includes.some(pattern => file.match(pattern));
 };
 
 
 const afterExtract = (extractPath, electronVersion, platform, arch, done) => {
-    jetpack.copy('./config_files', `${extractPath}/config_files`);
+    jetpack.copy('config_files', path.join(extractPath, 'config_files'));
 
-    jetpack.copy('./bundled', `${extractPath}/bundled`, {
+    jetpack.copy('bundled', path.join(extractPath, 'bundled'), {
         matching: [`*-${platform}/**`, `*-${platform}-${arch}/**`],
     });
 
