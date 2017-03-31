@@ -29,9 +29,8 @@ const ignoreFilter = (path) => {
 const afterExtract = (extractPath, electronVersion, platform, arch, done) => {
     jetpack.copy('./config_files', `${extractPath}/config_files`);
 
-    const packageArch = arch === 'ia32' ? 'x32' : arch;
     jetpack.copy('./bundled', `${extractPath}/bundled`, {
-        matching: [`*-${platform}/**`, `*-${platform}-${packageArch}/**`],
+        matching: [`*-${platform}/**`, `*-${platform}-${arch}/**`],
     });
 
     done();
