@@ -25,7 +25,7 @@
         "start": "electron-forge start",
         "forge-package": "gulp bundle-third-party && electron-forge package",
         "forge-make": "gulp bundle-third-party && electron-forge make",
-        "forge-publish": "electron-forge publish"
+        "forge-publish": "gulp bundle-third-party && electron-forge publish"
     },
     "license": "AGPL-1.0",
     "config": {
