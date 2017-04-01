@@ -50,7 +50,6 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
             'php_pdo_mysql.dll',
             'php_pdo_oci.dll',
             'php_pdo_odbc.dll',
-            'php_pgsql.dll',
             'php_phpdbg_webhelper.dll',
             'php_snmp.dll',
             'php_soap.dll',
