@@ -6,7 +6,7 @@ import * as path from 'path';
 export const getConfig = (env: string, debug: boolean) => {
     const platform = process.platform;
     const arch = process.arch;
-    const simpleArch = arch === 'win32' ? 'win32' : 'unix';
+    const simplePlatform = platform === 'win32' ? 'win32' : 'unix';
     const userDataPath = electronApp.getPath('userData');
 
     const hostName = 'localhost';
@@ -27,7 +27,7 @@ export const getConfig = (env: string, debug: boolean) => {
         phpIni: path.join(hitTrackerAppDir, 'etc', 'php', 'php.ini'),
         env: {
             PHPRC: path.join(hitTrackerAppDir, 'etc', 'php', 'php.ini'),
-            PHP_INI_SCAN_DIR: path.join(hitTrackerAppDir, 'etc', 'php', simpleArch),
+            PHP_INI_SCAN_DIR: path.join(hitTrackerAppDir, 'etc', 'php', simplePlatform),
         }
     };
     if (platform === 'win32') {
