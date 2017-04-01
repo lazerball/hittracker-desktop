@@ -91,7 +91,7 @@ export const getConfig = (env: string, debug: boolean) => {
             SITE_PORT: hitTracker.port,
             SITE_ROOT: hitTracker.webDir,
             SITE_MEDIA_ROOT: hitTracker.uploadDir,
-            FASTCGI_SERVER: fastCgi.host,
+            FASTCGI_HOST: fastCgi.host,
             FASTCGI_PORT: fastCgi.port,
         }
     };
