@@ -53,7 +53,7 @@ export const getConfig = (env: string, debug: boolean) => {
         // @todo: generate on app install
         SYMFONY__SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
         SYMFONY_DEBUG: debug ? 'true' : 'false',
-        SYMFONY_ENV: env == 'production' ? 'prod' : 'dev',
+        SYMFONY_ENV: env,
     };
     hitTracker.env = Object.assign({}, hitTracker.env, php.env);
 
