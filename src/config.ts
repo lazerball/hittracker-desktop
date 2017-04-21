@@ -47,11 +47,11 @@ export const getConfig = (env: string, debug: boolean) => {
 
     hitTracker.env = {
         SYMFONY__VAR_DIR: path.join(userDataPath, 'symfony'),
-        SYMFONY__UPLOAD_DIR:  hitTracker.uploadDir,
-        SYMFONY__DATABASE_PATH: hitTracker.databasePath,
-        SYMFONY__BUILD_TYPE: 'electron',
+        HITTRACKER_UPLOAD_DIR:  hitTracker.uploadDir,
+        HITTRACKER_DATABASE_PATH: hitTracker.databasePath,
+        HITTRACKER_BUILD_TYPE: 'electron',
         // @todo: generate on app install
-        SYMFONY__SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
+        HITTRACKER_SESSION_SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
         SYMFONY_DEBUG: debug ? 'true' : 'false',
         SYMFONY_ENV: env,
     };
