@@ -107,21 +107,22 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
         arm: 'arm',
         arm64: 'arm64',
     };
-    const caddyArch = caddyArchMap[arch];
+    let caddyArch = caddyArchMap[arch];
     let caddyArm = '';
     if (caddyArch === 'arm') {
         process.config.variables.hasOwnProperty('arm_version');
         caddyArm = (process.config.variables as any).arm_version;
     }
+    caddyArch = `${caddyArch}${caddyArm}`;
     const caddyFeatures = [
-        'cors',
-        'expires',
-        'locale',
-        'realip',
-        'upload',
+        'http.cgi',
+        'http.cors',
+        'http.expires',
+        'http.realip',
+        'http.upload',
     ].join(',');
 
-    const url = `https://caddyserver.com/download/build?os=${caddyOs}&arch=${caddyArch}&arm=${caddyArm}&features=${caddyFeatures}`;
+    const url = `https://caddyserver.com/download/${caddyOs}/${caddyArch}?plugins=${caddyFeatures}`;
 
     download(url, unpackDir, { extract: true }).then(() => {
         ['init', 'CHANGES.txt', 'README.txt'].forEach((file) => {
