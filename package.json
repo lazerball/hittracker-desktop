@@ -69,9 +69,9 @@
         "gulp": "^3.9.1",
         "spectron": "^3.6.0",
         "tmp": "^0.0.31",
-        "ts-node": "^2.1.0",
-        "tslint": "^4.4.2",
-        "tslint-eslint-rules": "^3.4.0",
+        "ts-node": "^3.0",
+        "tslint": "^5.1.0",
+        "tslint-eslint-rules": "^4.0",
         "typescript": "^2.2.1"
     },
     "resolutions": {
