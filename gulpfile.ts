@@ -25,6 +25,35 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
         console.log(error);
     });
 
+    const astUrl = `http://windows.php.net/downloads/pecl/snaps/ast/20170126/php_ast-20170126-7.1-nts-vc14-${phpArch}.zip`;
+    const astDir = path.join('bundled', `php-ext-ast-${platform}-${arch}`);
+
+    jetpack.dir(astDir);
+
+    download(astUrl, astDir, { extract: true }).then(() => {
+        jetpack.move(path.join(astDir, 'php_ast.dll'), path.join(unpackDir, 'php_ast.dll'));
+        jetpack.move(path.join(astDir, 'LICENSE'), path.join(path.dirname(unpackDir), 'AST_LICENSE'));
+        jetpack.remove(astDir);
+        console.log('Successfully downloaded ast');
+
+    }, (error: any) => {
+        console.log(error);
+    });
+
+    const xdebugArch = arch === 'x64' ? '-x86_64' : '';
+    const xdebugUrl = `https://xdebug.org/files/php_xdebug-2.5.2-7.1-vc14-nts${xdebugArch}.dll`;
+    const xdebugDir = path.join('bundled', `php-ext-xebug-${platform}-${arch}`);
+
+    jetpack.dir(xdebugDir);
+
+    download(xdebugUrl, xdebugDir).then(() => {
+        jetpack.move(path.join(xdebugDir, 'php_xdebug.dll'), path.join(unpackDir, 'php_xdebug.dll'));
+        jetpack.remove(xdebugDir);
+        console.log('Successfully downloaded ast');
+    }, (error: any) => {
+        console.log(error);
+    });
+
 };
 
 const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
