@@ -47,7 +47,7 @@
         "fs-jetpack": "^0.11.0",
         "lodash": "^4.17.4",
         "printer": "^0.2.2",
-        "serialport": "^4.0.7",
+        "serialport": "^5.0.0-beta.3",
         "spawn-rx": "^2.0.10",
         "sqlite3": "^3.1.8",
         "tslib": "^1.6.0",
