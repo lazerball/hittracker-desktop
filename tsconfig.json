@@ -1,40 +1,31 @@
 {
   "compilerOptions": {
-    "removeComments": false,
-    "preserveConstEnums": true,
-    "declaration": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "noImplicitThis": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "noUnusedParameters": true,
-    "importHelpers": true,
-    "noEmitHelpers": true,
-    "experimentalDecorators": true,
+    "plugins": [
+      { "name": "tslint-language-service"}
+    ],
+    "target": "es2016",  // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'.
     "module": "commonjs",
-    "moduleResolution": "node",
+    "declaration": true,
+    "lib": ["es2016", "es2017.object"],
+    "outDir": "dist",
+    "removeComments": false,
+    "sourceMap": true,
+    "strict": true,
     "pretty": true,
-    "target": "es2016",
     "jsx": "react",
-    "typeRoots": [ "./types", "./@types/", "./node_modules/@types"],
     "baseUrl": ".",
     "paths": {
       "*": ["./types/*"]
-    }
-  },
-  "formatCodeOptions": {
-    "indentSize": 4,
-    "tabSize": 4
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
     "node_modules",
+    "dist",
     "out",
     "**/*.spec.ts"
   ]
