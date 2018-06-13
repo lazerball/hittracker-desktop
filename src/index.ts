@@ -36,6 +36,7 @@ if (env !== 'production') {
 }
 const config = getConfig(env, debug);
 
+log.transports.rendererConsole.format = '{h}:{i}:{s}:{ms} {text}';
 log.transports.file.file = path.join(app.getPath('userData'), 'log.txt');
 
 if (isDev) {
@@ -146,18 +147,14 @@ const createWindow = async () => {
         width: 900,
         height: 600,
         webPreferences: {
+            preload: path.join(__dirname, 'preload-launcher.js'),
             nodeIntegration: false, // needed?
             defaultEncoding: 'UTF-8',
+            experimentalFeatures: true,
         },
     });
 
     const processes = await startProcesses();
-
-    if (debug) {
-        //await installExtension('noaneddfkdjfnfdakjjmocngnfkfehhd');
-        // tslint:disable-next-line:no-var-requires
-        require('electron-debug')({enabled: debug, showDevTools: debug});
-    }
 
     mainWindow.loadURL(config.hitTracker.url);
 
