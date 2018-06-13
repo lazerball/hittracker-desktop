@@ -69,11 +69,19 @@
         "eslint-plugin-import": "^2.2.0",
         "eslint-plugin-jsx-a11y": "^6",
         "eslint-plugin-react": "^7.0.0",
+        "prettier": "^1.13.5",
         "spectron": "^3.6.0",
         "tmp": "^0.0.33",
         "ts-node": "^6.1.1",
         "tslint": "^5.1.0",
-        "tslint-eslint-rules": "^5.0",
+        "tslint-config-prettier": "^1.13.0",
+        "tslint-config-standard": "^7.0.0",
         "typescript": "^2.9"
+    },
+    "prettier": {
+        "semi": true,
+        "singleQuote": true,
+        "printWidth": 120,
+        "trailingComma": "es5"
     }
 }
