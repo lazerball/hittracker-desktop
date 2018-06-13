@@ -1,88 +1,88 @@
 {
-    "name": "hittracker-desktop",
-    "productName": "HitTracker",
-    "version": "0.0.12",
-    "description": "HitTracker desktop application",
-    "homepage": "https://www.lazerball.com",
-    "bugs": {
-        "url": "https://github.com/lazerball/hittracker-desktop/issues",
-        "email": "support@lazerball.com"
-    },
-    "keywords": [],
-    "author": {
-        "name": "Johnny Robeson",
-        "email": "jrobeson@lazerball.com",
-        "url": "https://www.lazerball.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/lazerball/hittracker-desktop.git"
-    },
-    "main": "src/index.ts",
-    "scripts": {
-        "lint": "eslint src && tslint --force src",
-        "bundle-third-party": "gulp bundle-third-party",
-        "start": "electron-forge start",
-        "forge-package": "gulp bundle-third-party && electron-forge package",
-        "forge-make": "gulp bundle-third-party && electron-forge make",
-        "forge-publish": "gulp bundle-third-party && electron-forge publish"
-    },
-    "license": "AGPL-1.0",
-    "config": {
-        "forge": "./forge.config.js"
-    },
-    "dependencies": {
-        "@types/electron-devtools-installer": "^2.0",
-        "@types/lodash": "^4.14",
-        "@types/node": "^10.0",
-        "devtron": "^1.4.0",
-        "electron-about-window": "^1.6.1",
-        "electron-compile": "^6.4.0",
-        "electron-debug": "^2.0",
-        "electron-devtools-installer": "^2.1.0",
-        "electron-is-dev": "^0.3.0",
-        "electron-log": "^2.1.0",
-        "electron-window-state": "^4.0.2",
-        "fs-jetpack": "^1.0.0",
-        "gulp": "^4",
-        "gulp-cli": "^2.0.1",
-        "lodash": "^4.17.4",
-        "printer": "^0.2.2",
-        "react": "^16.0",
-        "react-dom": "^16.0",
-        "react-hot-loader": "^4.0",
-        "serialport": "^6.2",
-        "spawn-rx": "^2.0.10",
-        "sqlite3": "^4.0",
-        "tslib": "^1.9.0",
-        "xdg-basedir": "^3.0.0"
-    },
-    "devDependencies": {
-        "@types/gulp": "^4.0.2",
-        "async": "^2.1.5",
-        "babel-plugin-transform-async-to-generator": "^6.22.0",
-        "babel-preset-env": "^1.1.8",
-        "babel-preset-react": "^6.23.0",
-        "download": "^7.0",
-        "electron-prebuilt-compile": "^2.0",
-        "eslint": "^4.0",
-        "eslint-plugin-import": "^2.2.0",
-        "eslint-plugin-jsx-a11y": "^6",
-        "eslint-plugin-react": "^7.0.0",
-        "prettier": "^1.13.5",
-        "spectron": "^3.6.0",
-        "tmp": "^0.0.33",
-        "ts-node": "^6.1.1",
-        "tslint": "^5.1.0",
-        "tslint-config-prettier": "^1.13.0",
-        "tslint-config-standard": "^7.0.0",
-        "tslint-language-service": "^0.9.9",
-        "typescript": "^2.9"
-    },
-    "prettier": {
-        "semi": true,
-        "singleQuote": true,
-        "printWidth": 120,
-        "trailingComma": "es5"
-    }
+  "name": "hittracker-desktop",
+  "productName": "HitTracker",
+  "version": "0.0.12",
+  "description": "HitTracker desktop application",
+  "homepage": "https://www.lazerball.com",
+  "bugs": {
+    "url": "https://github.com/lazerball/hittracker-desktop/issues",
+    "email": "support@lazerball.com"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Johnny Robeson",
+    "email": "jrobeson@lazerball.com",
+    "url": "https://www.lazerball.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazerball/hittracker-desktop.git"
+  },
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint src && tslint --force src",
+    "bundle-third-party": "gulp bundle-third-party",
+    "start": "electron-forge start",
+    "forge-package": "gulp bundle-third-party && electron-forge package",
+    "forge-make": "gulp bundle-third-party && electron-forge make",
+    "forge-publish": "gulp bundle-third-party && electron-forge publish"
+  },
+  "license": "AGPL-1.0",
+  "config": {
+    "forge": "./forge.config.js"
+  },
+  "dependencies": {
+    "@types/electron-devtools-installer": "^2.0",
+    "@types/lodash": "^4.14",
+    "@types/node": "^10.0",
+    "devtron": "^1.4.0",
+    "electron-about-window": "^1.6.1",
+    "electron-compile": "^6.4.0",
+    "electron-debug": "^2.0",
+    "electron-devtools-installer": "^2.1.0",
+    "electron-is-dev": "^0.3.0",
+    "electron-log": "^2.1.0",
+    "electron-window-state": "^4.0.2",
+    "fs-jetpack": "^1.0.0",
+    "gulp": "^4",
+    "gulp-cli": "^2.0.1",
+    "lodash": "^4.17.4",
+    "printer": "^0.2.2",
+    "react": "^16.0",
+    "react-dom": "^16.0",
+    "react-hot-loader": "^4.0",
+    "serialport": "^6.2",
+    "spawn-rx": "^2.0.10",
+    "sqlite3": "^4.0",
+    "tslib": "^1.9.0",
+    "xdg-basedir": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/gulp": "^4.0.2",
+    "async": "^2.1.5",
+    "babel-plugin-transform-async-to-generator": "^6.22.0",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-react": "^6.23.0",
+    "download": "^7.0",
+    "electron-prebuilt-compile": "^2.0",
+    "eslint": "^4.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^6",
+    "eslint-plugin-react": "^7.0.0",
+    "prettier": "^1.13.5",
+    "spectron": "^3.6.0",
+    "tmp": "^0.0.33",
+    "ts-node": "^6.1.1",
+    "tslint": "^5.1.0",
+    "tslint-config-prettier": "^1.13.0",
+    "tslint-config-standard": "^7.0.0",
+    "tslint-language-service": "^0.9.9",
+    "typescript": "^2.9"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 120,
+    "trailingComma": "es5"
+  }
 }
