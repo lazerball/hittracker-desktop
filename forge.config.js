@@ -52,6 +52,7 @@ const forgeConfig = {
         ],
     },
     electronPackagerConfig: {
+        packageManager: 'npm',
         asar: true,
         ignore: ignoreFilter,
         afterExtract: [

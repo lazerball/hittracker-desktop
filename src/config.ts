@@ -37,7 +37,7 @@ export const getConfig = (env: string, debug: boolean) => {
     const hitTracker = <any> {
         bin: path.join(hitTrackerAppDir, 'bin', 'console'),
         appDir: hitTrackerAppDir,
-        webDir: path.join(hitTrackerAppDir, 'web'),
+        webDir: path.join(hitTrackerAppDir, 'public'),
         uploadDir: path.join(userDataPath, 'media'),
         databasePath: path.join(userDataPath, 'hittracker.db'),
         rootUri: '/',
@@ -46,7 +46,7 @@ export const getConfig = (env: string, debug: boolean) => {
     };
 
     hitTracker.env = {
-        SYMFONY__VAR_DIR: path.join(userDataPath, 'symfony'),
+        HITTRACKER_VAR_DIR: path.join(userDataPath, 'symfony'),
         HITTRACKER_UPLOAD_DIR:  hitTracker.uploadDir,
         HITTRACKER_DATABASE_PATH: hitTracker.databasePath,
         HITTRACKER_BUILD_TYPE: 'electron',
@@ -68,7 +68,7 @@ export const getConfig = (env: string, debug: boolean) => {
         bin: 'php-fpm',
         args: [
             '-p', path.join(userDataPath, 'php'),
-            '-y', path.join(hitTrackerAppDir, 'etc' , 'php-fpm', 'php-fpm-electron.conf'),
+            '-y', path.join(hitTrackerAppDir, 'etc' , 'electron', 'php-fpm.conf'),
         ],
         port: 8081,
         host: 'localhost',

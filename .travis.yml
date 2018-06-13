@@ -28,23 +28,20 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export NODE_PLATFORM=darwin; fi
 
 install:
-  # manually install yarn until https://github.com/travis-ci/travis-ci/issues/7454 is fixed
-  - npm install -g yarn
   - npm install -g electron-forge
-  - yarn install
+  - npm install
 script:
-  - yarn --version
+  - npm --version
   - node --version
-  - yarn lint
+  - npm lint
   #- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; sleep 3; fi
-  #- yarn test
-  #- yarn run e2e
+  #- npm test
+  #- npm run e2e
 
 after_success:
   - if [ ${TRAVIS_TAG} ]; then yarn forge-publish; fi
 
 cache:
-  yarn: true
   npm: true
   directories:
     - node_modules
