@@ -41,21 +41,21 @@ export const getConfig = (env: string, debug: boolean) => {
     appDir: hitTrackerAppDir,
     webDir: path.join(hitTrackerAppDir, 'public'),
     uploadDir: path.join(userDataPath, 'media'),
-    databasePath: path.join(userDataPath, 'hittracker.db'),
+    databasePath: `sqlite://${path.join(userDataPath, 'hittracker.db')}`,
     rootUri: '/',
     port: 8088,
     url: '',
   };
 
   hitTracker.env = {
-    HITTRACKER_VAR_DIR: path.join(userDataPath, 'symfony'),
+    APP_VAR_DIR: path.join(userDataPath, 'symfony'),
     HITTRACKER_UPLOAD_DIR: hitTracker.uploadDir,
-    HITTRACKER_DATABASE_PATH: hitTracker.databasePath,
-    HITTRACKER_BUILD_TYPE: 'electron',
+    DATABASE_URL: hitTracker.databasePath,
+    APP_BUILD_TYPE: 'electron',
     // @todo: generate on app install
-    HITTRACKER_SESSION_SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
-    SYMFONY_DEBUG: debug ? 'true' : 'false',
-    SYMFONY_ENV: env,
+    APP_SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
+    APP_DEBUG: !!debug,
+    AP_ENV: env,
   };
   hitTracker.env = Object.assign({}, hitTracker.env, php.env);
 
