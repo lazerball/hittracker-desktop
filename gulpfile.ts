@@ -10,7 +10,7 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
     // @todo: don't use http url for getting php
     const phpArch = arch === 'ia32' ? 'x86' : arch;
 
-    const apcuUrl = `http://windows.php.net/downloads/pecl/releases/apcu/5.1.8/php_apcu-5.1.8-7.1-nts-vc14-${phpArch}.zip`;
+    const apcuUrl = `https://windows.php.net/downloads/pecl/releases/apcu/5.1.9/php_apcu-5.1.9-7.2-nts-vc15-${phpArch}.zip`;
     const apcuDir = path.join('bundled', `php-ext-apcu-${platform}-${arch}`);
 
     jetpack.dir(apcuDir);
@@ -25,7 +25,7 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
         console.log(error);
     });
 
-    const astUrl = `http://windows.php.net/downloads/pecl/snaps/ast/20170126/php_ast-20170126-7.1-nts-vc14-${phpArch}.zip`;
+    const astUrl = `https://windows.php.net/downloads/pecl/releases/ast/0.1.6/php_ast-0.1.6-7.2-nts-vc15-${phpArch}.zip`;
     const astDir = path.join('bundled', `php-ext-ast-${platform}-${arch}`);
 
     jetpack.dir(astDir);
@@ -41,7 +41,7 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
     });
 
     const xdebugArch = arch === 'x64' ? '-x86_64' : '';
-    const xdebugUrl = `https://xdebug.org/files/php_xdebug-2.5.2-7.1-vc14-nts${xdebugArch}.dll`;
+    const xdebugUrl = `https://xdebug.org/files/php_xdebug-2.6.0.1-vc15-nts${xdebugArch}.dll`;
     const xdebugDir = path.join('bundled', `php-ext-xebug-${platform}-${arch}`);
 
     jetpack.dir(xdebugDir);
@@ -60,9 +60,8 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
     if (platform !== 'win32') {
         return;
     }
-    // @todo: don't use http url for getting php
     const phpArch = arch === 'ia32' ? 'x86' : arch;
-    const url = `http://windows.php.net/downloads/releases/php-7.1.3-nts-Win32-VC14-${phpArch}.zip`;
+    const url = `https://windows.php.net/downloads/releases/php-7.2.6-nts-Win32-VC15-${phpArch}.zip`;
     download(url, unpackDir, { extract: true }).then(() => {
         const cleanExtList = [
             'php_com_dotnet.dll',
@@ -115,7 +114,9 @@ const fetchHitTracker = (unpackDir: string, platform: string) => {
     if (jetpack.exists(unpackDir)) {
         return;
     }
-    const url = `https://github.com/lazerball/HitTracker/releases/download/0.0.24/HitTracker-electron-${platform}-0.0.24.tar.bz2`;
+    const hitTrackerVersion = '0.2.4';
+    const file = `HitTracker-electron-${platform}-${hitTrackerVersion}.tar.bz2`;
+    const url = `https://github.com/lazerball/HitTracker/releases/download/${hitTrackerVersion}/${file}`;
     download(url, unpackDir, { extract: true}).then(() => {
         console.log('Successfully downloaded HitTracker');
     }, (error: any) => {
