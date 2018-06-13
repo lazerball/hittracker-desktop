@@ -22,16 +22,18 @@ export const getConfig = (env: string, debug: boolean) => {
 
     const hitTrackerAppDir = path.join(packageDir, `HitTracker-${platform}`);
     // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
+    const phpIni = path.join(hitTrackerAppDir, 'etc', 'electron', `php-${simplePlatform}-${env}.ini`);
     const php = {
         bin: 'php',
-        phpIni: path.join(hitTrackerAppDir, 'etc', 'php', 'php.ini'),
+        phpIni: phpIni ,
         env: {
-            PHPRC: path.join(hitTrackerAppDir, 'etc', 'php', 'php.ini'),
-            PHP_INI_SCAN_DIR: path.join(hitTrackerAppDir, 'etc', 'php', simplePlatform),
+            PHPRC: phpIni,
+            PHP_INI_SCAN_DIR: '',
+            PHP_OPCACHE_FILE_CACHE_DIR: path.join(userDataPath, 'symfony', 'opcache'),
         }
     };
     if (platform === 'win32') {
-        php.bin = `${packageDir}/php-${platform}-${arch}/php.exe`;
+        php.bin = path.join(packageDir, `php-${platform}-${arch}`, 'php.exe');
     }
 
     const hitTracker = <any> {
