@@ -1,7 +1,11 @@
+// tslint:disable: no-console
 import * as path from 'path';
+
 import * as gulp from 'gulp';
-import * as jetpack from 'fs-jetpack';
+
+// tslint:disable-next-line: no-implicit-dependencies
 import * as download from 'download';
+import * as jetpack from 'fs-jetpack';
 
 const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) => {
   if (platform !== 'win32') {
@@ -151,7 +155,7 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
     x64: 'amd64',
     arm: 'arm',
     arm64: 'arm64',
-  };
+  } as any;
   let caddyArch = caddyArchMap[arch];
   let caddyArm = '';
   if (caddyArch === 'arm') {
@@ -159,9 +163,20 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
     caddyArm = (process.config.variables as any).arm_version;
   }
   caddyArch = `${caddyArch}${caddyArm}`;
-  const caddyFeatures = ['http.cgi', 'http.cors', 'http.expires', 'http.realip', 'http.upload'].join(',');
 
-  const url = `https://caddyserver.com/download/${caddyOs}/${caddyArch}?plugins=${caddyFeatures}`;
+  const caddyFeatures = [
+    'http.cache',
+    'http.cgi',
+    'http.cors',
+    'http.expires',
+    'http.filter',
+    'http.forwardproxy',
+    'http.grpc',
+    'http.locale',
+    'http.realip',
+    'http.upload',
+  ].join(',');
+  const url = `https://caddyserver.com/download/${caddyOs}/${caddyArch}?plugins=${caddyFeatures}&license=personal&telemetry=off`;
 
   download(url, unpackDir, { extract: true }).then(
     () => {

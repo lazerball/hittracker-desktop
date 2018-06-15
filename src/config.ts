@@ -1,7 +1,5 @@
 import { app as electronApp } from 'electron';
 import * as path from 'path';
-//import * as jetpack from 'fs-jetpack';
-//import * as _ from 'lodash';
 
 export const getConfig = (env: string, debug: boolean) => {
   const platform = process.platform;
@@ -17,7 +15,7 @@ export const getConfig = (env: string, debug: boolean) => {
     packageDir = 'bundled';
   }
   const app = {
-    debug: debug,
+    debug,
   };
 
   const hitTrackerAppDir = path.join(packageDir, `HitTracker-${platform}`);
@@ -25,7 +23,7 @@ export const getConfig = (env: string, debug: boolean) => {
   const phpIni = path.join(hitTrackerAppDir, 'etc', 'electron', `php-${simplePlatform}-${env}.ini`);
   const php = {
     bin: 'php',
-    phpIni: phpIni,
+    phpIni,
     env: {
       PHPRC: phpIni,
       PHP_INI_SCAN_DIR: '',
@@ -36,7 +34,7 @@ export const getConfig = (env: string, debug: boolean) => {
     php.bin = path.join(packageDir, `php-${platform}-${arch}`, 'php.exe');
   }
 
-  const hitTracker = <any>{
+  const hitTracker = {
     bin: path.join(hitTrackerAppDir, 'bin', 'console'),
     appDir: hitTrackerAppDir,
     webDir: path.join(hitTrackerAppDir, 'public'),
@@ -45,7 +43,7 @@ export const getConfig = (env: string, debug: boolean) => {
     rootUri: '/',
     port: 8088,
     url: '',
-  };
+  } as any;
 
   hitTracker.env = {
     APP_VAR_DIR: path.join(userDataPath, 'symfony'),
@@ -55,16 +53,16 @@ export const getConfig = (env: string, debug: boolean) => {
     // @todo: generate on app install
     APP_SECRET: 'KtY0RcymRPHx5ocfeJEU4kC6lQ00ihpSCCmf66KS5ZmrD',
     APP_DEBUG: !!debug,
-    AP_ENV: env,
+    APP_ENV: env,
   };
-  hitTracker.env = Object.assign({}, hitTracker.env, php.env);
+  hitTracker.env = { ...hitTracker.env, ...php.env };
 
-  const htc = Object.assign({}, hitTracker);
-  htc.scheme = 'http';
-  if (htc.port !== 80 && htc.port !== 443) {
-    htc.port = `:${htc.port}`;
+  const scheme = 'http';
+  let port = '';
+  if (hitTracker.port !== 80 && hitTracker.port !== 443) {
+    port = `:${hitTracker.port}`;
   }
-  hitTracker.url = `${htc.scheme}://${hostName}${htc.port}${htc.rootUri}`;
+  hitTracker.url = `${scheme}://${hostName}${port}${hitTracker.rootUri}`;
 
   const fastCgi = {
     bin: 'php-fpm',

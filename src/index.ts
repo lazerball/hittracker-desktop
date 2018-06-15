@@ -1,11 +1,13 @@
 import { app, Menu, BrowserWindow } from 'electron';
-import { getConfig } from './config';
-import * as xdgBaseDir from 'xdg-basedir';
+
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
 import * as path from 'path';
+import * as xdgBaseDir from 'xdg-basedir';
+
 import { spawn, spawnPromise } from 'spawn-rx';
 
+import { getConfig } from './config';
 import devMenuTemplate from './menu/dev';
 import editMenuTemplate from './menu/edit';
 import fileMenuTemplate from './menu/file';
@@ -17,7 +19,7 @@ const isDev = /[\\/]electron/.test(process.execPath);
 const packageJson = require('../package.json');
 
 // We still want to show our app name even if running with prebuilt binary
-if (app.getName().toLowerCase() == 'electron') {
+if (app.getName().toLowerCase() === 'electron') {
   app.setName(packageJson.productName || packageJson.name);
 }
 
@@ -51,7 +53,7 @@ log.info(config);
 let mainWindow: Electron.BrowserWindow | null = null;
 
 const appendEnvVars = (envVars: any) => {
-  return Object.assign({}, envVars, process.env);
+    return { ...envVars, ...process.env };
 };
 
 const firstRun = async () => {
@@ -94,12 +96,12 @@ async function startProcesses() {
     log.error(msg);
   };
 
-  const phpFpm = await spawn(config.fastCgi.bin, config.fastCgi.args, {
+  const phpFpm = spawn(config.fastCgi.bin, config.fastCgi.args, {
     split: true,
     env: appendEnvVars(config.fastCgi.env),
   }).subscribe(processLogger, processErrorLogger);
 
-  const caddy = await spawn(config.caddy.bin, config.caddy.args, {
+  const caddy = spawn(config.caddy.bin, config.caddy.args, {
     env: appendEnvVars(config.caddy.env),
   }).subscribe(processLogger, processErrorLogger);
 
@@ -165,11 +167,11 @@ const createWindow = async () => {
 
 app.on('ready', createWindow);
 
-app.on('activate', () => {
+app.on('activate', async () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow();
+    await createWindow();
   }
 });
 app.on('window-all-closed', () => {
