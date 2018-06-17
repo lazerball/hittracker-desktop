@@ -1,4 +1,4 @@
-import { app, Menu, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
