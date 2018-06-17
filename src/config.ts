@@ -1,6 +1,9 @@
 import { app as electronApp } from 'electron';
 import * as path from 'path';
 
+const executableName = (name: string) => {
+  return process.platform === 'win32' ? `${name}.exe` : name;
+};
 export const getConfig = (env: string, debug: boolean) => {
   const platform = process.platform;
   const arch = process.arch;
@@ -22,7 +25,7 @@ export const getConfig = (env: string, debug: boolean) => {
   // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
   const phpIni = path.join(hitTrackerAppDir, 'etc', 'electron', `php-${simplePlatform}-${env}.ini`);
   const php = {
-    bin: 'php',
+    bin: executableName('php'),
     phpIni,
     env: {
       PHPRC: phpIni,
@@ -31,7 +34,7 @@ export const getConfig = (env: string, debug: boolean) => {
     },
   };
   if (platform === 'win32') {
-    php.bin = path.join(packageDir, `php-${platform}-${arch}`, 'php.exe');
+    php.bin = path.join(packageDir, `php-${platform}-${arch}`, php.bin);
   }
 
   const hitTracker = {
