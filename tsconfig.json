@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "plugins": [{ "name": "tslint-language-service" }],
+    "moduleResolution": "node",
     "target": "es2016", // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'.
     "module": "commonjs",
     "declaration": true,
