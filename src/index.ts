@@ -10,8 +10,7 @@ import devMenuTemplate from './menu/dev';
 import editMenuTemplate from './menu/edit';
 import fileMenuTemplate from './menu/file';
 import helpMenuTemplate from './menu/help';
-
-const isDev = /[\\/]electron/.test(process.execPath);
+import * as utils from './utils';
 
 // tslint:disable-next-line:no-var-requires
 const packageJson = require('../package.json');
@@ -21,8 +20,8 @@ if (app.getName().toLowerCase() === 'electron') {
   app.setName(packageJson.productName || packageJson.name);
 }
 
-const env: string = isDev ? 'development' : 'production';
-const debug = isDev;
+const env: string = utils.isDev() ? 'development' : 'production';
+const debug = utils.isDev();
 
 // needed until electron stops storing non-config files in `$XDG_CONFIG_HOME`
 // https://github.com/electron/electron/issues/8124
@@ -39,7 +38,7 @@ const config = getConfig(env, debug);
 log.transports.rendererConsole.format = '{h}:{i}:{s}:{ms} {text}';
 log.transports.file.file = path.join(app.getPath('userData'), 'log.txt');
 
-if (isDev) {
+if (utils.isDev()) {
   log.info('Running in development');
 } else {
   log.info('Running in production');
