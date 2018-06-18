@@ -10,6 +10,8 @@
     "removeComments": false,
     "sourceMap": true,
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "pretty": true,
     "jsx": "react",
     "baseUrl": ".",
