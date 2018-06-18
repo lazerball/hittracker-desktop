@@ -18,8 +18,24 @@ export const getConfig = (env: string, debug: boolean) => {
     packageDir = 'bundled';
   }
   const app = {
+    userDataPath,
     debug,
   };
+
+  const postgreSqlDir = path.join(electronApp.getAppPath(), 'bundled', `postgresql-${platform}-${arch}`, 'pgsql');
+
+  const postgreSql = {
+    binDir: path.join(postgreSqlDir, 'bin'),
+    dataDir:  path.join(userDataPath, 'postgres'),
+    configDir: path.join(electronApp.getAppPath(), 'config_files', 'postgres'),
+    user: 'postgres',
+    port: 54320,
+  } as any;
+
+  postgreSql.bin = path.join(postgreSql.binDir, executableName('postgres'));
+  postgreSql.args = ['-D', postgreSql.configDir, '-c', `data_directory=${postgreSql.dataDir}`, '-p', postgreSql.port, '-h', hostName];
+  postgreSql.initDbBin = path.join(postgreSql.binDir, executableName('initdb'));
+  postgreSql.initDbArgs = ['-D', postgreSql.dataDir, '-E', 'utf8', '-U', 'postgres', '--locale', electronApp.getLocale()];
 
   const hitTrackerAppDir = path.join(packageDir, `HitTracker-${platform}`);
   // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
@@ -42,7 +58,7 @@ export const getConfig = (env: string, debug: boolean) => {
     appDir: hitTrackerAppDir,
     webDir: path.join(hitTrackerAppDir, 'public'),
     uploadDir: path.join(userDataPath, 'media'),
-    databasePath: `sqlite://${path.join(userDataPath, 'hittracker.db')}`,
+    databasePath: `pgsql://${postgreSql.user}@localhost:${postgreSql.port}/hittracker`,
     rootUri: '/',
     port: 8088,
     url: '',
@@ -108,5 +124,5 @@ export const getConfig = (env: string, debug: boolean) => {
     htDataClient.args.push(...['-l', 'debug']);
   }
 
-  return { app, caddy, fastCgi, hitTracker, htDataClient, php };
+  return { app, caddy, fastCgi, hitTracker, htDataClient, php, postgreSql };
 };

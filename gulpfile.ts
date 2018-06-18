@@ -191,13 +191,47 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
   );
 };
 
+const fetchPostgreSql = (unpackDir: string, platform: string, arch: string) => {
+  if (jetpack.exists(unpackDir)) {
+    return;
+  }
+
+  const version = '10.4';
+  const subVersion = '1';
+  const packageArch = arch === 'x64' && platform !== 'darwin' ? `-${arch}` : '';
+
+  const osMap = {
+    darwin: 'osx',
+    linux: 'linux',
+    win32: 'windows',
+  } as any;
+  const packageOs = osMap[platform];
+  const extension = platform === 'linux' ? 'tar.gz' : 'zip';
+
+    const url = `https://get.enterprisedb.com/postgresql/postgresql-${version}-${subVersion}-${packageOs}${packageArch}-binaries.${extension}?ls=Crossover&type=Crossover`;
+
+  const filesToRemove = ['doc', 'includes', 'pgAdmin 4', 'pgAdmin 4.app', path.join('share', 'man'), 'stackbuilder', 'symbols', 'StackBuilder'];
+  download(url, unpackDir, { extract: true }).then(
+    () => {
+      filesToRemove.forEach(file => {
+        jetpack.remove(path.join(unpackDir, 'pgsql', file));
+      });
+      console.log(`Sucessfully downloaded PostgreSQL ${version}`);
+    },
+    (error: any) => {
+      console.log(error);
+    }
+  );
+};
+
 gulp.task('bundle-third-party', () => {
   const baseUnpackDir = 'bundled';
   const arch = process.arch;
   const platform = process.platform;
 
   return Promise.all([
-    fetchDataClient(path.join(baseUnpackDir, `htdataclient-${platform}-${arch}`), platform, arch),
+    //fetchDataClient(path.join(baseUnpackDir, `htdataclient-${platform}-${arch}`), platform, arch),
+    fetchPostgreSql(path.join(baseUnpackDir, `postgresql-${platform}-${arch}`), platform, arch),
     fetchCaddy(path.join(baseUnpackDir, `caddy-${platform}-${arch}`), platform, arch),
     fetchPhp(path.join(baseUnpackDir, `php-${platform}-${arch}`), platform, arch),
     fetchHitTracker(path.join(baseUnpackDir, `HitTracker-${platform}`), platform),

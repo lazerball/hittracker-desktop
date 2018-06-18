@@ -1,13 +1,11 @@
 import { app, BrowserWindow, Menu } from 'electron';
 
 import * as log from 'electron-log';
-import * as jetpack from 'fs-jetpack';
 import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
 
-import { spawn, spawnPromise } from 'spawn-rx';
-
 import { getConfig } from './config';
+import { firstRun, initDatabase, startDatabase, startWebApp } from './external-commands';
 import devMenuTemplate from './menu/dev';
 import editMenuTemplate from './menu/edit';
 import fileMenuTemplate from './menu/file';
@@ -52,66 +50,7 @@ log.info(config);
 
 let mainWindow: Electron.BrowserWindow | null = null;
 
-const appendEnvVars = (envVars: any) => {
-    return { ...envVars, ...process.env };
-};
 
-const firstRun = async () => {
-  const userDataRoot = app.getPath('userData');
-
-  // make directories we need
-  ['php', 'media', 'symfony/logs', 'symfony/cache'].forEach(dir => {
-    jetpack.dir(path.join(userDataRoot, dir));
-  });
-
-  const runHitTrackerCmd = async (subCommand: string, args?: any[]) => {
-    const commandArgs = [config.hitTracker.bin, subCommand, '--no-interaction'];
-    if (args) {
-      commandArgs.push(...args);
-    }
-
-    const envVars = appendEnvVars(config.hitTracker.env);
-    await spawnPromise(config.php.bin, commandArgs, { env: envVars }).then(
-      x => log.info(x), // needs to be log.debug
-      e => {
-        log.error(`ERROR: ${e}`);
-      }
-    );
-  };
-
-  await runHitTrackerCmd('cache:clear');
-  // --if-not-exists is broken on sqlite (https://github.com/doctrine/dbal/pull/2402)
-  if (!jetpack.exists(config.hitTracker.databasePath)) {
-    await runHitTrackerCmd('doctrine:database:create');
-  }
-  await runHitTrackerCmd('doctrine:migrations:migrate');
-};
-
-async function startProcesses() {
-  const processLogger = (msg: any) => {
-    log.debug(msg);
-  };
-
-  const processErrorLogger = (msg: any) => {
-    log.error(msg);
-  };
-
-  const phpFpm = spawn(config.fastCgi.bin, config.fastCgi.args, {
-    split: true,
-    env: appendEnvVars(config.fastCgi.env),
-  }).subscribe(processLogger, processErrorLogger);
-
-  const caddy = spawn(config.caddy.bin, config.caddy.args, {
-    env: appendEnvVars(config.caddy.env),
-  }).subscribe(processLogger, processErrorLogger);
-
-  const htDataClient = spawn(config.htDataClient.bin, config.htDataClient.args).subscribe(
-    processLogger,
-    processErrorLogger
-  );
-
-  return [caddy, htDataClient, phpFpm];
-}
 
 const setApplicationMenu = () => {
   const menus = [fileMenuTemplate, editMenuTemplate];
@@ -139,7 +78,11 @@ if (shouldQuit) {
 const createWindow = async () => {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
-  await firstRun();
+
+  await initDatabase(config);
+  const dbProcess = startDatabase(config);
+  await firstRun(config);
+
 
   setApplicationMenu();
   mainWindow = new BrowserWindow({
@@ -153,7 +96,9 @@ const createWindow = async () => {
     },
   });
 
-  const processes = await startProcesses();
+  const processes = await startWebApp(config);
+
+  processes.push(dbProcess);
 
   mainWindow.loadURL(config.hitTracker.url);
 
