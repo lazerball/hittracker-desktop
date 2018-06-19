@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu } from 'electron';
 
+import * as contextMenu from 'electron-context-menu';
 import * as log from 'electron-log';
 import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
@@ -50,6 +51,7 @@ log.info(config);
 let mainWindow: Electron.BrowserWindow | null = null;
 
 
+contextMenu();
 
 const setApplicationMenu = () => {
   const menus = [fileMenuTemplate, editMenuTemplate];
