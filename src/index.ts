@@ -87,7 +87,7 @@ const createWindow = async () => {
     width: 900,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload-launcher.js'),
+      // preload: path.join(__dirname, 'preload-launcher.js'),
       nodeIntegration: false, // needed?
       defaultEncoding: 'UTF-8',
       experimentalFeatures: true,
