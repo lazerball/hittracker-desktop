@@ -54,7 +54,6 @@
     "react-hot-loader": "^4.3.3",
     "serialport": "^6.2",
     "spawn-rx": "^2.0.10",
-    "sqlite3": "^4.0",
     "tslib": "^1.9.3",
     "xdg-basedir": "^3.0.0"
   },
