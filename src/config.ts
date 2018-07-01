@@ -1,6 +1,13 @@
 import { app as electronApp } from 'electron';
 import * as path from 'path';
 
+export interface IBaseConfigOptions {
+  bin: string;
+  port?: number;
+  args?: Array<string|number>;
+  env?: any;
+  [propName: string]: any;
+}
 const executableName = (name: string) => {
   return process.platform === 'win32' ? `${name}.exe` : name;
 };
@@ -24,13 +31,14 @@ export const getConfig = (env: string, debug: boolean) => {
 
   const postgreSqlDir = path.join(electronApp.getAppPath(), 'bundled', `postgresql-${platform}-${arch}`, 'pgsql');
 
-  const postgreSql = {
+  const postgreSql: IBaseConfigOptions = {
+    bin: '',
     binDir: path.join(postgreSqlDir, 'bin'),
     dataDir:  path.join(userDataPath, 'postgres'),
     configDir: path.join(electronApp.getAppPath(), 'config_files', 'postgres'),
     user: 'postgres',
     port: 54320,
-  } as any;
+  };
 
   postgreSql.bin = path.join(postgreSql.binDir, executableName('postgres'));
   postgreSql.args = ['-D', postgreSql.configDir, '-c', `data_directory=${postgreSql.dataDir}`, '-p', postgreSql.port, '-h', hostName];
@@ -40,7 +48,7 @@ export const getConfig = (env: string, debug: boolean) => {
   const hitTrackerAppDir = path.join(packageDir, `HitTracker-${platform}`);
   // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
   const phpIni = path.join(hitTrackerAppDir, 'etc', 'electron', `php-${simplePlatform}-${env}.ini`);
-  const php = {
+  const php: IBaseConfigOptions = {
     bin: executableName('php'),
     phpIni,
     env: {
@@ -53,7 +61,7 @@ export const getConfig = (env: string, debug: boolean) => {
     php.bin = path.join(packageDir, `php-${platform}-${arch}`, php.bin);
   }
 
-  const hitTracker = {
+  const hitTracker: IBaseConfigOptions = {
     bin: path.join(hitTrackerAppDir, 'bin', 'console'),
     appDir: hitTrackerAppDir,
     webDir: path.join(hitTrackerAppDir, 'public'),
@@ -62,7 +70,7 @@ export const getConfig = (env: string, debug: boolean) => {
     rootUri: '/',
     port: 8088,
     url: '',
-  } as any;
+  };
 
   hitTracker.env = {
     APP_VAR_DIR: path.join(userDataPath, 'symfony'),
@@ -96,7 +104,7 @@ export const getConfig = (env: string, debug: boolean) => {
   }
   fastCgi.args.push(...['-c', php.phpIni]);
 
-  const caddy: any = {
+  const caddy: IBaseConfigOptions = {
     bin: path.join(packageDir, `caddy-${platform}-${arch}`, 'caddy'),
     args: ['-conf', path.join('config_files', 'Caddyfile')],
     env: {
