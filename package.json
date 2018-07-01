@@ -32,6 +32,7 @@
     "forge": "./forge.config.js"
   },
   "dependencies": {
+    "@lazerball/hittracker-device-mediator": "^1.1.1",
     "@types/electron-devtools-installer": "^2.0",
     "@types/lodash": "^4.14.110",
     "@types/node": "^10.3.6",
