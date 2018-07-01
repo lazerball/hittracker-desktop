@@ -7,10 +7,8 @@ import * as xdgBaseDir from 'xdg-basedir';
 
 import { getConfig } from './config';
 import { firstRun, initDatabase, startDatabase, startWebApp } from './external-commands';
-import devMenuTemplate from './menu/dev';
-import editMenuTemplate from './menu/edit';
-import fileMenuTemplate from './menu/file';
-import helpMenuTemplate from './menu/help';
+
+import * as menus from './menu';
 import * as utils from './utils';
 
 // tslint:disable-next-line:no-var-requires
@@ -54,12 +52,12 @@ let mainWindow: Electron.BrowserWindow | null = null;
 contextMenu();
 
 const setApplicationMenu = () => {
-  const menus = [fileMenuTemplate, editMenuTemplate];
+  const menuTemplates = [menus.file, menus.edit];
   if (env !== 'production') {
-    menus.push(devMenuTemplate);
+    menuTemplates.push(menus.development);
   }
-  menus.push(helpMenuTemplate);
-  Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
+  menuTemplates.push(menus.help);
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplates));
 };
 
 const shouldQuit = app.makeSingleInstance(() => {
