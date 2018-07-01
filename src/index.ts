@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
 
 import { getConfig } from './config';
-import { firstRun, initDatabase, startDatabase, startWebApp } from './external-commands';
+import { firstRun, initDatabase, startDatabase, startDeviceMediator, startWebApp } from './external-commands';
 
 import * as menus from './menu';
 import * as utils from './utils';
@@ -82,7 +82,6 @@ const createWindow = async () => {
   const dbProcess = startDatabase(config);
   await firstRun(config);
 
-
   setApplicationMenu();
   mainWindow = new BrowserWindow({
     width: 900,
@@ -97,13 +96,15 @@ const createWindow = async () => {
 
   const processes = await startWebApp(config);
 
+  const hitTrackerDeviceMediator = startDeviceMediator(config);
   processes.push(dbProcess);
+  processes.push(hitTrackerDeviceMediator);
 
   mainWindow.loadURL(config.hitTracker.url);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
-    processes.forEach(process => {
+    processes.forEach((process: Subscription) => {
       process.unsubscribe();
     });
   });

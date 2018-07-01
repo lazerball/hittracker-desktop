@@ -118,19 +118,16 @@ export const getConfig = (env: string, debug: boolean) => {
     },
   };
 
-  const htDataClient: any = {
-    bin: path.join(packageDir, `htdataclient-${platform}-${arch}`, 'htdataclient'),
-    args: [
-      // '/dev/ttyUSB0',
-      '/dev/pts/4',
-      `${hitTracker.url}/games/hit`,
-      '-c',
-      '1',
-    ],
+  const hitTrackerDeviceMediator: IBaseConfigOptions = {
+    bin: require.resolve('@lazerball/hittracker-device-mediator'),
+    port: 30010,
+    hciDevice: 0,
   };
+
+  hitTrackerDeviceMediator.args = ['--hit-url', `http://localhost:${hitTracker.port}`, '--port', hitTrackerDeviceMediator.port, '--hci-device', hitTrackerDeviceMediator.hciDevice];
   if (debug) {
-    htDataClient.args.push(...['-l', 'debug']);
+    hitTrackerDeviceMediator.args.push(...['-v']);
   }
 
-  return { app, caddy, fastCgi, hitTracker, htDataClient, php, postgreSql };
+  return { app, caddy, fastCgi, hitTracker, hitTrackerDeviceMediator, php, postgreSql };
 };

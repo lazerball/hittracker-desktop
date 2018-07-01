@@ -73,10 +73,14 @@ export const startWebApp = async (config: any) => {
     env: appendEnvVars(config.caddy.env),
   }).subscribe(processLogger, processErrorLogger);
 
-  /*const htDataClient = spawn(config.htDataClient.bin, config.htDataClient.args).subscribe(
-    processLogger,
-    processErrorLogger
-  );*/
-
   return [caddy, phpFpm];
+};
+
+export const startDeviceMediator = (config: any) => {
+  const hitTrackerDeviceMediator = spawn(config.hitTrackerDeviceMediator.bin, config.hitTrackerDeviceMediator.args, {
+    split: true,
+    env: appendEnvVars({ELECTRON_VERSION: process.versions.electron}),
+  }).subscribe(log.debug, log.error);
+
+  return hitTrackerDeviceMediator;
 };
