@@ -18,18 +18,14 @@ export const getConfig = (env: string, debug: boolean) => {
   const userDataPath = electronApp.getPath('userData');
 
   const hostName = 'localhost';
-  const useBundledPackages = true;
 
-  let packageDir = '';
-  if (useBundledPackages) {
-    packageDir = 'bundled';
-  }
+  const bundledPackageDir = 'bundled';
   const app = {
     userDataPath,
     debug,
   };
 
-  const postgreSqlDir = path.join(electronApp.getAppPath(), 'bundled', `postgresql-${platform}-${arch}`, 'pgsql');
+  const postgreSqlDir = path.join(bundledPackageDir, `postgresql-${platform}-${arch}`, 'pgsql');
 
   const postgreSql: IBaseConfigOptions = {
     bin: '',
@@ -45,7 +41,7 @@ export const getConfig = (env: string, debug: boolean) => {
   postgreSql.initDbBin = path.join(postgreSql.binDir, executableName('initdb'));
   postgreSql.initDbArgs = ['-D', postgreSql.dataDir, '-E', 'utf8', '-U', 'postgres', '--locale', electronApp.getLocale()];
 
-  const hitTrackerAppDir = path.join(packageDir, `HitTracker-${platform}`);
+  const hitTrackerAppDir = path.join(bundledPackageDir, `HitTracker-${platform}`);
   // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
   const phpIni = path.join(hitTrackerAppDir, 'etc', 'electron', `php-${simplePlatform}-${env}.ini`);
   const php: IBaseConfigOptions = {
@@ -58,7 +54,7 @@ export const getConfig = (env: string, debug: boolean) => {
     },
   };
   if (platform === 'win32') {
-    php.bin = path.join(packageDir, `php-${platform}-${arch}`, php.bin);
+    php.bin = path.join(bundledPackageDir, `php-${platform}-${arch}`, php.bin);
   }
 
   const hitTracker: IBaseConfigOptions = {
@@ -99,13 +95,13 @@ export const getConfig = (env: string, debug: boolean) => {
     env: hitTracker.env,
   };
   if (platform === 'win32') {
-    fastCgi.bin = path.join(packageDir, `php-${platform}-${arch}`, 'php-cgi.exe');
+    fastCgi.bin = path.join(bundledPackageDir, `php-${platform}-${arch}`, 'php-cgi.exe');
     fastCgi.args = ['-b', `${fastCgi.host}:${fastCgi.port}`];
   }
   fastCgi.args.push(...['-c', php.phpIni]);
 
   const caddy: IBaseConfigOptions = {
-    bin: path.join(packageDir, `caddy-${platform}-${arch}`, 'caddy'),
+    bin: path.join(bundledPackageDir, `caddy-${platform}-${arch}`, 'caddy'),
     args: ['-conf', path.join('config_files', 'Caddyfile')],
     env: {
       SITE_ADDRESS: '127.0.0.1',
