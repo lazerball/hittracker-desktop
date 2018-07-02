@@ -16,11 +16,11 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "*": ["./types/*"]
+      "*": ["./types/*","node_modules/electron-prebuilt-compile/node_modules/electron/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*", "*.js", "*.ts"],
+  "include": ["src/**/*", "*.js", "*.ts", "node_modules/electron-prebuilt-compile/node_modules/electron"],
   "exclude": ["node_modules", "dist", "out", "**/*.spec.ts"]
 }
