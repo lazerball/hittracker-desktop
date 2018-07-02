@@ -12,8 +12,10 @@ node_js:
 addons:
   apt:
     packages:
+      - build-essential
       - icnsutils
       - graphicsmagick
+      - libudev-dev
       # for node-printer
       - libcups2-dev
       - libgnome-keyring-dev
