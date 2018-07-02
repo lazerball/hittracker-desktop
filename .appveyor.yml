@@ -32,7 +32,7 @@ install:
 test_script:
   - node --version
   - npm --version
-  - npm lint
+  - npm run lint
 
 
 deploy_script:
