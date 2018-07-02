@@ -45,7 +45,7 @@ const forgeConfig = {
   },
   electronPackagerConfig: {
     packageManager: 'npm',
-    asar: true,
+    asar: false,
     ignore: ignoreFilter,
     afterExtract: [afterExtract],
     appCopyright: 'LazerBall',
