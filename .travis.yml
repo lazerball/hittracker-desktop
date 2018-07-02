@@ -7,7 +7,7 @@ os:
 
 language: node_js
 node_js:
-  - 7.7.4
+  - 8.9.3
 
 addons:
   apt:
