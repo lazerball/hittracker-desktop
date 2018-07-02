@@ -20,7 +20,7 @@
   },
   "main": "src/index.ts",
   "scripts": {
-    "lint": "tslint --force src",
+    "lint": "tslint --project .",
     "bundle-third-party": "gulp bundle-third-party",
     "start": "electron-forge start",
     "forge-package": "gulp bundle-third-party && electron-forge package",
