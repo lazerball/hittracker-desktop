@@ -109,23 +109,6 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
   );
 };
 
-const fetchDataClient = (unpackDir: string, platform: string, arch: string) => {
-  if (jetpack.exists(unpackDir)) {
-    return;
-  }
-  const packageArch = arch === 'ia32' ? 'x32' : arch;
-  const ext = platform === 'win32' ? 'zip' : 'tar.xz';
-  const url = `https://github.com/lazerball/htdataredirector/releases/download/0.7.9/htdataclient-${platform}-${packageArch}-0.7.9.${ext}`;
-  download(url, unpackDir, { extract: true, strip: 1 }).then(
-    () => {
-      console.log('Successfully downloaded htDataClient');
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
-};
-
 const fetchHitTracker = (unpackDir: string, platform: string) => {
   if (jetpack.exists(unpackDir)) {
     return;
@@ -230,7 +213,6 @@ gulp.task('bundle-third-party', () => {
   const platform = process.platform;
 
   return Promise.all([
-    //fetchDataClient(path.join(baseUnpackDir, `htdataclient-${platform}-${arch}`), platform, arch),
     fetchPostgreSql(path.join(baseUnpackDir, `postgresql-${platform}-${arch}`), platform, arch),
     fetchCaddy(path.join(baseUnpackDir, `caddy-${platform}-${arch}`), platform, arch),
     fetchPhp(path.join(baseUnpackDir, `php-${platform}-${arch}`), platform, arch),
