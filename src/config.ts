@@ -1,5 +1,6 @@
 import { app as electronApp } from 'electron';
 import * as path from 'path';
+import * as utils from './utils';
 
 export interface IBaseConfigOptions {
   bin: string;
@@ -19,7 +20,8 @@ export const getConfig = (env: string, debug: boolean) => {
 
   const hostName = 'localhost';
 
-  const bundledPackageDir = 'bundled';
+  const bundledPackageDir = path.join(utils.getAppRootDir(), 'bundled');
+  const configFilesDir = path.join(utils.getAppRootDir(), 'config_files');
   const app = {
     userDataPath,
     debug,
@@ -31,7 +33,7 @@ export const getConfig = (env: string, debug: boolean) => {
     bin: '',
     binDir: path.join(postgreSqlDir, 'bin'),
     dataDir:  path.join(userDataPath, 'postgres'),
-    configDir: path.join(electronApp.getAppPath(), 'config_files', 'postgres'),
+    configDir: path.join(configFilesDir, 'postgres'),
     user: 'postgres',
     port: 54320,
   };
