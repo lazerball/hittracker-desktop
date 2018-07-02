@@ -2,7 +2,6 @@ import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
 import * as path from 'path';
 import { spawn, spawnPromise } from 'spawn-rx';
-import { getConfig } from './config';
 
 const appendEnvVars = (envVars: any) => {
   return { ...envVars, ...process.env };
