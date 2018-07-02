@@ -28,7 +28,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export NODE_PLATFORM=darwin; fi
 
 install:
-  - npm upgrade -g npm
+  - npm install -g npm@6
   - npm install -g electron-forge
   - npm install
 script:

@@ -24,7 +24,7 @@ init:
 
 install:
   - ps: Install-Product node $env:node_version $env:PLATFORM
-  - npm upgrade -g npm
+  - npm uinstall -g npm@6
   - npm install -g electron-forge
   - npm install
 
