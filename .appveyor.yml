@@ -36,7 +36,7 @@ test_script:
 
 
 deploy_script:
-  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" == "" npm forge-publish --arch=%NODE_ARCH%
+  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" == "" npm run forge-publish --arch=%NODE_ARCH%
 
 cache:
   - node_modules
