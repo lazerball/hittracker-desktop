@@ -96,7 +96,7 @@ const fetchHitTracker = (unpackDir: string, platform: string) => {
   if (jetpack.exists(unpackDir)) {
     return;
   }
-  const hitTrackerVersion = '0.2.7';
+  const hitTrackerVersion = '0.2.12';
   const file = `HitTracker-electron-${platform}-${hitTrackerVersion}.tar.bz2`;
   const url = `https://github.com/lazerball/HitTracker/releases/download/${hitTrackerVersion}/${file}`;
   download(url, unpackDir, { extract: true }).then(
