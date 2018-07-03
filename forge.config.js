@@ -39,13 +39,14 @@ const afterExtract = (extractPath, electronVersion, platform, arch, done) => {
 
 const forgeConfig = {
   make_targets: {
-    win32: ['squirrel', 'zip'],
+    win32: ['squirrel'],
     darwin: ['zip'],
     linux: ['zip'],
   },
   electronPackagerConfig: {
     packageManager: 'npm',
     asar: false,
+    out: 'dist',
     ignore: ignoreFilter,
     afterExtract: [afterExtract],
     appCopyright: 'LazerBall',
