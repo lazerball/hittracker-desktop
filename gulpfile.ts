@@ -41,7 +41,7 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
     () => {
       jetpack.move(path.join(xdebugDir, 'php_xdebug.dll'), path.join(unpackDir, 'php_xdebug.dll'));
       jetpack.remove(xdebugDir);
-      console.log('Successfully downloaded ast');
+      console.log('Successfully downloaded xdebug');
     },
     (error: any) => {
       console.log(error);
@@ -54,7 +54,7 @@ const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
     return;
   }
   const phpArch = arch === 'ia32' ? 'x86' : arch;
-  const url = `https://windows.php.net/downloads/releases/php-7.2.6-nts-Win32-VC15-${phpArch}.zip`;
+  const url = `https://windows.php.net/downloads/releases/php-7.2.7-nts-Win32-VC15-${phpArch}.zip`;
   download(url, unpackDir, { extract: true }).then(
     () => {
       const cleanExtList = [
