@@ -31,23 +31,6 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
     }
   );
 
-  const astUrl = `https://windows.php.net/downloads/pecl/releases/ast/0.1.6/php_ast-0.1.6-7.2-nts-vc15-${phpArch}.zip`;
-  const astDir = path.join('bundled', `php-ext-ast-${platform}-${arch}`);
-
-  jetpack.dir(astDir);
-
-  download(astUrl, astDir, { extract: true }).then(
-    () => {
-      jetpack.move(path.join(astDir, 'php_ast.dll'), path.join(unpackDir, 'php_ast.dll'));
-      jetpack.move(path.join(astDir, 'LICENSE'), path.join(path.dirname(unpackDir), 'AST_LICENSE'));
-      jetpack.remove(astDir);
-      console.log('Successfully downloaded ast');
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
-
   const xdebugArch = arch === 'x64' ? '-x86_64' : '';
   const xdebugUrl = `https://xdebug.org/files/php_xdebug-2.6.0.1-vc15-nts${xdebugArch}.dll`;
   const xdebugDir = path.join('bundled', `php-ext-xebug-${platform}-${arch}`);
