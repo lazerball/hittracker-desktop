@@ -42,7 +42,7 @@ script:
   #- npm run e2e
 
 after_success:
-  - if [ ${TRAVIS_TAG} ]; then npm run forge-publish; fi
+  - if [[ -n $TRAVIS_TAG ]]; then npm run forge-publish; fi
 
 cache:
   npm: true
