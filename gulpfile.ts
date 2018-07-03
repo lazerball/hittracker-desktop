@@ -32,7 +32,7 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
   );
 
   const xdebugArch = arch === 'x64' ? '-x86_64' : '';
-  const xdebugUrl = `https://xdebug.org/files/php_xdebug-2.6.0.1-vc15-nts${xdebugArch}.dll`;
+  const xdebugUrl = `https://xdebug.org/files/php_xdebug-2.6.0-7.2-vc15-nts${xdebugArch}.dll`;
   const xdebugDir = path.join('bundled', `php-ext-xebug-${platform}-${arch}`);
 
   jetpack.dir(xdebugDir);
