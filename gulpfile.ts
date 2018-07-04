@@ -196,8 +196,7 @@ const fetchPostgreSql = async (unpackDir: string, platform: string, arch: string
 gulp.task('bundle-third-party', async () => {
   const baseUnpackDir = 'bundled';
   const arch = process.arch;
-  //const platform = process.platform;
-  const platform = 'win32';
+  const platform = process.platform;
 
   return Promise.all([
     fetchPostgreSql(path.join(baseUnpackDir, `postgresql-${platform}-${arch}`), platform, arch),
