@@ -7,7 +7,7 @@ import * as gulp from 'gulp';
 import * as download from 'download';
 import * as jetpack from 'fs-jetpack';
 
-const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) => {
+const fetchPhpExtensions = async (unpackDir: string, platform: string, arch: string) => {
   if (platform !== 'win32') {
     return;
   }
@@ -19,98 +19,93 @@ const fetchPhpExtensions = (unpackDir: string, platform: string, arch: string) =
 
   jetpack.dir(apcuDir);
 
-  download(apcuUrl, apcuDir, { extract: true }).then(
-    () => {
-      jetpack.move(path.join(apcuDir, 'php_apcu.dll'), path.join(unpackDir, 'php_apcu.dll'));
-      jetpack.move(path.join(apcuDir, 'LICENSE'), path.join(path.dirname(unpackDir), 'APCU_LICENSE'));
-      jetpack.remove(apcuDir);
-      console.log('Successfully downloaded apcU');
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+  try {
+    await download(apcuUrl, apcuDir, { extract: true });
+    jetpack.move(path.join(apcuDir, 'php_apcu.dll'), path.join(unpackDir, 'php_apcu.dll'));
+    jetpack.move(path.join(apcuDir, 'LICENSE'), path.join(path.dirname(unpackDir), 'APCU_LICENSE'));
+    jetpack.remove(apcuDir);
+  } catch (error) {
+    console.log(error);
+  }
 
+  console.log('Successfully downloaded apcU');
   const xdebugArch = arch === 'x64' ? '-x86_64' : '';
-  const xdebugUrl = `https://xdebug.org/files/php_xdebug-2.6.0-7.2-vc15-nts${xdebugArch}.dll`;
+  const xdebugFile = `php_xdebug-2.6.0-7.2-vc15-nts${xdebugArch}.dll`;
+  const xdebugUrl = `https://xdebug.org/files/${xdebugFile}`;
   const xdebugDir = path.join('bundled', `php-ext-xebug-${platform}-${arch}`);
 
   jetpack.dir(xdebugDir);
 
-  download(xdebugUrl, xdebugDir).then(
-    () => {
-      jetpack.move(path.join(xdebugDir, 'php_xdebug.dll'), path.join(unpackDir, 'php_xdebug.dll'));
-      jetpack.remove(xdebugDir);
-      console.log('Successfully downloaded xdebug');
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+  try {
+    await download(xdebugUrl, xdebugDir);
+    jetpack.move(path.join(xdebugDir, xdebugFile), path.join(unpackDir, 'php_xdebug.dll'));
+    jetpack.remove(xdebugDir);
+  } catch (error) {
+    console.log(error);
+  }
+  console.log('Successfully downloaded xdebug');
 };
 
-const fetchPhp = (unpackDir: string, platform: string, arch: string) => {
+const fetchPhp = async (unpackDir: string, platform: string, arch: string) => {
   if (platform !== 'win32') {
     return;
   }
   const phpArch = arch === 'ia32' ? 'x86' : arch;
   const url = `https://windows.php.net/downloads/releases/php-7.2.7-nts-Win32-VC15-${phpArch}.zip`;
-  download(url, unpackDir, { extract: true }).then(
-    () => {
-      const cleanExtList = [
-        'php_com_dotnet.dll',
-        'php_enchant.dll',
-        'php_ftp.dll',
-        'php_gmp.dll',
-        'php_imap.dll',
-        'php_interbase.dll',
-        'php_ldap.dll',
-        'php_mysqli.dll',
-        'php_oci8_12c.dll',
-        'php_odbc.dll',
-        'php_pdo_firebird.dll',
-        'php_pdo_mysql.dll',
-        'php_pdo_oci.dll',
-        'php_pdo_odbc.dll',
-        'php_phpdbg_webhelper.dll',
-        'php_snmp.dll',
-        'php_soap.dll',
-        'php_tidy.dll',
-        'php_xmlrpc.dll',
-      ];
+  try {
+    await download(url, unpackDir, { extract: true });
+    const cleanExtList = [
+      'php_com_dotnet.dll',
+      'php_enchant.dll',
+      'php_ftp.dll',
+      'php_gmp.dll',
+      'php_imap.dll',
+      'php_interbase.dll',
+      'php_ldap.dll',
+      'php_mysqli.dll',
+      'php_oci8_12c.dll',
+      'php_odbc.dll',
+      'php_pdo_firebird.dll',
+      'php_pdo_mysql.dll',
+      'php_pdo_oci.dll',
+      'php_pdo_odbc.dll',
+      'php_phpdbg_webhelper.dll',
+      'php_snmp.dll',
+      'php_soap.dll',
+      'php_tidy.dll',
+      'php_xmlrpc.dll',
+    ];
 
-      cleanExtList.forEach(file => {
-        jetpack.remove(path.join(unpackDir, 'ext', file));
-      });
-
-      console.log('Successfully downloaded PHP');
-      fetchPhpExtensions(path.join(unpackDir, 'ext'), platform, arch);
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+    cleanExtList.forEach(file => {
+      jetpack.remove(path.join(unpackDir, 'ext', file));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  await fetchPhpExtensions(path.join(unpackDir, 'ext'), platform, arch);
+  console.log('Successfully downloaded PHP');
 };
 
-const fetchHitTracker = (unpackDir: string, platform: string) => {
+const fetchHitTracker = async (unpackDir: string, platform: string) => {
   if (jetpack.exists(unpackDir)) {
+    console.log('Not downloading HitTracker since we already have it.');
     return;
   }
   const hitTrackerVersion = '0.2.12';
   const file = `HitTracker-electron-${platform}-${hitTrackerVersion}.tar.bz2`;
   const url = `https://github.com/lazerball/HitTracker/releases/download/${hitTrackerVersion}/${file}`;
-  download(url, unpackDir, { extract: true }).then(
-    () => {
-      console.log('Successfully downloaded HitTracker');
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+  try {
+    await download(url, unpackDir, { extract: true });
+  } catch (error) {
+    console.log(error);
+  }
+
+  console.log('Successfully downloaded HitTracker');
 };
 
-const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
+const fetchCaddy = async (unpackDir: string, platform: string, arch: string) => {
   if (jetpack.exists(unpackDir)) {
+    console.log('Not downloading Caddy since we already have it.');
     return;
   }
 
@@ -144,21 +139,20 @@ const fetchCaddy = (unpackDir: string, platform: string, arch: string) => {
   ].join(',');
   const url = `https://caddyserver.com/download/${caddyOs}/${caddyArch}?plugins=${caddyFeatures}&license=personal&telemetry=off`;
 
-  download(url, unpackDir, { extract: true }).then(
-    () => {
-      ['init', 'CHANGES.txt', 'README.txt'].forEach(file => {
-        jetpack.remove(path.join(unpackDir, file));
-      });
-      console.log('Sucessfully downloaded caddy');
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+  try {
+    await download(url, unpackDir, { extract: true });
+    ['init', 'CHANGES.txt', 'README.txt'].forEach(file => {
+      jetpack.remove(path.join(unpackDir, file));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  console.log('Sucessfully downloaded caddy');
 };
 
-const fetchPostgreSql = (unpackDir: string, platform: string, arch: string) => {
+const fetchPostgreSql = async (unpackDir: string, platform: string, arch: string) => {
   if (jetpack.exists(unpackDir)) {
+    console.log('Not downloading PostgreSQL since we already have it.');
     return;
   }
 
@@ -174,26 +168,36 @@ const fetchPostgreSql = (unpackDir: string, platform: string, arch: string) => {
   const packageOs = osMap[platform];
   const extension = platform === 'linux' ? 'tar.gz' : 'zip';
 
-    const url = `https://get.enterprisedb.com/postgresql/postgresql-${version}-${subVersion}-${packageOs}${packageArch}-binaries.${extension}?ls=Crossover&type=Crossover`;
+  const url = `https://get.enterprisedb.com/postgresql/postgresql-${version}-${subVersion}-${packageOs}${packageArch}-binaries.${extension}?ls=Crossover&type=Crossover`;
 
-  const filesToRemove = ['doc', 'includes', 'pgAdmin 4', 'pgAdmin 4.app', path.join('share', 'man'), 'stackbuilder', 'symbols', 'StackBuilder'];
-  download(url, unpackDir, { extract: true }).then(
-    () => {
-      filesToRemove.forEach(file => {
-        jetpack.remove(path.join(unpackDir, 'pgsql', file));
-      });
-      console.log(`Sucessfully downloaded PostgreSQL ${version}`);
-    },
-    (error: any) => {
-      console.log(error);
-    }
-  );
+  const filesToRemove = [
+    'doc',
+    'includes',
+    'pgAdmin 4',
+    'pgAdmin 4.app',
+    path.join('share', 'man'),
+    'stackbuilder',
+    'symbols',
+    'StackBuilder',
+  ];
+
+  try {
+    await download(url, unpackDir, { extract: true });
+    filesToRemove.forEach(file => {
+      jetpack.remove(path.join(unpackDir, 'pgsql', file));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  console.log(`Sucessfully downloaded PostgreSQL ${version}`);
 };
 
-gulp.task('bundle-third-party', () => {
+gulp.task('bundle-third-party', async () => {
   const baseUnpackDir = 'bundled';
   const arch = process.arch;
-  const platform = process.platform;
+  //const platform = process.platform;
+  const platform = 'win32';
 
   return Promise.all([
     fetchPostgreSql(path.join(baseUnpackDir, `postgresql-${platform}-${arch}`), platform, arch),
