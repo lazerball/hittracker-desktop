@@ -11,8 +11,9 @@ environment:
     node_version: "8.9.3"
 
 branches:
-  except:
-    - "gh-pages"
+  only:
+    - master
+    - /^v\d+\.\d+\.\d+/
 
 init:
   - IF NOT EXIST C:\T mkdir C:\T
@@ -24,6 +25,7 @@ init:
 
 install:
   - ps: Install-Product node $env:node_version $env:PLATFORM
+  - SET PATH=%APPDATA%\npm;%PATH%
   - npm install -g npm@6
   - npm install -g electron-forge
   - npm install
@@ -33,10 +35,11 @@ test_script:
   - node --version
   - npm --version
   - npm run lint
+  - if %APPVEYOR_REPO_TAG% EQU false npm run forge-make
 
 
 deploy_script:
-  - IF NOT "%APPVEYOR_REPO_TAG_NAME%" == "" npm run forge-publish --arch=%NODE_ARCH%
+  - IF %APPVEYOR_REPO_TAG% EQU true  npm run forge-publish --arch=%NODE_ARCH%
 
 cache:
   - node_modules
