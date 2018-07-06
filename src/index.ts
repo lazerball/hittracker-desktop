@@ -11,6 +11,12 @@ import { firstRun, initDatabase, startDatabase, startDeviceMediator, startWebApp
 import * as menus from './menu';
 import * as utils from './utils';
 
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+// tslint:disable-next-line:no-var-requires
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
+
 // tslint:disable-next-line:no-var-requires
 const packageJson = require('../package.json');
 
