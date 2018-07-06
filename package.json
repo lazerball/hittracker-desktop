@@ -1,7 +1,7 @@
 {
   "name": "hittracker-desktop",
   "productName": "HitTracker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "HitTracker desktop application",
   "homepage": "https://www.lazerball.com",
   "bugs": {
@@ -32,6 +32,7 @@
     "forge": "./forge.config.js"
   },
   "dependencies": {
+    "@electron-forge/publisher-github": "^6.0.0-beta.22",
     "@lazerball/hittracker-device-mediator": "^1.1.3",
     "@types/electron-devtools-installer": "^2.0",
     "@types/lodash": "^4.14.110",
