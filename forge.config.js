@@ -27,42 +27,58 @@ const ignoreFilter = file => {
   return !includes.some(pattern => file.match(pattern));
 };
 
-const afterExtract = (extractPath, electronVersion, platform, arch, done) => {
+const afterExtract = async (forgeConfig, extractPath, electronVersion, platform, arch) => {
   jetpack.copy('config_files', path.join(extractPath, 'config_files'));
 
   jetpack.copy('bundled', path.join(extractPath, 'bundled'), {
     matching: [`*-${platform}/**`, `*-${platform}-${arch}/**`],
   });
-
-  done();
 };
 
-const forgeConfig = {
-  make_targets: {
-    win32: ['squirrel'],
-    darwin: ['zip'],
-    linux: ['zip'],
-  },
-  electronPackagerConfig: {
+module.exports = {
+  plugins: [
+    ['@electron-forge/plugin-auto-unpack-natives'],
+    ['@electron-forge/plugin-compile'],
+  ],
+  packagerConfig: {
     packageManager: 'npm',
-    asar: false,
-    out: 'dist',
+    asar: true,
     ignore: ignoreFilter,
-    afterExtract: [afterExtract],
     appCopyright: 'LazerBall',
     appBundleId: 'com.lazerball.HitTracker',
     appCategoryType: 'public.app-category.games',
     win32metadata: {
-      CompanyName: 'LazerBall',
+      CompanyName: 'LazerBall Reusable Paintballs',
       productName: 'HitTracker',
     },
   },
-  electronWinstallerConfig: {
-    name: 'HitTracker',
+  makers: [
+    {
+      name: '@electron-forge/maker-zip',
+      platforms: ['darwin', 'linux', 'win32'],
+    },
+    {
+      name: '@electron-forge/maker-squirrel',
+      platforms: ['win32'],
+      config: {
+        name: 'HitTracker',
+        copyright: 'LazerBall Reusable Paintballs',
+      }
+    },
+  ],
+  hooks: {
+    packageAfterExtract: afterExtract,
   },
-  github_repository: {
-    owner: 'lazerball',
-    name: 'hittracker-desktop',
-  },
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'lazerball',
+          name: 'hittracker-desktop'
+        },
+        draft: true
+      }
+    }
+  ],
 };
-module.exports = forgeConfig;

@@ -35,7 +35,6 @@ before_install:
 
 install:
   - npm install -g npm@6
-  - npm install -g electron-forge
   - npm install
 script:
   - npm --version
