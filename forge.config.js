@@ -35,6 +35,13 @@ const afterExtract = async (forgeConfig, extractPath, electronVersion, platform,
   });
 };
 
+const cleanElectronReBuildBuildFiles = async (forgeConfig, prunePath, electronVersion, pPlatform, pArch) => {
+  const pathsToRemove = jetpack.find(path.join(prunePath, 'node_modules'), { directories: true, files: false, matching: '.deps'});
+  for (pathToRemove of pathsToRemove) {
+    jetpack.remove(pathToRemove);
+  }
+};
+
 module.exports = {
   plugins: [
     ['@electron-forge/plugin-auto-unpack-natives'],
@@ -68,6 +75,7 @@ module.exports = {
   ],
   hooks: {
     packageAfterExtract: afterExtract,
+    packageAfterPrune: cleanElectronReBuildBuildFiles,
   },
   publishers: [
     {
