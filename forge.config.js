@@ -27,10 +27,10 @@ const ignoreFilter = file => {
   return !includes.some(pattern => file.match(pattern));
 };
 
-const afterExtract = async (forgeConfig, extractPath, electronVersion, platform, arch) => {
-  jetpack.copy('config_files', path.join(extractPath, 'config_files'));
+const copyFilesIntoApp = async (forgeConfig, extractPath, electronVersion, platform, arch) => {
+  jetpack.copy('config_files', path.join(extractPath, 'resources', 'config_files'));
 
-  jetpack.copy('bundled', path.join(extractPath, 'bundled'), {
+  jetpack.copy('bundled', path.join(extractPath, 'resources', 'bundled'), {
     matching: [`*-${platform}/**`, `*-${platform}-${arch}/**`],
   });
 };
@@ -74,7 +74,7 @@ module.exports = {
     },
   ],
   hooks: {
-    packageAfterExtract: afterExtract,
+    packageAfterExtract: copyFilesIntoApp,
     packageAfterPrune: cleanElectronReBuildBuildFiles,
   },
   publishers: [

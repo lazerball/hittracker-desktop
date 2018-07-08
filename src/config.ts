@@ -20,8 +20,8 @@ export const getConfig = (env: string, debug: boolean) => {
 
   const hostName = 'localhost';
 
-  const bundledPackageDir = path.join(utils.getAppRootDir(), 'bundled');
-  const configFilesDir = path.join(utils.getAppRootDir(), 'config_files');
+  const bundledPackageDir = path.join(utils.getVendoredFilesRootDir(), 'bundled');
+  const configFilesDir = path.join(utils.getVendoredFilesRootDir(), 'config_files');
   const app = {
     userDataPath,
     debug,
