@@ -104,7 +104,7 @@ export const getConfig = (env: string, debug: boolean) => {
 
   const caddy: IBaseConfigOptions = {
     bin: path.join(bundledPackageDir, `caddy-${platform}-${arch}`, 'caddy'),
-    args: ['-conf', path.join('config_files', 'Caddyfile')],
+    args: ['-conf', path.join(configFilesDir, 'Caddyfile')],
     env: {
       SITE_ADDRESS: '127.0.0.1',
       SITE_HOSTNAME: hostName,
