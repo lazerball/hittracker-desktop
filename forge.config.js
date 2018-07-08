@@ -23,7 +23,6 @@ const ignoreFilter = file => {
     '^/types',
     '^/package.json$',
   ];
-
   return !includes.some(pattern => file.match(pattern));
 };
 
@@ -44,12 +43,12 @@ const cleanElectronReBuildBuildFiles = async (forgeConfig, prunePath, electronVe
 
 module.exports = {
   plugins: [
-    ['@electron-forge/plugin-auto-unpack-natives'],
+    //['@electron-forge/plugin-auto-unpack-natives'],
     ['@electron-forge/plugin-compile'],
   ],
   packagerConfig: {
     packageManager: 'npm',
-    asar: true,
+    asar: false,
     ignore: ignoreFilter,
     appCopyright: 'LazerBall',
     appBundleId: 'com.lazerball.HitTracker',
