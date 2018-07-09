@@ -31,7 +31,7 @@ const debug = utils.isDev();
 
 // needed until electron stops storing non-config files in `$XDG_CONFIG_HOME`
 // https://github.com/electron/electron/issues/8124
-if (!['win32', 'darwin'].includes(process.platform)) {
+if (!['win32', 'darwin'].includes(process.platform) && xdgBaseDir.data !== null) {
   app.setPath('appData', xdgBaseDir.data);
   app.setPath('userData', path.join(xdgBaseDir.data, app.getName()));
 }
