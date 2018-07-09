@@ -2,6 +2,7 @@ import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
 import * as path from 'path';
 
+import * as childProcess from 'child_process';
 import * as spawn from 'cross-spawn';
 import * as spawnPromise from 'cross-spawn-promise';
 
@@ -96,13 +97,9 @@ export const startWebApp = async (config: any) => {
 };
 
 export const startDeviceMediator = (config: any) => {
-  const hitTrackerDeviceMediator = spawn(config.hitTrackerDeviceMediator.bin, config.hitTrackerDeviceMediator.args, {
-    windowsHide: true,
-    env: appendEnvVars({ELECTRON_VERSION: process.versions.electron}),
+  const hitTrackerDeviceMediator = childProcess.fork(config.hitTrackerDeviceMediator.bin, config.hitTrackerDeviceMediator.args, {
+    env: { ELECTRON_VERSION: process.versions.electron },
   });
-
-  hitTrackerDeviceMediator.stdout.on('data', processLogger);
-  hitTrackerDeviceMediator.stderr.on('data', processErrorLogger);
 
   return hitTrackerDeviceMediator;
 };
