@@ -1,3 +1,4 @@
+import { ChildProcess } from 'child_process';
 import { app, BrowserWindow, Menu } from 'electron';
 
 import * as contextMenu from 'electron-context-menu';
@@ -110,8 +111,8 @@ const createWindow = async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
-    processes.forEach((process: Subscription) => {
-      process.unsubscribe();
+    processes.forEach((process: ChildProcess) => {
+      process.kill();
     });
   });
 };

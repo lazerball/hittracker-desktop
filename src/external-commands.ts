@@ -1,7 +1,10 @@
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
 import * as path from 'path';
-import { spawn, spawnPromise } from 'spawn-rx';
+
+import * as spawn from 'cross-spawn';
+import * as spawnPromise from 'cross-spawn-promise';
+
 
 const appendEnvVars = (envVars: any) => {
   return { ...envVars, ...process.env };
@@ -20,7 +23,7 @@ export const firstRun = async (config: any) => {
     }
 
     const envVars = appendEnvVars(config.hitTracker.env);
-    await spawnPromise(config.php.bin, commandArgs, { env: envVars }).then(
+    await spawnPromise(config.php.bin, commandArgs, { env: envVars, encoding: 'utf8' }).then(
       x => log.info(x), // needs to be log.debug
       e => {
         log.error(`ERROR: ${e}`);
@@ -36,11 +39,19 @@ export const firstRun = async (config: any) => {
 };
 
 const processLogger = (msg: any) => {
-  log.debug(msg);
+  if (msg instanceof Buffer) {
+    log.debug(msg.toString());
+  } else {
+    log.debug(msg);
+  }
 };
 
 const processErrorLogger = (msg: any) => {
-  log.error(msg);
+  if (msg instanceof Buffer) {
+    log.error(msg.toString());
+  } else {
+    log.error(msg);
+  }
 };
 
 export const initDatabase = async (config: any) => {
@@ -48,38 +59,50 @@ export const initDatabase = async (config: any) => {
 
   try {
     jetpack.dir(config.postgreSql.dataDir, { mode: 0o700 });
-    await spawnPromise(config.postgreSql.initDbBin, config.postgreSql.initDbArgs);
+    await spawnPromise(config.postgreSql.initDbBin, config.postgreSql.initDbArgs, {encoding: 'utf8'});
   } catch (error) {
     log.error(error);
   }
 };
 export const startDatabase = (config: any) => {
   const postgreSql = spawn(config.postgreSql.bin, config.postgreSql.args, {
-    split: true,
+    windowsHide: true,
     cwd: config.postgreSql.binDir, // the dlls are located in the bin dir on windows
-  }).subscribe(log.debug, log.error);
+  });
+
+  postgreSql.stdout.on('data', processLogger);
+  postgreSql.stderr.on('data', processErrorLogger);
 
   return postgreSql;
 };
 
 export const startWebApp = async (config: any) => {
   const phpFpm = spawn(config.fastCgi.bin, config.fastCgi.args, {
-    split: true,
+    windowsHide: true,
     env: appendEnvVars(config.fastCgi.env),
-  }).subscribe(processLogger, processErrorLogger);
+  });
+
+  phpFpm.stdout.on('data', processLogger);
+  phpFpm.stderr.on('data', processErrorLogger);
 
   const caddy = spawn(config.caddy.bin, config.caddy.args, {
     env: appendEnvVars(config.caddy.env),
-  }).subscribe(processLogger, processErrorLogger);
+  });
+
+  caddy.stdout.on('data', processLogger);
+  caddy.stderr.on('data', processErrorLogger);
 
   return [caddy, phpFpm];
 };
 
 export const startDeviceMediator = (config: any) => {
   const hitTrackerDeviceMediator = spawn(config.hitTrackerDeviceMediator.bin, config.hitTrackerDeviceMediator.args, {
-    split: true,
+    windowsHide: true,
     env: appendEnvVars({ELECTRON_VERSION: process.versions.electron}),
-  }).subscribe(log.debug, log.error);
+  });
+
+  hitTrackerDeviceMediator.stdout.on('data', processLogger);
+  hitTrackerDeviceMediator.stderr.on('data', processErrorLogger);
 
   return hitTrackerDeviceMediator;
 };
