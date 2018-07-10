@@ -97,7 +97,6 @@ const createWindow = async () => {
       // preload: path.join(__dirname, 'preload-launcher.js'),
       nodeIntegration: false, // needed?
       defaultEncoding: 'UTF-8',
-      experimentalFeatures: true,
     },
   });
 
