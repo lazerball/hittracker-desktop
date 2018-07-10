@@ -6,7 +6,9 @@ import * as childProcess from 'child_process';
 import * as spawn from 'cross-spawn';
 import * as spawnPromise from 'cross-spawn-promise';
 
+/* tslint:disable:no-duplicate-imports no-console */
 import { dialog } from 'electron';
+console.log(dialog);
 
 const appendEnvVars = (envVars: any) => {
   return { ...envVars, ...process.env };

@@ -1,5 +1,5 @@
 import { ChildProcess } from 'child_process';
-import { app, BrowserWindow, dialog, Menu } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 
 import * as contextMenu from 'electron-context-menu';
 import * as log from 'electron-log';
@@ -12,6 +12,9 @@ import { firstRun, initDatabase, startDatabase, startDeviceMediator, startWebApp
 import * as menus from './menu';
 import * as utils from './utils';
 
+/* tslint:disable:no-duplicate-imports no-console */
+import { dialog } from 'electron';
+console.log(dialog);
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // tslint:disable-next-line:no-var-requires
 if (require('electron-squirrel-startup')) {
