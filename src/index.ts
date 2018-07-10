@@ -1,5 +1,5 @@
 import { ChildProcess } from 'child_process';
-import { app, BrowserWindow, Menu } from 'electron';
+import { app, BrowserWindow, dialog, Menu } from 'electron';
 
 import * as contextMenu from 'electron-context-menu';
 import * as log from 'electron-log';

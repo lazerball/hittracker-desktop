@@ -6,6 +6,7 @@ import * as childProcess from 'child_process';
 import * as spawn from 'cross-spawn';
 import * as spawnPromise from 'cross-spawn-promise';
 
+import { dialog } from 'electron';
 
 const appendEnvVars = (envVars: any) => {
   return { ...envVars, ...process.env };
