@@ -72,5 +72,3 @@ export const enableApplicationMenu = (env: string, debug: boolean = false) => {
   menuTemplates.push(help);
   Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplates));
 };
-
-
