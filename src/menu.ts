@@ -1,8 +1,8 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import openAboutWindow from 'electron-about-window';
 import * as path from 'path';
 
-export const file = {
+const file = {
   label: 'File',
   submenu: [
     {
@@ -16,7 +16,7 @@ export const file = {
 };
 
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
-export const edit: MenuItemConstructorOptions = {
+const edit: MenuItemConstructorOptions = {
   label: 'Edit',
   submenu: [
     { label: 'Undo', accelerator: 'CmdOrCtrl+Z', role: 'undo' },
@@ -29,7 +29,7 @@ export const edit: MenuItemConstructorOptions = {
   ],
 };
 
-export const development = {
+const development = {
   label: 'Development',
   submenu: [
     {
@@ -49,7 +49,7 @@ export const development = {
   ],
 };
 
-export const help = {
+const help = {
   label: 'Help',
   submenu: [
     {
@@ -62,3 +62,15 @@ export const help = {
     },
   ],
 };
+
+
+export const enableApplicationMenu = (env: string, debug: boolean = false) => {
+  const menuTemplates = [file, edit];
+  if (env !== 'production' || debug) {
+    menuTemplates.push(development);
+  }
+  menuTemplates.push(help);
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplates));
+};
+
+

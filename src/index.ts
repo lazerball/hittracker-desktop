@@ -1,5 +1,5 @@
 import { ChildProcess } from 'child_process';
-import { app, BrowserWindow, Menu } from 'electron';
+import { app, BrowserWindow } from 'electron';
 
 import * as contextMenu from 'electron-context-menu';
 import * as log from 'electron-log';
@@ -9,7 +9,7 @@ import * as xdgBaseDir from 'xdg-basedir';
 import { getConfig } from './config';
 import { firstRun, initDatabase, startDatabase, startDeviceMediator, startWebApp } from './external-commands';
 
-import * as menus from './menu';
+import { enableApplicationMenu } from './menu';
 import * as utils from './utils';
 
 /* tslint:disable:no-duplicate-imports no-console */
@@ -61,15 +61,6 @@ let mainWindow: Electron.BrowserWindow | null = null;
 
 contextMenu();
 
-const setApplicationMenu = () => {
-  const menuTemplates = [menus.file, menus.edit];
-  if (env !== 'production') {
-    menuTemplates.push(menus.development);
-  }
-  menuTemplates.push(menus.help);
-  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplates));
-};
-
 const shouldQuit = app.makeSingleInstance(() => {
   // Someone tried to run a second instance, we should focus our window.
   if (mainWindow) {
@@ -92,7 +83,7 @@ const createWindow = async () => {
   const dbProcess = startDatabase(config);
   await firstRun(config);
 
-  setApplicationMenu();
+  enableApplicationMenu(env);
   mainWindow = new BrowserWindow({
     width: 900,
     height: 600,
