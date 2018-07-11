@@ -31,6 +31,7 @@ if (utils.isPackaged()) {
 
 const env: string = utils.isDev() ? 'development' : 'production';
 const debug = utils.isDebug();
+utils.setElectronIsDev(debug);
 
 // needed until electron stops storing non-config files in `$XDG_CONFIG_HOME`
 // https://github.com/electron/electron/issues/8124
@@ -79,7 +80,7 @@ const createWindow = async () => {
   const dbProcess = startDatabase(config);
   await firstRun(config);
 
-  enableApplicationMenu(env);
+  enableApplicationMenu(env, debug);
   mainWindow = new BrowserWindow({
     width: 900,
     height: 600,

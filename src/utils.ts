@@ -11,12 +11,19 @@ export const isPackaged = () => {
   return execFile !== 'electron';
 };
 
+// electron-is-dev package is used by various dependencies, so we map our var to theirs
+export const setElectronIsDev = (debug: boolean) => {
+  if (process.env.ELECTRON_IS_DEV === undefined && debug) {
+    process.env.ELECTRON_IS_DEV = '1';
+  }
+};
+
 export const isDev = () => {
-  if (process.env.ELECTRON_IS_DEV === undefined) {
-    // /[\\/]electron/.test(process.execPath);
+  if (process.env.ELECTRON_ENV === undefined) {
     return process.defaultApp || /node_modules[\\/]electron[\\/]/.test(process.execPath);
   }
-  return parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
+  return process.env.ELECTRON_ENV === 'development';
+};
 
 export const isDebug = () => {
   if (isDev()) return true;
@@ -27,7 +34,6 @@ export const isDebug = () => {
 };
 
 export const getVendoredFilesRootDir = () => {
-
   if (isPackaged()) {
     if (process.resourcesPath === undefined) {
       return '';
