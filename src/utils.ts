@@ -17,6 +17,13 @@ export const isDev = () => {
     return process.defaultApp || /node_modules[\\/]electron[\\/]/.test(process.execPath);
   }
   return parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
+
+export const isDebug = () => {
+  if (isDev()) return true;
+
+  if (process.env.ELECTRON_DEBUG === undefined) return false;
+
+  return process.env.ELECTRON_DEBUG === '1';
 };
 
 export const getVendoredFilesRootDir = () => {

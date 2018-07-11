@@ -30,7 +30,7 @@ if (utils.isPackaged()) {
 }
 
 const env: string = utils.isDev() ? 'development' : 'production';
-const debug = utils.isDev();
+const debug = utils.isDebug();
 
 // needed until electron stops storing non-config files in `$XDG_CONFIG_HOME`
 // https://github.com/electron/electron/issues/8124
