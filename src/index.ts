@@ -55,7 +55,6 @@ log.info(config);
 
 let mainWindow: Electron.BrowserWindow | null = null;
 
-
 contextMenu();
 
 const shouldQuit = app.makeSingleInstance(() => {
@@ -77,7 +76,7 @@ const createWindow = async () => {
   // initialization and is ready to create browser windows.
 
   await initDatabase(config);
-  const dbProcess = startDatabase(config);
+  const dbProcess = await startDatabase(config);
   await firstRun(config);
 
   enableApplicationMenu(env, debug);
@@ -93,7 +92,7 @@ const createWindow = async () => {
 
   const processes = await startWebApp(config);
 
-  const hitTrackerDeviceMediator = startDeviceMediator(config);
+  const hitTrackerDeviceMediator = await startDeviceMediator(config);
   processes.push(dbProcess);
   processes.push(hitTrackerDeviceMediator);
 

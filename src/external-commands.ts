@@ -68,7 +68,7 @@ export const initDatabase = async (config: any) => {
     log.error(error);
   }
 };
-export const startDatabase = (config: any) => {
+export const startDatabase = async (config: any) => {
   const postgreSql = spawn(config.postgreSql.bin, config.postgreSql.args, {
     windowsHide: true,
     cwd: config.postgreSql.binDir, // the dlls are located in the bin dir on windows
@@ -99,7 +99,7 @@ export const startWebApp = async (config: any) => {
   return [caddy, phpFpm];
 };
 
-export const startDeviceMediator = (config: any) => {
+export const startDeviceMediator = async (config: any) => {
   const hitTrackerDeviceMediator = childProcess.fork(config.hitTrackerDeviceMediator.bin, config.hitTrackerDeviceMediator.args, {
     env: { ELECTRON_VERSION: process.versions.electron },
   });
