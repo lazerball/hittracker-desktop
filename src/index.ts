@@ -47,11 +47,7 @@ const config = getConfig(env, debug);
 log.transports.rendererConsole.format = '{h}:{i}:{s}:{ms} {text}';
 log.transports.file.file = path.join(app.getPath('userData'), 'log.txt');
 
-if (utils.isDev()) {
-  log.info('Running in development');
-} else {
-  log.info('Running in production');
-}
+log.info(`ENVIRONMENT: ${env} DEBUG: ${debug}`);
 
 log.info('Configuration:');
 log.info(config);
