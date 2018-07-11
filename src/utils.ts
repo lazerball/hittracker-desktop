@@ -21,7 +21,6 @@ export const isDev = () => {
 
 export const getVendoredFilesRootDir = () => {
 
-  // return app.getAppPath().replace(`${path.sep}app.asar`, '');
   if (isPackaged()) {
     if (process.resourcesPath === undefined) {
       return '';
