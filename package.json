@@ -20,6 +20,7 @@
   },
   "main": "src/index.ts",
   "scripts": {
+    "cm": "git-cz",
     "lint": "tslint --project .",
     "bundle-third-party": "gulp bundle-third-party",
     "start": "electron-forge start",
@@ -29,7 +30,10 @@
   },
   "license": "AGPL-1.0",
   "config": {
-    "forge": "./forge.config.js"
+    "forge": "./forge.config.js",
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "dependencies": {
     "@electron-forge/publisher-github": "^6.0.0-beta.22",
@@ -72,6 +76,8 @@
     "babel-plugin-transform-async-to-generator": "^6.22.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.23.0",
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
     "devtron": "^1.4.0",
     "download": "^7.0",
     "electron-prebuilt-compile": "2.0.4",
