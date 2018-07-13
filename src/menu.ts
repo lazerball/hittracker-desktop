@@ -15,38 +15,42 @@ const file = {
   ],
 };
 
-import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
-const edit: MenuItemConstructorOptions = {
-  label: 'Edit',
-  submenu: [
-    { label: 'Undo', accelerator: 'CmdOrCtrl+Z', role: 'undo' },
-    { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
-    { type: 'separator' },
-    { label: 'Cut', accelerator: 'CmdOrCtrl+X', role: 'cut' },
-    { label: 'Copy', accelerator: 'CmdOrCtrl+C', role: 'copy' },
-    { label: 'Paste', accelerator: 'CmdOrCtrl+V', role: 'paste' },
-    { label: 'Select All', accelerator: 'CmdOrCtrl+A', role: 'selectall' },
-  ],
+const edit = {
+  role: 'editMenu'
 };
 
-const development = {
-  label: 'Development',
+import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
+const view: MenuItemConstructorOptions = {
+  label: 'View',
   submenu: [
     {
-      label: 'Reload',
-      accelerator: 'CmdOrCtrl+R',
+
+      label: 'Back',
+      accelerator: 'CmdOrCtrl+B',
       click: () => {
-        BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
-      },
+        BrowserWindow.getFocusedWindow().webContents.goBack();
+      }
     },
     {
-      label: 'Toggle DevTools',
-      accelerator: 'Alt+CmdOrCtrl+I',
-      click: () => {
-        BrowserWindow.getFocusedWindow().webContents.openDevTools();
-      },
+      role: 'forceReload'
     },
-  ],
+    {
+      type: 'separator'
+    },
+    {
+      role: 'toggleFullScreen'
+    },
+    {
+      role: 'zoomIn',
+      accelerator: 'CmdOrCtrl+Plus'
+    },
+    {
+      role: 'zoomOut'
+    },
+    {
+      role: 'resetZoom'
+    },
+  ]
 };
 
 const help = {
@@ -60,15 +64,17 @@ const help = {
           description: '',
         }),
     },
+    {
+      role: 'toggleDevTools'
+    },
   ],
 };
 
+const window = {
+  role: 'windowMenu'
+};
 
-export const enableApplicationMenu = (env: string, debug: boolean = false) => {
-  const menuTemplates = [file, edit];
-  if (env !== 'production' || debug) {
-    menuTemplates.push(development);
-  }
-  menuTemplates.push(help);
+export const enableApplicationMenu = () => {
+  const menuTemplates = [file, edit, view, window, help];
   Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplates));
 };

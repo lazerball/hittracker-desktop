@@ -77,7 +77,7 @@ const createWindow = async () => {
   const dbProcess = await startDatabase(config);
   await firstRun(config);
 
-  enableApplicationMenu(env, debug);
+  enableApplicationMenu();
   mainWindow = new BrowserWindow({
     width: 900,
     height: 600,
