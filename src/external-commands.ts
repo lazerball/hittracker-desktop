@@ -90,6 +90,7 @@ export const startWebApp = async (config: any) => {
   phpFpm.stderr.on('data', processErrorLogger);
 
   const caddy = spawn(config.caddy.bin, config.caddy.args, {
+    windowsHide: true,
     env: appendEnvVars(config.caddy.env),
   });
 
