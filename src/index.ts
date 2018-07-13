@@ -25,9 +25,7 @@ if (require('electron-squirrel-startup')) {
 const packageJson = require('../package.json');
 
 // We still want to show our app name even if running with prebuilt binary
-if (utils.isPackaged()) {
-  app.setName(packageJson.productName || packageJson.name);
-}
+app.setName(packageJson.productName || packageJson.name);
 
 const env: string = utils.isDev() ? 'development' : 'production';
 const debug = utils.isDebug();
