@@ -71,7 +71,8 @@ export const getConfig = (env: string, debug: boolean) => {
   };
 
   hitTracker.env = {
-    APP_VAR_DIR: path.join(userDataPath, 'symfony'),
+    APP_LOG_DIR: path.join(userDataPath, 'symfony', 'logs'),
+    APP_TMP_DIR: path.join(userDataPath, 'symfony', 'tmp'),
     HITTRACKER_UPLOAD_DIR: hitTracker.uploadDir,
     DATABASE_URL: hitTracker.databasePath,
     APP_BUILD_TYPE: 'electron',

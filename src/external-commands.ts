@@ -16,7 +16,7 @@ const appendEnvVars = (envVars: any) => {
 
 export const firstRun = async (config: any) => {
   // make directories we need
-  ['php', 'postgres', 'media', path.join('symfony', 'logs'), path.join('symfony', 'cache')].forEach(dir => {
+  ['php', 'postgres', 'media', path.join('symfony', 'logs'), path.join('symfony', 'tmp')].forEach(dir => {
     jetpack.dir(path.join(config.app.userDataPath, dir));
   });
 
@@ -34,8 +34,6 @@ export const firstRun = async (config: any) => {
       }
     );
   };
-
-  await runHitTrackerCmd('cache:clear');
 
   await runHitTrackerCmd('doctrine:database:create', ['--if-not-exists']);
 
