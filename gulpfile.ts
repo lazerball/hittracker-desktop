@@ -172,7 +172,7 @@ const fetchPostgreSql = async (unpackDir: string, platform: string, arch: string
 
   const filesToRemove = [
     'doc',
-    'includes',
+    'include',
     'pgAdmin 4',
     'pgAdmin 4.app',
     path.join('share', 'man'),
