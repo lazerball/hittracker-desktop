@@ -61,11 +61,11 @@
     "xdg-basedir": "^3.0.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.25",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.25",
-    "@electron-forge/maker-zip": "^6.0.0-beta.25",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.25",
-    "@electron-forge/plugin-compile": "^6.0.0-beta.25",
+    "@electron-forge/cli": "^6.0.0-beta.26",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.26",
+    "@electron-forge/maker-zip": "^6.0.0-beta.26",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.26",
+    "@electron-forge/plugin-compile": "^6.0.0-beta.26",
     "@types/download": "^6.2.2",
     "@types/electron-devtools-installer": "^2.0",
     "@types/gulp": "^4.0.2",
@@ -87,7 +87,7 @@
     "tmp": "^0.0.33",
     "ts-node": "^7.0.0",
     "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.13.0",
+    "tslint-config-prettier": "^1.14.0",
     "tslint-config-standard": "^7.1.0",
     "tslint-language-service": "^0.9.9",
     "typescript": "^2.9.2"
