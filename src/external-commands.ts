@@ -61,7 +61,7 @@ export const initDatabase = async (config: any) => {
 
   try {
     jetpack.dir(config.postgreSql.dataDir, { mode: 0o700 });
-    await spawnPromise(config.postgreSql.initDbBin, config.postgreSql.initDbArgs, {encoding: 'utf8'});
+    await spawnPromise(config.postgreSql.initDbBin, config.postgreSql.initDbArgs, { encoding: 'utf8' });
   } catch (error) {
     log.error(error);
   }
@@ -99,9 +99,13 @@ export const startWebApp = async (config: any) => {
 };
 
 export const startDeviceMediator = async (config: any) => {
-  const hitTrackerDeviceMediator = childProcess.fork(config.hitTrackerDeviceMediator.bin, config.hitTrackerDeviceMediator.args, {
-    env: { ELECTRON_VERSION: process.versions.electron },
-  });
+  const hitTrackerDeviceMediator = childProcess.fork(
+    config.hitTrackerDeviceMediator.bin,
+    config.hitTrackerDeviceMediator.args,
+    {
+      env: { ELECTRON_VERSION: process.versions.electron },
+    }
+  );
 
   return hitTrackerDeviceMediator;
 };
