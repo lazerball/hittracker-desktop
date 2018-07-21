@@ -103,6 +103,16 @@ export const getConfig = (env: string, debug: boolean) => {
   }
   fastCgi.args.push(...['-c', php.phpIni]);
 
+  const hitTrackerDeviceMediator: IBaseConfigOptions = {
+    bin: require.resolve('@lazerball/hittracker-device-mediator'),
+    port: 30010,
+    hciDevice: 0,
+  };
+
+  hitTrackerDeviceMediator.args = ['--hit-url', `http://localhost:${hitTracker.port}`, '--port', hitTrackerDeviceMediator.port, '--hci-device', hitTrackerDeviceMediator.hciDevice];
+  if (debug) {
+    hitTrackerDeviceMediator.args.push(...['-v']);
+  }
   const caddy: IBaseConfigOptions = {
     bin: path.join(bundledPackageDir, `caddy-${platform}-${arch}`, 'caddy'),
     args: ['-conf', path.join(configFilesDir, 'Caddyfile')],
@@ -116,17 +126,6 @@ export const getConfig = (env: string, debug: boolean) => {
       FASTCGI_PORT: fastCgi.port,
     },
   };
-
-  const hitTrackerDeviceMediator: IBaseConfigOptions = {
-    bin: require.resolve('@lazerball/hittracker-device-mediator'),
-    port: 30010,
-    hciDevice: 0,
-  };
-
-  hitTrackerDeviceMediator.args = ['--hit-url', `http://localhost:${hitTracker.port}`, '--port', hitTrackerDeviceMediator.port, '--hci-device', hitTrackerDeviceMediator.hciDevice];
-  if (debug) {
-    hitTrackerDeviceMediator.args.push(...['-v']);
-  }
 
   return { app, caddy, fastCgi, hitTracker, hitTrackerDeviceMediator, php, postgreSql };
 };
