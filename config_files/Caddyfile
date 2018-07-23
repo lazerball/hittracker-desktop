@@ -17,7 +17,7 @@
     }
 
     # https://caddyserver.com/docs/fastcgi
-    # pool is the number of persistent connections to reuse (can be good for performance on Windows); default is 0.
     fastcgi / {$FASTCGI_HOST}:{$FASTCGI_PORT} php {
+        pool 2
     }
 }
