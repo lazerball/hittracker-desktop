@@ -85,7 +85,7 @@ const createWindow = async () => {
     height: 600,
     webPreferences: {
       // preload: path.join(__dirname, 'preload-launcher.js'),
-      nodeIntegration: false, // needed?
+      nodeIntegration: false,
       defaultEncoding: 'UTF-8',
     },
   });
@@ -93,8 +93,8 @@ const createWindow = async () => {
   const processes = await startWebApp(config);
 
   const hitTrackerDeviceMediator = await startDeviceMediator(config);
-  processes.push(dbProcess);
   processes.push(hitTrackerDeviceMediator);
+  processes.push(dbProcess);
 
   const ssePubsub = await startSsePubsub(config);
   processes.push(ssePubsub);

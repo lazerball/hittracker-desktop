@@ -118,6 +118,7 @@ export const getConfig = (env: string, debug: boolean) => {
   if (debug) {
     hitTrackerDeviceMediator.args.push(...['-v']);
   }
+
   const caddy: IBaseConfigOptions = {
     bin: path.join(bundledPackageDir, `caddy-${platform}-${arch}`, 'caddy'),
     args: ['-conf', path.join(configFilesDir, 'Caddyfile')],
