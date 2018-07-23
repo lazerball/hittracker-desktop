@@ -82,6 +82,7 @@ const createWindow = async () => {
   enableApplicationMenu();
   mainWindow = new BrowserWindow({
     width: 900,
+    backgroundColor: '#FFF', // https://github.com/electron/electron/issues/10025
     height: 600,
     webPreferences: {
       // preload: path.join(__dirname, 'preload-launcher.js'),
