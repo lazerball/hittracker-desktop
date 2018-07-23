@@ -6,6 +6,28 @@
     root {$SITE_MEDIA_ROOT}
 }
 
+{$SITE_HOSTNAME}:{$SITE_PORT}/sse
+    bind {$SITE_ADDRESS}
+    log stdout
+    errors stderr
+    proxy / localhost:{$SSE_PUBSUB_PORT} {
+        #timeout duration
+        without /sse
+        transparent
+    }
+}
+
+{$SITE_HOSTNAME}:{$SITE_PORT}/blegateway
+    bind {$SITE_ADDRESS}
+    errors stderr
+
+    proxy / localhost:{$BLE_GATEWAY_PORT} {
+        #timeout duration
+        without /blegateway
+        transparent
+    }
+}
+
 {$SITE_HOSTNAME}:{$SITE_PORT}/ {
     bind {$SITE_ADDRESS}
     log stdout
