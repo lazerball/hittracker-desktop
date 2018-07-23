@@ -7,7 +7,7 @@ import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
 
 import { getConfig } from './config';
-import { firstRun, initDatabase, startDatabase, startDeviceMediator, startWebApp } from './external-commands';
+import { firstRun, initDatabase, startDatabase, startDeviceMediator, startSsePubsub, startWebApp } from './external-commands';
 
 import { enableApplicationMenu } from './menu';
 import * as utils from './utils';
@@ -96,6 +96,8 @@ const createWindow = async () => {
   processes.push(dbProcess);
   processes.push(hitTrackerDeviceMediator);
 
+  const ssePubsub = await startSsePubsub(config);
+  processes.push(ssePubsub);
   mainWindow.loadURL(config.hitTracker.url);
 
   mainWindow.on('closed', () => {

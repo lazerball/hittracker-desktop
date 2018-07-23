@@ -103,6 +103,11 @@ export const getConfig = (env: string, debug: boolean) => {
   }
   fastCgi.args.push(...['-c', php.phpIni]);
 
+  const ssePubsub: IBaseConfigOptions = {
+    bin: require.resolve('./sse-pubsub.js'),
+    port: 40000,
+  };
+
   const hitTrackerDeviceMediator: IBaseConfigOptions = {
     bin: require.resolve('@lazerball/hittracker-device-mediator'),
     port: 30010,
@@ -124,8 +129,10 @@ export const getConfig = (env: string, debug: boolean) => {
       SITE_MEDIA_ROOT: hitTracker.uploadDir,
       FASTCGI_HOST: fastCgi.host,
       FASTCGI_PORT: fastCgi.port,
+      SSE_PUBSUB_PORT: ssePubsub.port,
+      BLE_GATEWAY_PORT: hitTrackerDeviceMediator.port,
     },
   };
 
-  return { app, caddy, fastCgi, hitTracker, hitTrackerDeviceMediator, php, postgreSql };
+  return { app, caddy, fastCgi, hitTracker, hitTrackerDeviceMediator, php, postgreSql, ssePubsub };
 };

@@ -109,3 +109,11 @@ export const startDeviceMediator = async (config: any) => {
 
   return hitTrackerDeviceMediator;
 };
+
+export const startSsePubsub = async (config: any) => {
+  const ssePubsub = childProcess.fork(config.ssePubsub.bin, [], {
+    env: { SSE_PUBSUB_PORT: config.ssePubsub.port },
+  });
+
+  return ssePubsub;
+};
