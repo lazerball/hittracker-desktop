@@ -37,8 +37,7 @@
   },
   "dependencies": {
     "@electron-forge/publisher-github": "^6.0.0-beta.22",
-    "@lazerball/hittracker-device-mediator": "^1.1.7",
-    "@types/cross-spawn": "^6.0.0",
+    "@lazerball/hittracker-device-mediator": "^1.1.12",
     "@lazerball/sse-pubsub": "^1.1.1",
     "body-parser": "^1.18.3",
     "cross-spawn": "^6.0.5",
