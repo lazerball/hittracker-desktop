@@ -104,7 +104,7 @@ export const getConfig = (env: string, debug: boolean) => {
   fastCgi.args.push(...['-c', php.phpIni]);
 
   const ssePubsub: IBaseConfigOptions = {
-    bin: require.resolve('./sse-pubsub.js'),
+    bin: path.join(__dirname, 'sse-pubsub.js'),
     port: 40000,
   };
 
