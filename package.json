@@ -85,7 +85,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "devtron": "^1.4.0",
     "download": "^7.1.0",
-    "electron-prebuilt-compile": "2.0.5",
+    "electron-prebuilt-compile": "2.0.4",
     "electron-rebuild": "^1.7.3",
     "prettier": "^1.13.7",
     "spectron": "^3.6.0",
