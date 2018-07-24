@@ -55,7 +55,6 @@
     "gulp": "^4",
     "gulp-cli": "^2.0.1",
     "lodash": "^4.17.4",
-    "printer": "^0.2.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.3.3",
