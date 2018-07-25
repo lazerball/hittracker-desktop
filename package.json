@@ -1,7 +1,7 @@
 {
   "name": "hittracker-desktop",
   "productName": "HitTracker",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "HitTracker desktop application",
   "homepage": "https://www.lazerball.com",
   "bugs": {
@@ -74,7 +74,7 @@
     "@types/express": "^4.16.0",
     "@types/gulp": "^4.0.2",
     "@types/lodash": "^4.14.113",
-    "@types/node": "^10.5.2",
+    "@types/node": "^10.5.3",
     "@types/xdg-basedir": "^2.0.0",
     "async": "^2.1.5",
     "babel-plugin-transform-async-to-generator": "^6.22.0",
