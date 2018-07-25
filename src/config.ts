@@ -18,7 +18,7 @@ export const getConfig = (env: string, debug: boolean) => {
   const simplePlatform = platform === 'win32' ? 'win32' : 'unix';
   const userDataPath = electronApp.getPath('userData');
 
-  const hostName = 'localhost';
+  const hostName = '127.0.0.1';
 
   const bundledPackageDir = path.join(utils.getVendoredFilesRootDir(), 'bundled');
   const configFilesDir = path.join(utils.getVendoredFilesRootDir(), 'config_files');
@@ -64,7 +64,7 @@ export const getConfig = (env: string, debug: boolean) => {
     appDir: hitTrackerAppDir,
     webDir: path.join(hitTrackerAppDir, 'public'),
     uploadDir: path.join(userDataPath, 'media'),
-    databasePath: `pgsql://${postgreSql.user}@localhost:${postgreSql.port}/hittracker`,
+    databasePath: `pgsql://${postgreSql.user}@${hostName}:${postgreSql.port}/hittracker`,
     rootUri: '/',
     port: 8088,
     url: '',
@@ -94,7 +94,7 @@ export const getConfig = (env: string, debug: boolean) => {
     bin: 'php-fpm',
     args: ['-p', path.join(userDataPath, 'php'), '-y', path.join(hitTrackerAppDir, 'etc', 'electron', 'php-fpm.conf')],
     port: 8081,
-    host: 'localhost',
+    host: hostName,
     env: hitTracker.env,
   };
   if (platform === 'win32') {
@@ -114,7 +114,7 @@ export const getConfig = (env: string, debug: boolean) => {
     hciDevice: 0,
   };
 
-  hitTrackerDeviceMediator.args = ['--hit-url', `http://localhost:${hitTracker.port}`, '--port', hitTrackerDeviceMediator.port, '--hci-device', hitTrackerDeviceMediator.hciDevice];
+  hitTrackerDeviceMediator.args = ['--hit-url', `http://${hostName}:${hitTracker.port}`, '--port', hitTrackerDeviceMediator.port, '--hci-device', hitTrackerDeviceMediator.hciDevice];
   if (debug) {
     hitTrackerDeviceMediator.args.push(...['-v']);
   }
