@@ -56,6 +56,5 @@ cache:
 
 
 branches:
-  only:
+  except:
     - gh-pages
-    - /^v\d+\.\d+\.\d+/
