@@ -83,6 +83,19 @@ export const startDatabase = async (config: any) => {
   return postgreSql;
 };
 
+export const stopDatabase = async (config: any) => {
+
+  const postgreSql = spawn(config.postgreSql.bin, ['stop'], {
+    windowsHide: true,
+    cwd: config.postgreSql.binDir, // the dlls are located in the bin dir on windows
+    env: config.postgreSql.env,
+  });
+
+  postgreSql.stdout.on('data', processLogger);
+  postgreSql.stderr.on('data', processErrorLogger);
+
+};
+
 export const startPhpFpm = async (config: any) => {
   const phpFpm = spawn(config.fastCgi.bin, config.fastCgi.args, {
     windowsHide: true,

@@ -7,7 +7,7 @@ import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
 
 import { getConfig } from './config';
-import { firstRun, initDatabase, startDatabase, startDeviceMediator, startPhpFpm, startSsePubsub, startWebServer } from './external-commands';
+import { firstRun, initDatabase, startDatabase, startDeviceMediator, startPhpFpm, startSsePubsub, startWebServer, stopDatabase } from './external-commands';
 
 import { enableApplicationMenu } from './menu';
 import * as utils from './utils';
@@ -78,8 +78,7 @@ const createWindow = async () => {
   const processes: ChildProcess[] = [];
   await initDatabase(config);
 
-  const dbProcess = await startDatabase(config);
-  processes.push(dbProcess);
+  await startDatabase(config);
 
   await firstRun(config);
 
@@ -108,11 +107,12 @@ const createWindow = async () => {
 
   mainWindow.loadURL(config.hitTracker.url);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  mainWindow.on('closed', async () => {
     processes.forEach((process: ChildProcess) => {
       process.kill();
     });
+    await stopDatabase(config);
+    mainWindow = null;
   });
 };
 
