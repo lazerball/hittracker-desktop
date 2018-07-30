@@ -86,7 +86,7 @@
     "download": "^7.1.0",
     "electron-prebuilt-compile": "2.0.4",
     "electron-rebuild": "^1.7.3",
-    "prettier": "^1.13.7",
+    "prettier": "^1.14.0",
     "spectron": "^3.6.0",
     "tmp": "^0.0.33",
     "ts-node": "^7.0.0",
