@@ -32,16 +32,21 @@ export const getConfig = (env: string, debug: boolean) => {
   const postgreSql: IBaseConfigOptions = {
     bin: '',
     binDir: path.join(postgreSqlDir, 'bin'),
-    dataDir:  path.join(userDataPath, 'postgres'),
+    dataDir: path.join(userDataPath, 'postgres'),
     configDir: path.join(configFilesDir, 'postgres'),
     user: 'postgres',
     port: 54320,
+    env: {}
   };
 
-  postgreSql.bin = path.join(postgreSql.binDir, executableName('postgres'));
-  postgreSql.args = ['-D', postgreSql.configDir, '-c', `data_directory=${postgreSql.dataDir}`, '-p', postgreSql.port, '-h', hostName];
+  postgreSql.env = {
+    'PGPORT': postgreSql.port,
+    'PGDATA': postgreSql.dataDir
+  };
+  postgreSql.bin = path.join(postgreSql.binDir, executableName('pg_ctl'));
+  postgreSql.args = [`-o '-h ${hostName}'`];
   postgreSql.initDbBin = path.join(postgreSql.binDir, executableName('initdb'));
-  postgreSql.initDbArgs = ['-D', postgreSql.dataDir, '-E', 'utf8', '-U', 'postgres', '--locale', electronApp.getLocale()];
+  postgreSql.initDbArgs = ['--encoding', 'utf8', '--username', 'postgres'];
 
   const hitTrackerAppDir = path.join(bundledPackageDir, `HitTracker-${platform}`);
   // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?

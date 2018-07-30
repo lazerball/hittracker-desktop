@@ -58,18 +58,23 @@ const processErrorLogger = (msg: any) => {
 
 export const initDatabase = async (config: any) => {
   if (jetpack.exists(path.join(config.postgreSql.dataDir, 'PG_VERSION'))) return;
-
   try {
     jetpack.dir(config.postgreSql.dataDir, { mode: 0o700 });
-    await spawnPromise(config.postgreSql.initDbBin, config.postgreSql.initDbArgs, { encoding: 'utf8' });
+
+    await spawnPromise(config.postgreSql.initDbBin, config.postgreSql.initDbArgs, {
+      encoding: 'utf8',
+      env: config.postgreSql.env,
+      cwd: config.postgreSql.binDir, // the dlls are located in the bin dir on windows
+    });
   } catch (error) {
     log.error(error);
   }
 };
 export const startDatabase = async (config: any) => {
-  const postgreSql = spawn(config.postgreSql.bin, config.postgreSql.args, {
+  const postgreSql = spawn(config.postgreSql.bin, ['start', ...config.postgreSql.args], {
     windowsHide: true,
     cwd: config.postgreSql.binDir, // the dlls are located in the bin dir on windows
+    env: config.postgreSql.env,
   });
 
   postgreSql.stdout.on('data', processLogger);
