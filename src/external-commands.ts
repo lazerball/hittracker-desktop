@@ -78,7 +78,7 @@ export const startDatabase = async (config: any) => {
   return postgreSql;
 };
 
-export const startWebApp = async (config: any) => {
+export const startPhpFpm = async (config: any) => {
   const phpFpm = spawn(config.fastCgi.bin, config.fastCgi.args, {
     windowsHide: true,
     env: appendEnvVars(config.fastCgi.env),
@@ -87,6 +87,10 @@ export const startWebApp = async (config: any) => {
   phpFpm.stdout.on('data', processLogger);
   phpFpm.stderr.on('data', processErrorLogger);
 
+  return phpFpm;
+};
+
+export const startWebServer = async (config: any) => {
   const caddy = spawn(config.caddy.bin, config.caddy.args, {
     windowsHide: true,
     env: appendEnvVars(config.caddy.env),
@@ -95,7 +99,7 @@ export const startWebApp = async (config: any) => {
   caddy.stdout.on('data', processLogger);
   caddy.stderr.on('data', processErrorLogger);
 
-  return [caddy, phpFpm];
+  return caddy;
 };
 
 export const startDeviceMediator = async (config: any) => {

@@ -7,7 +7,7 @@ import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
 
 import { getConfig } from './config';
-import { firstRun, initDatabase, startDatabase, startDeviceMediator, startSsePubsub, startWebApp } from './external-commands';
+import { firstRun, initDatabase, startDatabase, startDeviceMediator, startPhpFpm, startSsePubsub, startWebServer } from './external-commands';
 
 import { enableApplicationMenu } from './menu';
 import * as utils from './utils';
@@ -75,8 +75,12 @@ const createWindow = async () => {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
 
+  const processes: ChildProcess[] = [];
   await initDatabase(config);
+
   const dbProcess = await startDatabase(config);
+  processes.push(dbProcess);
+
   await firstRun(config);
 
   enableApplicationMenu();
@@ -91,14 +95,17 @@ const createWindow = async () => {
     },
   });
 
-  const processes = await startWebApp(config);
+  const phpFpm = await startPhpFpm(config);
+  processes.push(phpFpm);
+  const webServer = await startWebServer(config);
+  processes.push(webServer);
 
   const hitTrackerDeviceMediator = await startDeviceMediator(config);
   processes.push(hitTrackerDeviceMediator);
-  processes.push(dbProcess);
 
   const ssePubsub = await startSsePubsub(config);
   processes.push(ssePubsub);
+
   mainWindow.loadURL(config.hitTracker.url);
 
   mainWindow.on('closed', () => {
