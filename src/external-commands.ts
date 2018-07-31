@@ -84,7 +84,6 @@ export const startDatabase = async (config: any) => {
 };
 
 export const stopDatabase = async (config: any) => {
-
   const postgreSql = spawn(config.postgreSql.bin, ['stop'], {
     windowsHide: true,
     cwd: config.postgreSql.binDir, // the dlls are located in the bin dir on windows
@@ -93,7 +92,6 @@ export const stopDatabase = async (config: any) => {
 
   postgreSql.stdout.on('data', processLogger);
   postgreSql.stderr.on('data', processErrorLogger);
-
 };
 
 export const startPhpFpm = async (config: any) => {
@@ -121,7 +119,26 @@ export const startWebServer = async (config: any) => {
 };
 
 export const startDeviceMediator = async (config: any) => {
-  const hitTrackerDeviceMediator = childProcess.fork(
+  // @todo: remove this when a fix for https://github.com/electron/electron/issues/13458 is released
+  const setTimeoutAsync = async (delay: number) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, delay);
+    });
+  };
+  let hitTrackerDeviceMediator;
+  hitTrackerDeviceMediator = childProcess.fork(
+    config.hitTrackerDeviceMediator.bin,
+    config.hitTrackerDeviceMediator.args,
+    {
+      env: { ELECTRON_VERSION: process.versions.electron },
+    }
+  );
+
+  await setTimeoutAsync(2000);
+  hitTrackerDeviceMediator.kill('SIGINT');
+  await setTimeoutAsync(2000);
+
+  hitTrackerDeviceMediator = childProcess.fork(
     config.hitTrackerDeviceMediator.bin,
     config.hitTrackerDeviceMediator.args,
     {
