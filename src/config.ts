@@ -45,7 +45,9 @@ export const getConfig = (env: string, debug: boolean) => {
     'PGDATA': postgreSql.dataDir
   };
   postgreSql.bin = path.join(postgreSql.binDir, executableName('pg_ctl'));
-  postgreSql.args = [`-o '-h ${hostName}'`];
+  if (simplePlatform === 'unix') {
+    postgreSql.args.push(`-o '-h ${hostName}'`);
+  }
   postgreSql.initDbBin = path.join(postgreSql.binDir, executableName('initdb'));
   postgreSql.initDbArgs = ['--encoding', 'utf8', '--username', 'postgres'];
 
