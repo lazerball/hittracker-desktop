@@ -85,7 +85,7 @@
     "devtron": "^1.4.0",
     "download": "^7.1.0",
     "electron-prebuilt-compile": "2.0.4",
-    "electron-rebuild": "^1.7.3",
+    "electron-rebuild": "^1.8.2",
     "prettier": "^1.14.0",
     "spectron": "^3.6.0",
     "tmp": "^0.0.33",
