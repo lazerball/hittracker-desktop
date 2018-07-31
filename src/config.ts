@@ -5,7 +5,7 @@ import * as utils from './utils';
 export interface IBaseConfigOptions {
   bin: string;
   port?: number;
-  args?: Array<string|number>;
+  args: Array<string|number>;
   env?: any;
   [propName: string]: any;
 }
@@ -36,6 +36,7 @@ export const getConfig = (env: string, debug: boolean) => {
     configDir: path.join(configFilesDir, 'postgres'),
     user: 'postgres',
     port: 54320,
+    args: [],
     env: {}
   };
 
@@ -53,6 +54,7 @@ export const getConfig = (env: string, debug: boolean) => {
   const phpIni = path.join(hitTrackerAppDir, 'etc', 'electron', `php-${simplePlatform}-${env}.ini`);
   const php: IBaseConfigOptions = {
     bin: executableName('php'),
+    args: [],
     phpIni,
     env: {
       PHPRC: phpIni,
@@ -66,6 +68,7 @@ export const getConfig = (env: string, debug: boolean) => {
 
   const hitTracker: IBaseConfigOptions = {
     bin: path.join(hitTrackerAppDir, 'bin', 'console'),
+    args: [],
     appDir: hitTrackerAppDir,
     webDir: path.join(hitTrackerAppDir, 'public'),
     uploadDir: path.join(userDataPath, 'media'),
@@ -110,11 +113,13 @@ export const getConfig = (env: string, debug: boolean) => {
 
   const ssePubsub: IBaseConfigOptions = {
     bin: path.join(__dirname, 'sse-pubsub.js'),
+    args: [],
     port: 40000,
   };
 
   const hitTrackerDeviceMediator: IBaseConfigOptions = {
     bin: require.resolve('@lazerball/hittracker-device-mediator'),
+    args: [],
     port: 30010,
     hciDevice: 0,
   };
