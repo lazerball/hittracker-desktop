@@ -134,9 +134,9 @@ export const startDeviceMediator = async (config: any) => {
     }
   );
 
-  await setTimeoutAsync(2000);
+  await setTimeoutAsync(4000);
   hitTrackerDeviceMediator.kill('SIGINT');
-  await setTimeoutAsync(2000);
+  await setTimeoutAsync(4000);
 
   hitTrackerDeviceMediator = childProcess.fork(
     config.hitTrackerDeviceMediator.bin,

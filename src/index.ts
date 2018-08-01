@@ -15,6 +15,9 @@ import * as utils from './utils';
 /* tslint:disable:no-duplicate-imports no-console */
 import { dialog } from 'electron';
 console.log(dialog);
+
+const processes: ChildProcess[] = [];
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // tslint:disable-next-line:no-var-requires
 if (require('electron-squirrel-startup')) {
@@ -75,7 +78,6 @@ const createWindow = async () => {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
 
-  const processes: ChildProcess[] = [];
   await initDatabase(config);
 
   await startDatabase(config);
