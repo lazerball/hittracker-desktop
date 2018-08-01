@@ -36,7 +36,7 @@ export const getConfig = (env: string, debug: boolean) => {
     configDir: path.join(configFilesDir, 'postgres'),
     user: 'postgres',
     port: 54320,
-    args: [],
+    args: ['-w'],
     env: {}
   };
 
