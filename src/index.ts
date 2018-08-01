@@ -84,9 +84,7 @@ const createWindow = async () => {
 
   enableApplicationMenu();
   mainWindow = new BrowserWindow({
-    width: 900,
     backgroundColor: '#FFF', // https://github.com/electron/electron/issues/10025
-    height: 600,
     webPreferences: {
       // preload: path.join(__dirname, 'preload-launcher.js'),
       nodeIntegration: false,
@@ -106,6 +104,9 @@ const createWindow = async () => {
   processes.push(ssePubsub);
 
   mainWindow.loadURL(config.hitTracker.url);
+
+  mainWindow.maximize();
+  mainWindow.show();
 
   mainWindow.on('closed', async () => {
     processes.forEach((process: ChildProcess) => {
