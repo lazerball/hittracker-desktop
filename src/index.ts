@@ -111,10 +111,6 @@ const createWindow = async () => {
   mainWindow.show();
 
   mainWindow.on('closed', async () => {
-    processes.forEach((process: ChildProcess) => {
-      process.kill();
-    });
-    await stopDatabase(config);
     mainWindow = null;
   });
 };
@@ -128,7 +124,12 @@ app.on('activate', async () => {
     await createWindow();
   }
 });
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
+    processes.forEach((process: ChildProcess) => {
+      process.kill();
+    });
+    await stopDatabase(config);
+
   if (process.platform !== 'darwin') {
     app.quit();
   }
