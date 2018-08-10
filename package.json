@@ -84,7 +84,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "devtron": "^1.4.0",
     "download": "^7.1.0",
-    "electron-prebuilt-compile": "2.0.6",
+    "electron-prebuilt-compile": "2.0.7",
     "electron-rebuild": "^1.8.2",
     "prettier": "^1.14.2",
     "spectron": "^3.6.0",
@@ -94,7 +94,7 @@
     "tslint-config-prettier": "^1.14.0",
     "tslint-config-standard": "^7.1.0",
     "tslint-language-service": "^0.9.9",
-    "typescript": "^3.0.1"
+    "typescript": "^2.9.2"
   },
   "prettier": {
     "semi": true,
