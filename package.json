@@ -57,7 +57,7 @@
     "lodash": "^4.17.4",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-hot-loader": "^4.3.4",
+    "react-hot-loader": "^4.3.5",
     "tslib": "^1.9.3",
     "xdg-basedir": "^3.0.0"
   },
@@ -91,7 +91,7 @@
     "tmp": "^0.0.33",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.14.0",
+    "tslint-config-prettier": "^1.15.0",
     "tslint-config-standard": "^7.1.0",
     "tslint-language-service": "^0.9.9",
     "typescript": "^2.9.2"
