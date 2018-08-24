@@ -1,6 +1,7 @@
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
 import * as path from 'path';
+import * as util from 'util';
 
 import * as childProcess from 'child_process';
 import * as spawn from 'cross-spawn';
@@ -119,12 +120,7 @@ export const startWebServer = async (config: any) => {
 };
 
 export const startDeviceMediator = async (config: any) => {
-  // @todo: remove this when a fix for https://github.com/electron/electron/issues/13458 is released
-  const setTimeoutAsync = async (delay: number) => {
-    return new Promise(resolve => {
-      setTimeout(resolve, delay);
-    });
-  };
+  const setTimeoutAsync = util.promisify(setTimeout);
   let hitTrackerDeviceMediator;
   hitTrackerDeviceMediator = childProcess.fork(
     config.hitTrackerDeviceMediator.bin,
