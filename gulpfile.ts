@@ -51,7 +51,7 @@ const fetchPhp = async (unpackDir: string, platform: string, arch: string) => {
     return;
   }
   const phpArch = arch === 'ia32' ? 'x86' : arch;
-  const url = `https://windows.php.net/downloads/releases/php-7.2.9-nts-Win32-VC15-${phpArch}.zip`;
+  const url = `https://windows.php.net/downloads/releases/php-7.2.10-nts-Win32-VC15-${phpArch}.zip`;
   try {
     await download(url, unpackDir, { extract: true });
     const cleanExtList = [
