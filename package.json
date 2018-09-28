@@ -93,7 +93,7 @@
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-config-standard": "^8.0.0",
-    "tslint-language-service": " angelozerr/tslint-language-service",
+    "tslint-language-service": "angelozerr/tslint-language-service",
     "typescript": "^3.0.0"
   },
   "prettier": {
