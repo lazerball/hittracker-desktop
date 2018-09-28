@@ -120,7 +120,6 @@ export const startWebServer = async (config: any) => {
 };
 
 export const startDeviceMediator = async (config: any) => {
-  const setTimeoutAsync = util.promisify(setTimeout);
   let hitTrackerDeviceMediator;
   /*hitTrackerDeviceMediator = childProcess.fork(
     config.hitTrackerDeviceMediator.bin,
