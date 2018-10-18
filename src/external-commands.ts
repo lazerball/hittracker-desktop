@@ -121,7 +121,7 @@ export const startWebServer = async (config: any) => {
 
 export const startDeviceMediator = async (config: any) => {
   let hitTrackerDeviceMediator;
-  /*hitTrackerDeviceMediator = childProcess.fork(
+  hitTrackerDeviceMediator = childProcess.fork(
     config.hitTrackerDeviceMediator.bin,
     config.hitTrackerDeviceMediator.args,
     {
@@ -129,10 +129,10 @@ export const startDeviceMediator = async (config: any) => {
     }
   );
 
+  const setTimeoutAsync = util.promisify(setTimeout);
   await setTimeoutAsync(4000);
   hitTrackerDeviceMediator.kill('SIGINT');
   await setTimeoutAsync(4000);
-  */
   hitTrackerDeviceMediator = childProcess.fork(
     config.hitTrackerDeviceMediator.bin,
     config.hitTrackerDeviceMediator.args,
