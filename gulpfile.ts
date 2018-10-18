@@ -51,7 +51,7 @@ const fetchPhp = async (unpackDir: string, platform: string, arch: string) => {
     return;
   }
   const phpArch = arch === 'ia32' ? 'x86' : arch;
-  const url = `https://windows.php.net/downloads/releases/php-7.2.10-nts-Win32-VC15-${phpArch}.zip`;
+  const url = `https://windows.php.net/downloads/releases/php-7.2.11-nts-Win32-VC15-${phpArch}.zip`;
   try {
     await download(url, unpackDir, { extract: true });
     const cleanExtList = [
@@ -91,7 +91,7 @@ const fetchHitTracker = async (unpackDir: string, platform: string) => {
     console.log('Not downloading HitTracker since we already have it.');
     return;
   }
-  const hitTrackerVersion = '0.3.18';
+  const hitTrackerVersion = '0.3.20';
   const file = `HitTracker-electron-${platform}-${hitTrackerVersion}.tar.bz2`;
   const url = `https://github.com/lazerball/HitTracker/releases/download/${hitTrackerVersion}/${file}`;
   try {
