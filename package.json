@@ -36,7 +36,7 @@
     }
   },
   "dependencies": {
-    "@lazerball/hittracker-device-mediator": "^1.1.26",
+    "@lazerball/hittracker-device-mediator": "^1.1.28",
     "@lazerball/sse-pubsub": "^1.1.1",
     "body-parser": "^1.18.3",
     "cross-spawn": "^6.0.5",
