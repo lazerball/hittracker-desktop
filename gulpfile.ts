@@ -14,7 +14,7 @@ const fetchPhpExtensions = async (unpackDir: string, platform: string, arch: str
   // @todo: don't use http url for getting php
   const phpArch = arch === 'ia32' ? 'x86' : arch;
 
-  const apcuUrl = `https://windows.php.net/downloads/pecl/releases/apcu/5.1.9/php_apcu-5.1.9-7.2-nts-vc15-${phpArch}.zip`;
+  const apcuUrl = `https://windows.php.net/downloads/pecl/releases/apcu/5.1.16/php_apcu-5.1.16-7.3-nts-vc15-${phpArch}.zip`;
   const apcuDir = path.join('bundled', `php-ext-apcu-${platform}-${arch}`);
 
   jetpack.dir(apcuDir);
@@ -30,7 +30,7 @@ const fetchPhpExtensions = async (unpackDir: string, platform: string, arch: str
 
   console.log('Successfully downloaded apcU');
   const xdebugArch = arch === 'x64' ? '-x86_64' : '';
-  const xdebugFile = `php_xdebug-2.6.0-7.2-vc15-nts${xdebugArch}.dll`;
+  const xdebugFile = `php_xdebug-2.7.0RC1-7.3-vc15-nts${xdebugArch}.dll`;
   const xdebugUrl = `https://xdebug.org/files/${xdebugFile}`;
   const xdebugDir = path.join('bundled', `php-ext-xebug-${platform}-${arch}`);
 
@@ -51,7 +51,7 @@ const fetchPhp = async (unpackDir: string, platform: string, arch: string) => {
     return;
   }
   const phpArch = arch === 'ia32' ? 'x86' : arch;
-  const url = `https://windows.php.net/downloads/releases/php-7.2.11-nts-Win32-VC15-${phpArch}.zip`;
+  const url = `https://windows.php.net/downloads/releases/php-7.3.1-nts-Win32-VC15-${phpArch}.zip`;
   try {
     await download(url, unpackDir, { extract: true });
     const cleanExtList = [
