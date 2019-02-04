@@ -36,7 +36,6 @@
     }
   },
   "dependencies": {
-    "@electron-forge/publisher-github": "^6.0.0-beta.22",
     "@lazerball/hittracker-device-mediator": "^1.1.26",
     "@lazerball/sse-pubsub": "^1.1.1",
     "body-parser": "^1.18.3",
@@ -62,11 +61,12 @@
     "xdg-basedir": "^3.0.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.32",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.32",
-    "@electron-forge/maker-zip": "^6.0.0-beta.32",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.32",
-    "@electron-forge/plugin-compile": "^6.0.0-beta.32",
+    "@electron-forge/cli": "6.0.0-beta.30",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.30",
+    "@electron-forge/maker-zip": "6.0.0-beta.30",
+    "@electron-forge/plugin-auto-unpack-natives": "6.0.0-beta.30",
+    "@electron-forge/plugin-compile": "6.0.0-beta.30",
+    "@electron-forge/publisher-github": "6.0.0-beta.30",
     "@types/body-parser": "^1.17.0",
     "@types/cross-spawn": "^6.0.0",
     "@types/download": "^6.2.4",
@@ -89,7 +89,7 @@
     "prettier": "^1.16.4",
     "spectron": "^4.0.0",
     "tmp": "^0.0.33",
-    "ts-node": "^8.0.2",
+    "ts-node": "^7.0.1",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.17.0",
     "tslint-config-standard": "^8.0.0",
