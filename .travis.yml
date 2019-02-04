@@ -6,8 +6,7 @@ os:
   - linux
 #  - osx
 
-sudo: false
-dist: trusty
+dist: xenial
 
 # osx_image: xcode8.3
 
