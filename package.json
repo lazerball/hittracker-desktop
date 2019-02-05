@@ -87,7 +87,7 @@
     "electron-prebuilt-compile": "2.0.8",
     "electron-rebuild": "^1.8.2",
     "prettier": "^1.16.4",
-    "spectron": "^4.0.0",
+    "spectron": "^5.0.0",
     "tmp": "^0.0.33",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.1",
