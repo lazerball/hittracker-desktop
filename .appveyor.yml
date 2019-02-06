@@ -8,7 +8,7 @@ environment:
   global:
     GITHUB_TOKEN:
       secure: 9va/uJFLZdZhq9AUQif1Txb9nSaAcLzcWvSC20I6B7KdV6xXzAujIMGouU2zqQAW
-    node_version: "8.9.3"
+    node_version: "10.11.0"
     NODE_ENV: production
 
 branches:

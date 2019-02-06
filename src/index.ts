@@ -31,7 +31,6 @@ if (!utils.isPackaged()) {
   app.setName(packageJson.productName || packageJson.name);
 }
 
-
 const env: string = utils.isDev() ? 'development' : 'production';
 const debug = utils.isDebug();
 utils.setElectronIsDev(debug);
@@ -60,20 +59,19 @@ let mainWindow: Electron.BrowserWindow | null = null;
 
 contextMenu();
 
-const shouldQuit = app.makeSingleInstance(() => {
-  // Someone tried to run a second instance, we should focus our window.
-  if (mainWindow) {
-    if (mainWindow.isMinimized()) {
-      mainWindow.restore();
-    }
-    mainWindow.focus();
-  }
-});
+const gotTheLock = app.requestSingleInstanceLock();
 
-if (shouldQuit) {
+if (!gotTheLock) {
   app.quit();
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (myWindow) {
+      if (myWindow.isMinimized()) myWindow.restore();
+      myWindow.focus();
+    }
+  });
 }
-
 const createWindow = async () => {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
