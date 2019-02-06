@@ -7,7 +7,16 @@ import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
 
 import { getConfig } from './config';
-import { firstRun, initDatabase, startDatabase, startDeviceMediator, startPhpFpm, startSsePubsub, startWebServer, stopDatabase } from './external-commands';
+import {
+  firstRun,
+  initDatabase,
+  startDatabase,
+  startDeviceMediator,
+  startPhpFpm,
+  startSsePubsub,
+  startWebServer,
+  stopDatabase,
+} from './external-commands';
 
 import { enableApplicationMenu } from './menu';
 import * as utils from './utils';
@@ -123,10 +132,10 @@ app.on('activate', async () => {
   }
 });
 app.on('window-all-closed', async () => {
-    processes.forEach((process: ChildProcess) => {
-      process.kill();
-    });
-    await stopDatabase(config);
+  processes.forEach((process: ChildProcess) => {
+    process.kill();
+  });
+  await stopDatabase(config);
 
   if (process.platform !== 'darwin') {
     app.quit();
