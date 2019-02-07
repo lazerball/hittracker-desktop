@@ -36,7 +36,7 @@
     }
   },
   "dependencies": {
-    "@lazerball/hittracker-device-mediator": "^1.1.29",
+    "@lazerball/hittracker-device-mediator": "^1.1.30",
     "@lazerball/sse-pubsub": "^1.1.1",
     "body-parser": "^1.18.3",
     "cross-spawn": "^6.0.5",
@@ -54,8 +54,8 @@
     "gulp": "^4",
     "gulp-cli": "^2.0.1",
     "lodash": "^4.17.11",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
     "react-hot-loader": "^4.6.5",
     "tslib": "^1.9.3",
     "xdg-basedir": "^3.0.0"
