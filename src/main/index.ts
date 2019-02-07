@@ -36,7 +36,7 @@ if (require('electron-squirrel-startup')) {
 // We still want to show our app name even if running with prebuilt binary
 if (!utils.isPackaged()) {
   // tslint:disable-next-line:no-var-requires
-  const packageJson = require('../package.json');
+  const packageJson = require('../../package.json');
   app.setName(packageJson.productName || packageJson.name);
 }
 

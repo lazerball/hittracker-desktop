@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/lazerball/hittracker-desktop.git"
   },
-  "main": "src/index.ts",
+  "main": "src/main/index.ts",
   "scripts": {
     "cm": "git-cz",
     "lint": "tslint --project .",
