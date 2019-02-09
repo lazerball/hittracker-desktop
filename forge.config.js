@@ -35,7 +35,11 @@ const copyFilesIntoApp = async (forgeConfig, extractPath, electronVersion, platf
 };
 
 const cleanElectronReBuildBuildFiles = async (forgeConfig, prunePath, electronVersion, pPlatform, pArch) => {
-  const pathsToRemove = jetpack.find(path.join(prunePath, 'node_modules'), { directories: true, files: false, matching: '.deps'});
+  const pathsToRemove = jetpack.find(path.join(prunePath, 'node_modules'), {
+    directories: true,
+    files: false,
+    matching: '.deps',
+  });
   for (pathToRemove of pathsToRemove) {
     jetpack.remove(pathToRemove);
   }
@@ -69,7 +73,7 @@ module.exports = {
       config: {
         name: 'HitTracker',
         copyright: 'LazerBall Reusable Paintballs',
-      }
+      },
     },
   ],
   hooks: {
@@ -82,10 +86,10 @@ module.exports = {
       config: {
         repository: {
           owner: 'lazerball',
-          name: 'hittracker-desktop'
+          name: 'hittracker-desktop',
         },
-        draft: true
-      }
-    }
+        draft: true,
+      },
+    },
   ],
 };
