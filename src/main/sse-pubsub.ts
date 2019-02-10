@@ -1,15 +1,16 @@
-const bodyParser = require('body-parser');
-const express = require('express');
-const { SseChannel } = require('@lazerball/sse-pubsub');
+import * as bodyParser from 'body-parser';
+import * as express from 'express';
 
-const PORT = process.env.SSE_PUBSUB_PORT || 3101;
+import { SseChannel } from '@lazerball/sse-pubsub';
+
+const PORT = process.env.SSE_PUBSUB_PORT || '3101';
 
 const app = express();
 
-/*interface SseChanelList {
+interface SseChanelList {
   [index: string]: SseChannel;
-}*/
-const sseChannels = {
+}
+const sseChannels: SseChanelList = {
   game: new SseChannel(),
 };
 
@@ -43,4 +44,4 @@ app.use((_, res) => {
   res.status(404).end('Not found');
 });
 
-app.listen(PORT, '127.0.0.1');
+app.listen(parseInt(PORT, 10), '127.0.0.1', undefined);

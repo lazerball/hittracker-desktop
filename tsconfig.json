@@ -1,26 +1,12 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "plugins": [{ "name": "tslint-language-service" }],
     "moduleResolution": "node",
-    "target": "es2016", // Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'.
+    "target": "es2017",
     "module": "commonjs",
     "declaration": true,
-    "lib": ["es2016", "es2017.object"],
-    "outDir": "dist",
-    "removeComments": false,
-    "sourceMap": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "pretty": true,
-    "jsx": "react",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["./types/*","node_modules/electron-prebuilt-compile/node_modules/electron/*"]
-    },
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "outDir": "dist"
   },
-  "include": ["src/**/*", "*.js", "*.ts", "node_modules/electron-prebuilt-compile/node_modules/electron"],
+  "include": ["src/**/*", "*.js", "*.ts"],
   "exclude": ["node_modules", "dist", "out", "**/*.spec.ts"]
 }

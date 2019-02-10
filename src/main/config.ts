@@ -120,7 +120,7 @@ export const getConfig = (env: string, debug: boolean) => {
   };
 
   const hitTrackerDeviceMediator: IBaseConfigOptions = {
-    bin: require.resolve('@lazerball/hittracker-device-mediator'),
+    bin: path.join(__dirname, 'device-mediator.js'),
     args: [],
     port: 30010,
     hciDevice: 0,

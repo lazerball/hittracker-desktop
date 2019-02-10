@@ -1,4 +1,6 @@
 node_modules
+/bundled
+/dist
 /out
+/.webpack
 *.log
-bundled

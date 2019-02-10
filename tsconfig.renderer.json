@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "es2015"
+  },
+  "include": ["src/renderer/**/*"],
+  "exclude": ["node_modules"]
+}

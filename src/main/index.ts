@@ -95,7 +95,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     backgroundColor: '#FFF', // https://github.com/electron/electron/issues/10025
     webPreferences: {
-      // preload: path.join(__dirname, 'preload-launcher.js'),
+      // preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       nodeIntegration: false,
       defaultEncoding: 'UTF-8',
     },

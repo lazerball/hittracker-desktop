@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "plugins": [{ "name": "tslint-language-service" }],
+    "lib": ["es2016", "es2017.object"],
+    "sourceMap": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "pretty": true,
+    "removeComments": false,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./types/*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
