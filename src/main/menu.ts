@@ -28,8 +28,8 @@ const view: MenuItemConstructorOptions = {
       label: 'Back',
       accelerator: 'CmdOrCtrl+B',
       click: () => {
-        BrowserWindow.getFocusedWindow().webContents.goBack();
-      }
+        BrowserWindow.getFocusedWindow()!.webContents.goBack();
+      },
     },
     {
       role: 'forceReload'
