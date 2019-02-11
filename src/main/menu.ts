@@ -16,7 +16,7 @@ const file = {
 };
 
 const edit = {
-  role: 'editMenu'
+  role: 'editMenu',
 };
 
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
@@ -24,7 +24,6 @@ const view: MenuItemConstructorOptions = {
   label: 'View',
   submenu: [
     {
-
       label: 'Back',
       accelerator: 'CmdOrCtrl+B',
       click: () => {
@@ -32,25 +31,25 @@ const view: MenuItemConstructorOptions = {
       },
     },
     {
-      role: 'forceReload'
+      role: 'forceReload',
     },
     {
-      type: 'separator'
+      type: 'separator',
     },
     {
-      role: 'toggleFullScreen'
+      role: 'toggleFullScreen',
     },
     {
       role: 'zoomIn',
-      accelerator: 'CmdOrCtrl+Plus'
+      accelerator: 'CmdOrCtrl+Plus',
     },
     {
-      role: 'zoomOut'
+      role: 'zoomOut',
     },
     {
-      role: 'resetZoom'
+      role: 'resetZoom',
     },
-  ]
+  ],
 };
 
 const help = {
@@ -65,13 +64,13 @@ const help = {
         }),
     },
     {
-      role: 'toggleDevTools'
+      role: 'toggleDevTools',
     },
   ],
 };
 
 const window = {
-  role: 'windowMenu'
+  role: 'windowMenu',
 };
 
 export const enableApplicationMenu = () => {

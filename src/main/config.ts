@@ -5,7 +5,7 @@ import * as utils from './utils';
 export interface IBaseConfigOptions {
   bin: string;
   port?: number;
-  args: Array<string|number>;
+  args: Array<string | number>;
   env?: any;
   [propName: string]: any;
 }
@@ -37,12 +37,12 @@ export const getConfig = (env: string, debug: boolean) => {
     user: 'postgres',
     port: 54320,
     args: ['-w'],
-    env: {}
+    env: {},
   };
 
   postgreSql.env = {
-    'PGPORT': postgreSql.port,
-    'PGDATA': postgreSql.dataDir
+    PGPORT: postgreSql.port,
+    PGDATA: postgreSql.dataDir,
   };
   postgreSql.bin = path.join(postgreSql.binDir, executableName('pg_ctl'));
   if (simplePlatform === 'unix') {
@@ -126,7 +126,14 @@ export const getConfig = (env: string, debug: boolean) => {
     hciDevice: 0,
   };
 
-  hitTrackerDeviceMediator.args = ['--hit-url', `http://${hostName}:${hitTracker.port}`, '--port', hitTrackerDeviceMediator.port, '--hci-device', hitTrackerDeviceMediator.hciDevice];
+  hitTrackerDeviceMediator.args = [
+    '--hit-url',
+    `http://${hostName}:${hitTracker.port}`,
+    '--port',
+    hitTrackerDeviceMediator.port,
+    '--hci-device',
+    hitTrackerDeviceMediator.hciDevice,
+  ];
   if (debug) {
     hitTrackerDeviceMediator.args.push(...['-v']);
   }
