@@ -1,7 +1,7 @@
 {
   "name": "hittracker-desktop",
   "productName": "HitTracker",
-  "version": "0.2.52",
+  "version": "0.2.53",
   "description": "HitTracker desktop application",
   "homepage": "https://www.lazerball.com",
   "bugs": {
@@ -89,7 +89,7 @@
     "tmp": "^0.0.33",
     "ts-loader": "^5.3.3",
     "ts-node": "^7.0.1",
-    "tslint": "^5.13.0",
+    "tslint": "^5.13.1",
     "tslint-config-prettier": "^1.17.0",
     "tslint-config-standard": "^8.0.0",
     "tslint-language-service": "github:angelozerr/tslint-language-service",
