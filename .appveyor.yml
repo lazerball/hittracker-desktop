@@ -31,6 +31,7 @@ install:
 
 
 test_script:
+  - SET DEBUG=electron-forge:*
   - node --version
   - npm --version
   - npm run lint
