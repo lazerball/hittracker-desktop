@@ -68,6 +68,9 @@ module.exports = {
       },
     ],
   ],
+  electronRebuildConfig: {
+    force: true,
+  }
   packagerConfig: {
     packageManager: 'npm',
     asar: true,
