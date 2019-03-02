@@ -83,7 +83,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "devtron": "^1.4.0",
     "download": "^7.1.0",
-    "electron": "4.0.6",
+    "electron": "4.0.0",
     "prettier": "^1.16.4",
     "spectron": "^5.0.0",
     "tmp": "^0.0.33",
