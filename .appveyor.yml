@@ -31,7 +31,7 @@ install:
 
 
 test_script:
-  - SET DEBUG=electron-rebuild:*
+  - SET DEBUG=electron-rebuild
   - node --version
   - npm --version
   - npm run lint
