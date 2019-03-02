@@ -70,6 +70,7 @@ module.exports = {
   ],
   electronRebuildConfig: {
     force: true,
+    extraModules: ['usb'],
   },
   packagerConfig: {
     packageManager: 'npm',
