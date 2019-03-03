@@ -91,7 +91,7 @@ const fetchHitTracker = async (unpackDir: string, platform: string) => {
     console.log('Not downloading HitTracker since we already have it.');
     return;
   }
-  const hitTrackerVersion = '0.3.20';
+  const hitTrackerVersion = '0.3.24';
   const file = `HitTracker-electron-${platform}-${hitTrackerVersion}.tar.bz2`;
   const url = `https://github.com/lazerball/HitTracker/releases/download/${hitTrackerVersion}/${file}`;
   try {
