@@ -28,12 +28,12 @@ export const firstRun = async (config: any) => {
     }
 
     const envVars = appendEnvVars(config.hitTracker.env);
-    await spawnPromise(config.php.bin, commandArgs, { env: envVars, encoding: 'utf8' }).then(
-      x => log.info(x), // needs to be log.debug
-      e => {
-        log.error(`ERROR: ${e}`);
-      }
-    );
+    try {
+      const stdout = await spawnPromise(config.php.bin, commandArgs, { env: envVars, encoding: 'utf8' });
+      log.info(stdout);
+    } catch (error) {
+      log.error(`Error running ${commandArgs} STATUS: ${error.exitStatus} OUT: ${error.stderr.toString()}`);
+    }
   };
 
   await runHitTrackerCmd('doctrine:database:create', ['--if-not-exists']);
@@ -140,7 +140,6 @@ export const startDeviceMediator = async (config: any) => {
       env: { ELECTRON_VERSION: process.versions.electron },
     }
   );
-
 
   return hitTrackerDeviceMediator;
 };
