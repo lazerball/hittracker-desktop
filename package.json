@@ -55,7 +55,7 @@
     "lodash": "^4.17.11",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-hot-loader": "^4.7.1",
+    "react-hot-loader": "^4.7.2",
     "tslib": "^1.9.3",
     "xdg-basedir": "^3.0.0"
   },
@@ -83,7 +83,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "devtron": "^1.4.0",
     "download": "^7.1.0",
-    "electron": "4.0.0",
+    "electron": "4.0.6",
     "prettier": "^1.16.4",
     "spectron": "^5.0.0",
     "tmp": "^0.0.33",
