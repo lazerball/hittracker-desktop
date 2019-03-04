@@ -22,6 +22,7 @@ init:
   - SET TMP=C:\T
   - SET NODE_ARCH=%PLATFORM%
   - IF %PLATFORM% == x86 SET NODE_ARCH=ia32
+  - SET DEBUG=electron-rebuild
 
 install:
   - ps: Install-Product node $env:node_version $env:PLATFORM
