@@ -34,7 +34,7 @@ before_install:
 
 install:
   - npm install -g npm@6
-  - npm install
+  - npm ci
 script:
   - npm --version
   - node --version
