@@ -21,10 +21,6 @@ import {
 import { enableApplicationMenu } from './menu';
 import * as utils from './utils';
 
-/* tslint:disable:no-duplicate-imports no-console */
-import { dialog } from 'electron';
-console.log(dialog);
-
 const processes: ChildProcess[] = [];
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
