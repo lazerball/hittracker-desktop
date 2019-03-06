@@ -1,9 +1,8 @@
-// tslint:disable: no-console
+/* eslint-disable no-console */
 import * as path from 'path';
 
 import * as gulp from 'gulp';
 
-// tslint:disable-next-line: no-implicit-dependencies
 import * as download from 'download';
 import * as jetpack from 'fs-jetpack';
 
@@ -11,7 +10,6 @@ const fetchPhpExtensions = async (unpackDir: string, platform: string, arch: str
   if (platform !== 'win32') {
     return;
   }
-  // @todo: don't use http url for getting php
   const phpArch = arch === 'ia32' ? 'x86' : arch;
 
   const apcuUrl = `https://windows.php.net/downloads/pecl/releases/apcu/5.1.16/php_apcu-5.1.16-7.3-nts-vc15-${phpArch}.zip`;
@@ -111,16 +109,17 @@ const fetchCaddy = async (unpackDir: string, platform: string, arch: string) => 
 
   const caddyOs = platform === 'win32' ? 'windows' : platform;
 
-  const caddyArchMap = {
+  const caddyArchMap: { [key: string]: string } = {
     ia32: '386',
     x64: 'amd64',
     arm: 'arm',
     arm64: 'arm64',
-  } as any;
+  };
   let caddyArch = caddyArchMap[arch];
   let caddyArm = '';
   if (caddyArch === 'arm') {
     process.config.variables.hasOwnProperty('arm_version');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     caddyArm = (process.config.variables as any).arm_version;
   }
   caddyArch = `${caddyArch}${caddyArm}`;
@@ -160,11 +159,11 @@ const fetchPostgreSql = async (unpackDir: string, platform: string, arch: string
   const subVersion = '1';
   const packageArch = arch === 'x64' && platform !== 'darwin' ? `-${arch}` : '';
 
-  const osMap = {
+  const osMap: { [key: string]: string } = {
     darwin: 'osx',
     linux: 'linux',
     win32: 'windows',
-  } as any;
+  };
   const packageOs = osMap[platform];
   const extension = platform === 'linux' ? 'tar.gz' : 'zip';
 

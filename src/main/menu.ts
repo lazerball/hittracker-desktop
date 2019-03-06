@@ -19,8 +19,7 @@ const edit = {
   role: 'editMenu',
 };
 
-import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
-const view: MenuItemConstructorOptions = {
+const view = {
   label: 'View',
   submenu: [
     {
@@ -32,9 +31,6 @@ const view: MenuItemConstructorOptions = {
     },
     {
       role: 'forceReload',
-    },
-    {
-      type: 'separator',
     },
     {
       role: 'toggleFullScreen',
@@ -59,7 +55,7 @@ const help = {
       label: 'About This App',
       click: () =>
         openAboutWindow({
-          icon_path: path.join(__dirname, 'icon.png'),
+          icon_path: path.join(__dirname, 'icon.png'), // eslint-disable-line @typescript-eslint/camelcase
           description: '',
         }),
     },

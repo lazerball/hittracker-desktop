@@ -1,0 +1,54 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "standard",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/standard"
+  ],
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+    "no-dupe-class-members": "off",
+    "no-unused-vars": ["error", { "args": "none" }],
+    "no-buffer-constructor": "error",
+    "no-const-assign": "error",
+    "no-unneeded-ternary": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-spread": "error",
+    "prefer-template": "error",
+    "prefer-object-spread": "error",
+    "eqeqeq": "error",
+    "no-bitwise": "off",
+    "linebreak-style": ["error", "unix"]
+  },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": ["*.d.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": "off"
+      }
+    }
+  ]
+}

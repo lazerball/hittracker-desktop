@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as log from 'electron-log';
 import * as jetpack from 'fs-jetpack';
 import * as path from 'path';

@@ -24,15 +24,13 @@ import * as utils from './utils';
 const processes: ChildProcess[] = [];
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-// tslint:disable-next-line:no-var-requires
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
 // We still want to show our app name even if running with prebuilt binary
 if (!utils.isPackaged()) {
-  // tslint:disable-next-line:no-var-requires
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../package.json'); // eslint-disable-line @typescript-eslint/no-var-requires
   app.setName(packageJson.productName || packageJson.name);
 }
 

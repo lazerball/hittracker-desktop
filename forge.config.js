@@ -43,7 +43,7 @@ const cleanElectronReBuildBuildFiles = async (forgeConfig, prunePath, electronVe
     files: false,
     matching: '.deps',
   });
-  for (pathToRemove of pathsToRemove) {
+  for (const pathToRemove of pathsToRemove) {
     jetpack.remove(pathToRemove);
   }
 };

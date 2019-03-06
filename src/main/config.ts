@@ -2,12 +2,12 @@ import { app as electronApp } from 'electron';
 import * as path from 'path';
 import * as utils from './utils';
 
-export interface IBaseConfigOptions {
+export interface BaseConfigOptions {
   bin: string;
   port?: number;
-  args: Array<string | number>;
-  env?: any;
-  [propName: string]: any;
+  args: (string | number)[];
+  env?: { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [propName: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 const executableName = (name: string) => {
   return process.platform === 'win32' ? `${name}.exe` : name;
@@ -29,7 +29,7 @@ export const getConfig = (env: string, debug: boolean) => {
 
   const postgreSqlDir = path.join(bundledPackageDir, `postgresql-${platform}-${arch}`, 'pgsql');
 
-  const postgreSql: IBaseConfigOptions = {
+  const postgreSql: BaseConfigOptions = {
     bin: '',
     binDir: path.join(postgreSqlDir, 'bin'),
     dataDir: path.join(userDataPath, 'postgres'),
@@ -54,7 +54,7 @@ export const getConfig = (env: string, debug: boolean) => {
   const hitTrackerAppDir = path.join(bundledPackageDir, `HitTracker-${platform}`);
   // @todo: php shouldn't generally be bundled for nix, but maybe for flatpak?
   const phpIni = path.join(hitTrackerAppDir, 'etc', 'electron', `php-${simplePlatform}-${env}.ini`);
-  const php: IBaseConfigOptions = {
+  const php: BaseConfigOptions = {
     bin: executableName('php'),
     args: [],
     phpIni,
@@ -68,7 +68,7 @@ export const getConfig = (env: string, debug: boolean) => {
     php.bin = path.join(bundledPackageDir, `php-${platform}-${arch}`, php.bin);
   }
 
-  const hitTracker: IBaseConfigOptions = {
+  const hitTracker: BaseConfigOptions = {
     bin: path.join(hitTrackerAppDir, 'bin', 'console'),
     args: [],
     appDir: hitTrackerAppDir,
@@ -113,13 +113,13 @@ export const getConfig = (env: string, debug: boolean) => {
   }
   fastCgi.args.push(...['-c', php.phpIni]);
 
-  const ssePubsub: IBaseConfigOptions = {
+  const ssePubsub: BaseConfigOptions = {
     bin: path.join(__dirname, 'sse-pubsub.js'),
     args: [],
     port: 40000,
   };
 
-  const hitTrackerDeviceMediator: IBaseConfigOptions = {
+  const hitTrackerDeviceMediator: BaseConfigOptions = {
     bin: path.join(__dirname, 'device-mediator.js'),
     args: [],
     port: 30010,
@@ -138,7 +138,7 @@ export const getConfig = (env: string, debug: boolean) => {
     hitTrackerDeviceMediator.args.push(...['-v']);
   }
 
-  const caddy: IBaseConfigOptions = {
+  const caddy: BaseConfigOptions = {
     bin: path.join(bundledPackageDir, `caddy-${platform}-${arch}`, 'caddy'),
     args: ['-conf', path.join(configFilesDir, 'Caddyfile')],
     env: {
