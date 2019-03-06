@@ -19,12 +19,12 @@ import {
 } from './external-commands';
 
 import { enableApplicationMenu } from './menu';
+import { installOrUpgradePending } from './squirrel';
 import * as utils from './utils';
 
 const processes: ChildProcess[] = [];
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
+if (installOrUpgradePending()) {
   app.quit();
 }
 
