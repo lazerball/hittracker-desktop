@@ -11,7 +11,7 @@ import * as ChildProcess from 'child_process';
 
 declare function crossSpawnPromise(
   cmd: string,
-  args?: string | number[],
+  args?: (string | number)[],
   options?: Partial<crossSpawnPromise.CrossSpawnOptions>
 ): Promise<Uint8Array>;
 
