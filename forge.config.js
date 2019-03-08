@@ -50,7 +50,7 @@ const cleanElectronReBuildBuildFiles = async (forgeConfig, prunePath, electronVe
 
 module.exports = {
   plugins: [
-    ['@electron-forge/plugin-auto-unpack-natives'],
+    // ['@electron-forge/plugin-auto-unpack-natives'],
     [
       '@electron-forge/plugin-webpack',
       {
