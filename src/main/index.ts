@@ -22,6 +22,9 @@ import { enableApplicationMenu } from './menu';
 import { installOrUpgradePending } from './squirrel';
 import * as utils from './utils';
 
+// https://github.com/electron-userland/electron-forge/issues/704
+declare var MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string; // eslint-disable-line no-var
+declare var MAIN_WINDOW_WEBPACK_ENTRY: string; // eslint-disable-line no-var
 const processes: ChildProcess[] = [];
 
 if (installOrUpgradePending()) {
@@ -79,21 +82,21 @@ const createWindow = async () => {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
 
+  enableApplicationMenu();
+  mainWindow = new BrowserWindow({
+    backgroundColor: '#FFF', // https://github.com/electron/electron/issues/10025
+    webPreferences: {
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: false,
+      defaultEncoding: 'UTF-8',
+    },
+  });
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   await initDatabase(config);
 
   await startDatabase(config);
 
   await firstRun(config);
-
-  enableApplicationMenu();
-  mainWindow = new BrowserWindow({
-    backgroundColor: '#FFF', // https://github.com/electron/electron/issues/10025
-    webPreferences: {
-      // preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      nodeIntegration: false,
-      defaultEncoding: 'UTF-8',
-    },
-  });
 
   const phpFpm = await startPhpFpm(config);
   processes.push(phpFpm);
