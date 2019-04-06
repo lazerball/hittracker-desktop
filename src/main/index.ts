@@ -1,11 +1,10 @@
 import { ChildProcess } from 'child_process';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, powerSaveBlocker } from 'electron';
 
 import * as contextMenu from 'electron-context-menu';
 import * as log from 'electron-log';
 import * as path from 'path';
 import * as xdgBaseDir from 'xdg-basedir';
-
 import { getConfig } from './config';
 import {
   firstRun,
@@ -125,6 +124,7 @@ app.on('activate', async () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
+    powerSaveBlocker.start('prevent-display-sleep');
     await createWindow();
   }
 });
