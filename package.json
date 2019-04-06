@@ -34,7 +34,7 @@
   "config": {
     "forge": "./forge.config.js",
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "cz-conventional-changelog"
     }
   },
   "dependencies": {
