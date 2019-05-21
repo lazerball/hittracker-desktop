@@ -31,7 +31,7 @@ if (installOrUpgradePending()) {
 }
 
 // We still want to show our app name even if running with prebuilt binary
-if (!utils.isPackaged()) {
+if (!app.isPackaged) {
   const packageJson = require('../../package.json'); // eslint-disable-line @typescript-eslint/no-var-requires
   app.setName(packageJson.productName || packageJson.name);
 }
