@@ -75,8 +75,8 @@ export const startDatabase = async (config: any) => {
     env: config.postgreSql.env,
   });
 
-  postgreSql.stdout.on('data', processLogger);
-  postgreSql.stderr.on('data', processErrorLogger);
+  postgreSql.stdout!.on('data', processLogger);
+  postgreSql.stderr!.on('data', processErrorLogger);
 
   return postgreSql;
 };
@@ -84,12 +84,12 @@ export const startDatabase = async (config: any) => {
 export const stopDatabase = async (config: any) => {
   const postgreSql = spawn(config.postgreSql.bin, ['stop'], {
     windowsHide: true,
-    cwd: config.postgreSql.binDir, // the dlls are located in the bin dir on windows
+    cwd: config.postgreSql.binDir, // the dlls are in the bin dir on windows
     env: config.postgreSql.env,
   });
 
-  postgreSql.stdout.on('data', processLogger);
-  postgreSql.stderr.on('data', processErrorLogger);
+  postgreSql.stdout!.on('data', processLogger);
+  postgreSql.stderr!.on('data', processErrorLogger);
 };
 
 export const startPhpFpm = async (config: any) => {
@@ -98,8 +98,8 @@ export const startPhpFpm = async (config: any) => {
     env: appendEnvVars(config.fastCgi.env),
   });
 
-  phpFpm.stdout.on('data', processLogger);
-  phpFpm.stderr.on('data', processErrorLogger);
+  phpFpm.stdout!.on('data', processLogger);
+  phpFpm.stderr!.on('data', processErrorLogger);
 
   return phpFpm;
 };
@@ -110,8 +110,8 @@ export const startWebServer = async (config: any) => {
     env: appendEnvVars(config.caddy.env),
   });
 
-  caddy.stdout.on('data', processLogger);
-  caddy.stderr.on('data', processErrorLogger);
+  caddy.stdout!.on('data', processLogger);
+  caddy.stderr!.on('data', processErrorLogger);
 
   return caddy;
 };
