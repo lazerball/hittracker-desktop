@@ -49,7 +49,7 @@ const fetchPhp = async (unpackDir: string, platform: string, arch: string) => {
     return;
   }
   const phpArch = arch === 'ia32' ? 'x86' : arch;
-  const url = `https://windows.php.net/downloads/releases/php-7.3.5-nts-Win32-VC15-${phpArch}.zip`;
+  const url = `https://windows.php.net/downloads/releases/php-7.3.7-nts-Win32-VC15-${phpArch}.zip`;
   try {
     await download(url, unpackDir, { extract: true });
     const cleanExtList = [
@@ -89,7 +89,7 @@ const fetchHitTracker = async (unpackDir: string, platform: string) => {
     console.log('Not downloading HitTracker since we already have it.');
     return;
   }
-  const hitTrackerVersion = '0.3.24';
+  const hitTrackerVersion = '0.4.4';
   const file = `HitTracker-electron-${platform}-${hitTrackerVersion}.tar.bz2`;
   const url = `https://github.com/lazerball/HitTracker/releases/download/${hitTrackerVersion}/${file}`;
   try {
@@ -134,8 +134,8 @@ const fetchCaddy = async (unpackDir: string, platform: string, arch: string) => 
     'http.grpc',
     'http.locale',
     'http.realip',
-    'http.upload',
   ].join(',');
+
   const url = `https://caddyserver.com/download/${caddyOs}/${caddyArch}?plugins=${caddyFeatures}&license=personal&telemetry=off`;
 
   try {
