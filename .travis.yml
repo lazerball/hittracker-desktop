@@ -33,7 +33,6 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export NODE_PLATFORM=darwin; fi
 
 install:
-  - npm install -g npm@6
   - npm ci
 script:
   - npm --version
