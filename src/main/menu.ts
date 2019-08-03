@@ -2,7 +2,7 @@ import { app, BrowserWindow, Menu } from 'electron';
 import openAboutWindow from 'electron-about-window';
 import * as path from 'path';
 
-const file = {
+const file: Electron.MenuItemConstructorOptions = {
   label: 'File',
   submenu: [
     {
@@ -15,11 +15,11 @@ const file = {
   ],
 };
 
-const edit = {
+const edit: Electron.MenuItemConstructorOptions = {
   role: 'editMenu',
 };
 
-const view = {
+const view: Electron.MenuItemConstructorOptions = {
   label: 'View',
   submenu: [
     {
@@ -45,10 +45,10 @@ const view = {
     {
       role: 'resetZoom',
     },
-  ],
+  ] as Electron.MenuItemConstructorOptions[],
 };
 
-const help = {
+const help: Electron.MenuItemConstructorOptions = {
   label: 'Help',
   submenu: [
     {
@@ -62,13 +62,12 @@ const help = {
     {
       role: 'toggleDevTools',
     },
-  ],
+  ] as Electron.MenuItemConstructorOptions[],
 };
 
-const window = {
+const window: Electron.MenuItemConstructorOptions = {
   role: 'windowMenu',
 };
-
 export const enableApplicationMenu = () => {
   const menuTemplates = [file, edit, view, window, help];
   Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplates));
