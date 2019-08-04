@@ -1,7 +1,7 @@
 {
   "name": "hittracker-desktop",
   "productName": "HitTracker",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "HitTracker desktop application",
   "homepage": "https://www.lazerball.com",
   "bugs": {
