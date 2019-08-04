@@ -7,7 +7,7 @@ clone_folder: "C:\\HT"
 environment:
   global:
     GITHUB_TOKEN:
-      secure: 9va/uJFLZdZhq9AUQif1Txb9nSaAcLzcWvSC20I6B7KdV6xXzAujIMGouU2zqQAW
+      secure: rTSf9qQ4EnuMOgfb9aBKzA0P+V7WR4au9zVt7wHOnn6wi/26pB/zzi9Y9mXh6gh4
     node_version: '12.4.0'
 
 branches:
